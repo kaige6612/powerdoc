@@ -1,0 +1,1795 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+		<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.putorn.powerdoc.dao.PowerDocDcResistanceMapper">
+
+	<resultMap id="RM_PowerDocDcResistance" type="com.putorn.powerdoc.entity.PowerDocDcResistance">
+        <result property="dcResistanceId" column="dc_resistance_id"/>
+        <result property="subreportId" column="subreport_id"/>
+        <result property="dcAb" column="dc_ab"/>
+        <result property="dcBc" column="dc_bc"/>
+        <result property="dcCa" column="dc_ca"/>
+        <result property="dcLast" column="dc_last"/>
+        <result property="convertAx" column="convert_ax"/>
+        <result property="convertBy" column="convert_by"/>
+        <result property="convertCz" column="convert_cz"/>
+        <result property="convertError" column="convert_error"/>
+        <result property="high1ao" column="high_1_AO"/>
+        <result property="high1bo" column="high_1_BO"/>
+        <result property="high1co" column="high_1_CO"/>
+        <result property="high1error" column="high_1_error"/>
+        <result property="middle1amOm" column="middle_1_AmOm"/>
+        <result property="middle1bmOm" column="middle_1_BmOm"/>
+        <result property="middle1cmOm" column="middle_1_CmOm"/>
+        <result property="middle1error" column="middle_1_error"/>
+        <result property="high2ao" column="high_2_AO"/>
+        <result property="high2bo" column="high_2_BO"/>
+        <result property="high2co" column="high_2_CO"/>
+        <result property="high2error" column="high_2_error"/>
+        <result property="middle2amOm" column="middle_2_AmOm"/>
+        <result property="middle2bmOm" column="middle_2_BmOm"/>
+        <result property="middle2cmOm" column="middle_2_CmOm"/>
+        <result property="middle2error" column="middle_2_error"/>
+        <result property="high3ao" column="high_3_AO"/>
+        <result property="high3bo" column="high_3_BO"/>
+        <result property="high3co" column="high_3_CO"/>
+        <result property="high3error" column="high_3_error"/>
+        <result property="middle3amOm" column="middle_3_AmOm"/>
+        <result property="middle3bmOm" column="middle_3_BmOm"/>
+        <result property="middle3cmOm" column="middle_3_CmOm"/>
+        <result property="middle3error" column="middle_3_error"/>
+        <result property="high4ao" column="high_4_AO"/>
+        <result property="high4bo" column="high_4_BO"/>
+        <result property="high4co" column="high_4_CO"/>
+        <result property="high4error" column="high_4_error"/>
+        <result property="middle4amOm" column="middle_4_AmOm"/>
+        <result property="middle4bmOm" column="middle_4_BmOm"/>
+        <result property="middle4cmOm" column="middle_4_CmOm"/>
+        <result property="middle4error" column="middle_4_error"/>
+        <result property="high5ao" column="high_5_AO"/>
+        <result property="high5bo" column="high_5_BO"/>
+        <result property="high5co" column="high_5_CO"/>
+        <result property="high5error" column="high_5_error"/>
+        <result property="middle5amOm" column="middle_5_AmOm"/>
+        <result property="middle5bmOm" column="middle_5_BmOm"/>
+        <result property="middle5cmOm" column="middle_5_CmOm"/>
+        <result property="middle5error" column="middle_5_error"/>
+        <result property="high6ao" column="high_6_AO"/>
+        <result property="high6bo" column="high_6_BO"/>
+        <result property="high6co" column="high_6_CO"/>
+        <result property="high6error" column="high_6_error"/>
+        <result property="middle6amOm" column="middle_6_AmOm"/>
+        <result property="middle6bmOm" column="middle_6_BmOm"/>
+        <result property="middle6cmOm" column="middle_6_CmOm"/>
+        <result property="middle6error" column="middle_6_error"/>
+        <result property="high7ao" column="high_7_AO"/>
+        <result property="high7bo" column="high_7_BO"/>
+        <result property="high7co" column="high_7_CO"/>
+        <result property="high7error" column="high_7_error"/>
+        <result property="middle7amOm" column="middle_7_AmOm"/>
+        <result property="middle7bmOm" column="middle_7_BmOm"/>
+        <result property="middle7cmOm" column="middle_7_CmOm"/>
+        <result property="middle7error" column="middle_7_error"/>
+        <result property="high8ao" column="high_8_AO"/>
+        <result property="high8bo" column="high_8_BO"/>
+        <result property="high8co" column="high_8_CO"/>
+        <result property="high8error" column="high_8_error"/>
+        <result property="middle8amOm" column="middle_8_AmOm"/>
+        <result property="middle8bmOm" column="middle_8_BmOm"/>
+        <result property="middle8cmOm" column="middle_8_CmOm"/>
+        <result property="middle8error" column="middle_8_error"/>
+        <result property="high9bAo" column="high_9b_AO"/>
+        <result property="high9bBo" column="high_9b_BO"/>
+        <result property="high9bCo" column="high_9b_CO"/>
+        <result property="high9bError" column="high_9b_error"/>
+        <result property="middle9bAmOm" column="middle_9b_AmOm"/>
+        <result property="middle9bBmOm" column="middle_9b_BmOm"/>
+        <result property="middle9bCmOm" column="middle_9b_CmOm"/>
+        <result property="middle9bError" column="middle_9b_error"/>
+        <result property="high10Ao" column="high_10_AO"/>
+        <result property="high10Bo" column="high_10_BO"/>
+        <result property="high10Co" column="high_10_CO"/>
+        <result property="high10Error" column="high_10_error"/>
+        <result property="middle10AmOm" column="middle_10_AmOm"/>
+        <result property="middle10BmOm" column="middle_10_BmOm"/>
+        <result property="middle10CmOm" column="middle_10_CmOm"/>
+        <result property="middle10Error" column="middle_10_error"/>
+        <result property="high11Ao" column="high_11_AO"/>
+        <result property="high11Bo" column="high_11_BO"/>
+        <result property="high11Co" column="high_11_CO"/>
+        <result property="high11Error" column="high_11_error"/>
+        <result property="middle11AmOm" column="middle_11_AmOm"/>
+        <result property="middle11BmOm" column="middle_11_BmOm"/>
+        <result property="middle11CmOm" column="middle_11_CmOm"/>
+        <result property="middle11Error" column="middle_11_error"/>
+        <result property="high12Ao" column="high_12_AO"/>
+        <result property="high12Bo" column="high_12_BO"/>
+        <result property="high12Co" column="high_12_CO"/>
+        <result property="high12Error" column="high_12_error"/>
+        <result property="middle12AmOm" column="middle_12_AmOm"/>
+        <result property="middle12BmOm" column="middle_12_BmOm"/>
+        <result property="middle12CmOm" column="middle_12_CmOm"/>
+        <result property="middle12Error" column="middle_12_error"/>
+        <result property="high13Ao" column="high_13_AO"/>
+        <result property="high13Bo" column="high_13_BO"/>
+        <result property="high13Co" column="high_13_CO"/>
+        <result property="high13Error" column="high_13_error"/>
+        <result property="middle13AmOm" column="middle_13_AmOm"/>
+        <result property="middle13BmOm" column="middle_13_BmOm"/>
+        <result property="middle13CmOm" column="middle_13_CmOm"/>
+        <result property="middle13Error" column="middle_13_error"/>
+        <result property="high14Ao" column="high_14_AO"/>
+        <result property="high14Bo" column="high_14_BO"/>
+        <result property="high14Co" column="high_14_CO"/>
+        <result property="high14Error" column="high_14_error"/>
+        <result property="middle14AmOm" column="middle_14_AmOm"/>
+        <result property="middle14BmOm" column="middle_14_BmOm"/>
+        <result property="middle14CmOm" column="middle_14_CmOm"/>
+        <result property="middle14Error" column="middle_14_error"/>
+        <result property="high15Ao" column="high_15_AO"/>
+        <result property="high15Bo" column="high_15_BO"/>
+        <result property="high15Co" column="high_15_CO"/>
+        <result property="high15Error" column="high_15_error"/>
+        <result property="middle15AmOm" column="middle_15_AmOm"/>
+        <result property="middle15BmOm" column="middle_15_BmOm"/>
+        <result property="middle15CmOm" column="middle_15_CmOm"/>
+        <result property="middle15Error" column="middle_15_error"/>
+        <result property="high16Ao" column="high_16_AO"/>
+        <result property="high16Bo" column="high_16_BO"/>
+        <result property="high16Co" column="high_16_CO"/>
+        <result property="high16Error" column="high_16_error"/>
+        <result property="middle16AmOm" column="middle_16_AmOm"/>
+        <result property="middle16BmOm" column="middle_16_BmOm"/>
+        <result property="middle16CmOm" column="middle_16_CmOm"/>
+        <result property="middle16Error" column="middle_16_error"/>
+        <result property="high17Ao" column="high_17_AO"/>
+        <result property="high17Bo" column="high_17_BO"/>
+        <result property="high17Co" column="high_17_CO"/>
+        <result property="high17Error" column="high_17_error"/>
+        <result property="middle17AmOm" column="middle_17_AmOm"/>
+        <result property="middle17BmOm" column="middle_17_BmOm"/>
+        <result property="middle17CmOm" column="middle_17_CmOm"/>
+        <result property="middle17Error" column="middle_17_error"/>
+        <result property="addUserid" column="add_userid"/>
+        <result property="addUsername" column="add_username"/>
+        <result property="addtime" column="addtime"/>
+        <result property="editUserid" column="edit_userid"/>
+        <result property="editUsername" column="edit_username"/>
+        <result property="edittime" column="edittime"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		dc_resistance_id,subreport_id,dc_ab,dc_bc,dc_ca,dc_last,convert_ax,convert_by,convert_cz,convert_error,high_1_AO,high_1_BO,high_1_CO,high_1_error,middle_1_AmOm,middle_1_BmOm,middle_1_CmOm,middle_1_error,high_2_AO,high_2_BO,high_2_CO,high_2_error,middle_2_AmOm,middle_2_BmOm,middle_2_CmOm,middle_2_error,high_3_AO,high_3_BO,high_3_CO,high_3_error,middle_3_AmOm,middle_3_BmOm,middle_3_CmOm,middle_3_error,high_4_AO,high_4_BO,high_4_CO,high_4_error,middle_4_AmOm,middle_4_BmOm,middle_4_CmOm,middle_4_error,high_5_AO,high_5_BO,high_5_CO,high_5_error,middle_5_AmOm,middle_5_BmOm,middle_5_CmOm,middle_5_error,high_6_AO,high_6_BO,high_6_CO,high_6_error,middle_6_AmOm,middle_6_BmOm,middle_6_CmOm,middle_6_error,high_7_AO,high_7_BO,high_7_CO,high_7_error,middle_7_AmOm,middle_7_BmOm,middle_7_CmOm,middle_7_error,high_8_AO,high_8_BO,high_8_CO,high_8_error,middle_8_AmOm,middle_8_BmOm,middle_8_CmOm,middle_8_error,high_9b_AO,high_9b_BO,high_9b_CO,high_9b_error,middle_9b_AmOm,middle_9b_BmOm,middle_9b_CmOm,middle_9b_error,high_10_AO,high_10_BO,high_10_CO,high_10_error,middle_10_AmOm,middle_10_BmOm,middle_10_CmOm,middle_10_error,high_11_AO,high_11_BO,high_11_CO,high_11_error,middle_11_AmOm,middle_11_BmOm,middle_11_CmOm,middle_11_error,high_12_AO,high_12_BO,high_12_CO,high_12_error,middle_12_AmOm,middle_12_BmOm,middle_12_CmOm,middle_12_error,high_13_AO,high_13_BO,high_13_CO,high_13_error,middle_13_AmOm,middle_13_BmOm,middle_13_CmOm,middle_13_error,high_14_AO,high_14_BO,high_14_CO,high_14_error,middle_14_AmOm,middle_14_BmOm,middle_14_CmOm,middle_14_error,high_15_AO,high_15_BO,high_15_CO,high_15_error,middle_15_AmOm,middle_15_BmOm,middle_15_CmOm,middle_15_error,high_16_AO,high_16_BO,high_16_CO,high_16_error,middle_16_AmOm,middle_16_BmOm,middle_16_CmOm,middle_16_error,high_17_AO,high_17_BO,high_17_CO,high_17_error,middle_17_AmOm,middle_17_BmOm,middle_17_CmOm,middle_17_error,add_userid,add_username,addtime,edit_userid,edit_username,edittime
+	    ]]>
+	</sql>
+
+	<!--保存 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="dcResistanceId">
+	    <![CDATA[
+	        INSERT INTO power_doc_dc_resistance ( 
+	        	subreport_id ,
+	        	dc_ab ,
+	        	dc_bc ,
+	        	dc_ca ,
+	        	dc_last ,
+	        	convert_ax ,
+	        	convert_by ,
+	        	convert_cz ,
+	        	convert_error ,
+	        	high_1_AO ,
+	        	high_1_BO ,
+	        	high_1_CO ,
+	        	high_1_error ,
+	        	middle_1_AmOm ,
+	        	middle_1_BmOm ,
+	        	middle_1_CmOm ,
+	        	middle_1_error ,
+	        	high_2_AO ,
+	        	high_2_BO ,
+	        	high_2_CO ,
+	        	high_2_error ,
+	        	middle_2_AmOm ,
+	        	middle_2_BmOm ,
+	        	middle_2_CmOm ,
+	        	middle_2_error ,
+	        	high_3_AO ,
+	        	high_3_BO ,
+	        	high_3_CO ,
+	        	high_3_error ,
+	        	middle_3_AmOm ,
+	        	middle_3_BmOm ,
+	        	middle_3_CmOm ,
+	        	middle_3_error ,
+	        	high_4_AO ,
+	        	high_4_BO ,
+	        	high_4_CO ,
+	        	high_4_error ,
+	        	middle_4_AmOm ,
+	        	middle_4_BmOm ,
+	        	middle_4_CmOm ,
+	        	middle_4_error ,
+	        	high_5_AO ,
+	        	high_5_BO ,
+	        	high_5_CO ,
+	        	high_5_error ,
+	        	middle_5_AmOm ,
+	        	middle_5_BmOm ,
+	        	middle_5_CmOm ,
+	        	middle_5_error ,
+	        	high_6_AO ,
+	        	high_6_BO ,
+	        	high_6_CO ,
+	        	high_6_error ,
+	        	middle_6_AmOm ,
+	        	middle_6_BmOm ,
+	        	middle_6_CmOm ,
+	        	middle_6_error ,
+	        	high_7_AO ,
+	        	high_7_BO ,
+	        	high_7_CO ,
+	        	high_7_error ,
+	        	middle_7_AmOm ,
+	        	middle_7_BmOm ,
+	        	middle_7_CmOm ,
+	        	middle_7_error ,
+	        	high_8_AO ,
+	        	high_8_BO ,
+	        	high_8_CO ,
+	        	high_8_error ,
+	        	middle_8_AmOm ,
+	        	middle_8_BmOm ,
+	        	middle_8_CmOm ,
+	        	middle_8_error ,
+	        	high_9b_AO ,
+	        	high_9b_BO ,
+	        	high_9b_CO ,
+	        	high_9b_error ,
+	        	middle_9b_AmOm ,
+	        	middle_9b_BmOm ,
+	        	middle_9b_CmOm ,
+	        	middle_9b_error ,
+	        	high_10_AO ,
+	        	high_10_BO ,
+	        	high_10_CO ,
+	        	high_10_error ,
+	        	middle_10_AmOm ,
+	        	middle_10_BmOm ,
+	        	middle_10_CmOm ,
+	        	middle_10_error ,
+	        	high_11_AO ,
+	        	high_11_BO ,
+	        	high_11_CO ,
+	        	high_11_error ,
+	        	middle_11_AmOm ,
+	        	middle_11_BmOm ,
+	        	middle_11_CmOm ,
+	        	middle_11_error ,
+	        	high_12_AO ,
+	        	high_12_BO ,
+	        	high_12_CO ,
+	        	high_12_error ,
+	        	middle_12_AmOm ,
+	        	middle_12_BmOm ,
+	        	middle_12_CmOm ,
+	        	middle_12_error ,
+	        	high_13_AO ,
+	        	high_13_BO ,
+	        	high_13_CO ,
+	        	high_13_error ,
+	        	middle_13_AmOm ,
+	        	middle_13_BmOm ,
+	        	middle_13_CmOm ,
+	        	middle_13_error ,
+	        	high_14_AO ,
+	        	high_14_BO ,
+	        	high_14_CO ,
+	        	high_14_error ,
+	        	middle_14_AmOm ,
+	        	middle_14_BmOm ,
+	        	middle_14_CmOm ,
+	        	middle_14_error ,
+	        	high_15_AO ,
+	        	high_15_BO ,
+	        	high_15_CO ,
+	        	high_15_error ,
+	        	middle_15_AmOm ,
+	        	middle_15_BmOm ,
+	        	middle_15_CmOm ,
+	        	middle_15_error ,
+	        	high_16_AO ,
+	        	high_16_BO ,
+	        	high_16_CO ,
+	        	high_16_error ,
+	        	middle_16_AmOm ,
+	        	middle_16_BmOm ,
+	        	middle_16_CmOm ,
+	        	middle_16_error ,
+	        	high_17_AO ,
+	        	high_17_BO ,
+	        	high_17_CO ,
+	        	high_17_error ,
+	        	middle_17_AmOm ,
+	        	middle_17_BmOm ,
+	        	middle_17_CmOm ,
+	        	middle_17_error ,
+	        	add_userid ,
+	        	add_username ,
+	        	addtime ,
+	        	edit_userid ,
+	        	edit_username ,
+	        	edittime 
+	        ) VALUES (
+	        	#{subreportId} ,
+	        	#{dcAb} ,
+	        	#{dcBc} ,
+	        	#{dcCa} ,
+	        	#{dcLast} ,
+	        	#{convertAx} ,
+	        	#{convertBy} ,
+	        	#{convertCz} ,
+	        	#{convertError} ,
+	        	#{high1ao} ,
+	        	#{high1bo} ,
+	        	#{high1co} ,
+	        	#{high1error} ,
+	        	#{middle1amOm} ,
+	        	#{middle1bmOm} ,
+	        	#{middle1cmOm} ,
+	        	#{middle1error} ,
+	        	#{high2ao} ,
+	        	#{high2bo} ,
+	        	#{high2co} ,
+	        	#{high2error} ,
+	        	#{middle2amOm} ,
+	        	#{middle2bmOm} ,
+	        	#{middle2cmOm} ,
+	        	#{middle2error} ,
+	        	#{high3ao} ,
+	        	#{high3bo} ,
+	        	#{high3co} ,
+	        	#{high3error} ,
+	        	#{middle3amOm} ,
+	        	#{middle3bmOm} ,
+	        	#{middle3cmOm} ,
+	        	#{middle3error} ,
+	        	#{high4ao} ,
+	        	#{high4bo} ,
+	        	#{high4co} ,
+	        	#{high4error} ,
+	        	#{middle4amOm} ,
+	        	#{middle4bmOm} ,
+	        	#{middle4cmOm} ,
+	        	#{middle4error} ,
+	        	#{high5ao} ,
+	        	#{high5bo} ,
+	        	#{high5co} ,
+	        	#{high5error} ,
+	        	#{middle5amOm} ,
+	        	#{middle5bmOm} ,
+	        	#{middle5cmOm} ,
+	        	#{middle5error} ,
+	        	#{high6ao} ,
+	        	#{high6bo} ,
+	        	#{high6co} ,
+	        	#{high6error} ,
+	        	#{middle6amOm} ,
+	        	#{middle6bmOm} ,
+	        	#{middle6cmOm} ,
+	        	#{middle6error} ,
+	        	#{high7ao} ,
+	        	#{high7bo} ,
+	        	#{high7co} ,
+	        	#{high7error} ,
+	        	#{middle7amOm} ,
+	        	#{middle7bmOm} ,
+	        	#{middle7cmOm} ,
+	        	#{middle7error} ,
+	        	#{high8ao} ,
+	        	#{high8bo} ,
+	        	#{high8co} ,
+	        	#{high8error} ,
+	        	#{middle8amOm} ,
+	        	#{middle8bmOm} ,
+	        	#{middle8cmOm} ,
+	        	#{middle8error} ,
+	        	#{high9bAo} ,
+	        	#{high9bBo} ,
+	        	#{high9bCo} ,
+	        	#{high9bError} ,
+	        	#{middle9bAmOm} ,
+	        	#{middle9bBmOm} ,
+	        	#{middle9bCmOm} ,
+	        	#{middle9bError} ,
+	        	#{high10Ao} ,
+	        	#{high10Bo} ,
+	        	#{high10Co} ,
+	        	#{high10Error} ,
+	        	#{middle10AmOm} ,
+	        	#{middle10BmOm} ,
+	        	#{middle10CmOm} ,
+	        	#{middle10Error} ,
+	        	#{high11Ao} ,
+	        	#{high11Bo} ,
+	        	#{high11Co} ,
+	        	#{high11Error} ,
+	        	#{middle11AmOm} ,
+	        	#{middle11BmOm} ,
+	        	#{middle11CmOm} ,
+	        	#{middle11Error} ,
+	        	#{high12Ao} ,
+	        	#{high12Bo} ,
+	        	#{high12Co} ,
+	        	#{high12Error} ,
+	        	#{middle12AmOm} ,
+	        	#{middle12BmOm} ,
+	        	#{middle12CmOm} ,
+	        	#{middle12Error} ,
+	        	#{high13Ao} ,
+	        	#{high13Bo} ,
+	        	#{high13Co} ,
+	        	#{high13Error} ,
+	        	#{middle13AmOm} ,
+	        	#{middle13BmOm} ,
+	        	#{middle13CmOm} ,
+	        	#{middle13Error} ,
+	        	#{high14Ao} ,
+	        	#{high14Bo} ,
+	        	#{high14Co} ,
+	        	#{high14Error} ,
+	        	#{middle14AmOm} ,
+	        	#{middle14BmOm} ,
+	        	#{middle14CmOm} ,
+	        	#{middle14Error} ,
+	        	#{high15Ao} ,
+	        	#{high15Bo} ,
+	        	#{high15Co} ,
+	        	#{high15Error} ,
+	        	#{middle15AmOm} ,
+	        	#{middle15BmOm} ,
+	        	#{middle15CmOm} ,
+	        	#{middle15Error} ,
+	        	#{high16Ao} ,
+	        	#{high16Bo} ,
+	        	#{high16Co} ,
+	        	#{high16Error} ,
+	        	#{middle16AmOm} ,
+	        	#{middle16BmOm} ,
+	        	#{middle16CmOm} ,
+	        	#{middle16Error} ,
+	        	#{high17Ao} ,
+	        	#{high17Bo} ,
+	        	#{high17Co} ,
+	        	#{high17Error} ,
+	        	#{middle17AmOm} ,
+	        	#{middle17BmOm} ,
+	        	#{middle17CmOm} ,
+	        	#{middle17Error} ,
+	        	#{addUserid} ,
+	        	#{addUsername} ,
+	        	#{addtime} ,
+	        	#{editUserid} ,
+	        	#{editUsername} ,
+	        	#{edittime} 
+	        )
+	    ]]>
+	</insert>
+	
+	<!-- 批量保存 -->
+	<insert id="batchInsert">
+	    <![CDATA[
+	        INSERT INTO power_doc_dc_resistance (
+	        		subreport_id ,
+	        		dc_ab ,
+	        		dc_bc ,
+	        		dc_ca ,
+	        		dc_last ,
+	        		convert_ax ,
+	        		convert_by ,
+	        		convert_cz ,
+	        		convert_error ,
+	        		high_1_AO ,
+	        		high_1_BO ,
+	        		high_1_CO ,
+	        		high_1_error ,
+	        		middle_1_AmOm ,
+	        		middle_1_BmOm ,
+	        		middle_1_CmOm ,
+	        		middle_1_error ,
+	        		high_2_AO ,
+	        		high_2_BO ,
+	        		high_2_CO ,
+	        		high_2_error ,
+	        		middle_2_AmOm ,
+	        		middle_2_BmOm ,
+	        		middle_2_CmOm ,
+	        		middle_2_error ,
+	        		high_3_AO ,
+	        		high_3_BO ,
+	        		high_3_CO ,
+	        		high_3_error ,
+	        		middle_3_AmOm ,
+	        		middle_3_BmOm ,
+	        		middle_3_CmOm ,
+	        		middle_3_error ,
+	        		high_4_AO ,
+	        		high_4_BO ,
+	        		high_4_CO ,
+	        		high_4_error ,
+	        		middle_4_AmOm ,
+	        		middle_4_BmOm ,
+	        		middle_4_CmOm ,
+	        		middle_4_error ,
+	        		high_5_AO ,
+	        		high_5_BO ,
+	        		high_5_CO ,
+	        		high_5_error ,
+	        		middle_5_AmOm ,
+	        		middle_5_BmOm ,
+	        		middle_5_CmOm ,
+	        		middle_5_error ,
+	        		high_6_AO ,
+	        		high_6_BO ,
+	        		high_6_CO ,
+	        		high_6_error ,
+	        		middle_6_AmOm ,
+	        		middle_6_BmOm ,
+	        		middle_6_CmOm ,
+	        		middle_6_error ,
+	        		high_7_AO ,
+	        		high_7_BO ,
+	        		high_7_CO ,
+	        		high_7_error ,
+	        		middle_7_AmOm ,
+	        		middle_7_BmOm ,
+	        		middle_7_CmOm ,
+	        		middle_7_error ,
+	        		high_8_AO ,
+	        		high_8_BO ,
+	        		high_8_CO ,
+	        		high_8_error ,
+	        		middle_8_AmOm ,
+	        		middle_8_BmOm ,
+	        		middle_8_CmOm ,
+	        		middle_8_error ,
+	        		high_9b_AO ,
+	        		high_9b_BO ,
+	        		high_9b_CO ,
+	        		high_9b_error ,
+	        		middle_9b_AmOm ,
+	        		middle_9b_BmOm ,
+	        		middle_9b_CmOm ,
+	        		middle_9b_error ,
+	        		high_10_AO ,
+	        		high_10_BO ,
+	        		high_10_CO ,
+	        		high_10_error ,
+	        		middle_10_AmOm ,
+	        		middle_10_BmOm ,
+	        		middle_10_CmOm ,
+	        		middle_10_error ,
+	        		high_11_AO ,
+	        		high_11_BO ,
+	        		high_11_CO ,
+	        		high_11_error ,
+	        		middle_11_AmOm ,
+	        		middle_11_BmOm ,
+	        		middle_11_CmOm ,
+	        		middle_11_error ,
+	        		high_12_AO ,
+	        		high_12_BO ,
+	        		high_12_CO ,
+	        		high_12_error ,
+	        		middle_12_AmOm ,
+	        		middle_12_BmOm ,
+	        		middle_12_CmOm ,
+	        		middle_12_error ,
+	        		high_13_AO ,
+	        		high_13_BO ,
+	        		high_13_CO ,
+	        		high_13_error ,
+	        		middle_13_AmOm ,
+	        		middle_13_BmOm ,
+	        		middle_13_CmOm ,
+	        		middle_13_error ,
+	        		high_14_AO ,
+	        		high_14_BO ,
+	        		high_14_CO ,
+	        		high_14_error ,
+	        		middle_14_AmOm ,
+	        		middle_14_BmOm ,
+	        		middle_14_CmOm ,
+	        		middle_14_error ,
+	        		high_15_AO ,
+	        		high_15_BO ,
+	        		high_15_CO ,
+	        		high_15_error ,
+	        		middle_15_AmOm ,
+	        		middle_15_BmOm ,
+	        		middle_15_CmOm ,
+	        		middle_15_error ,
+	        		high_16_AO ,
+	        		high_16_BO ,
+	        		high_16_CO ,
+	        		high_16_error ,
+	        		middle_16_AmOm ,
+	        		middle_16_BmOm ,
+	        		middle_16_CmOm ,
+	        		middle_16_error ,
+	        		high_17_AO ,
+	        		high_17_BO ,
+	        		high_17_CO ,
+	        		high_17_error ,
+	        		middle_17_AmOm ,
+	        		middle_17_BmOm ,
+	        		middle_17_CmOm ,
+	        		middle_17_error ,
+	        		add_userid ,
+	        		add_username ,
+	        		addtime ,
+	        		edit_userid ,
+	        		edit_username ,
+	        		edittime 
+	        ) VALUES 
+	         ]]>
+	        <foreach item="item" collection="list"   separator=",">
+	        	(
+					#{item.subreportId} ,
+					#{item.dcAb} ,
+					#{item.dcBc} ,
+					#{item.dcCa} ,
+					#{item.dcLast} ,
+					#{item.convertAx} ,
+					#{item.convertBy} ,
+					#{item.convertCz} ,
+					#{item.convertError} ,
+					#{item.high1ao} ,
+					#{item.high1bo} ,
+					#{item.high1co} ,
+					#{item.high1error} ,
+					#{item.middle1amOm} ,
+					#{item.middle1bmOm} ,
+					#{item.middle1cmOm} ,
+					#{item.middle1error} ,
+					#{item.high2ao} ,
+					#{item.high2bo} ,
+					#{item.high2co} ,
+					#{item.high2error} ,
+					#{item.middle2amOm} ,
+					#{item.middle2bmOm} ,
+					#{item.middle2cmOm} ,
+					#{item.middle2error} ,
+					#{item.high3ao} ,
+					#{item.high3bo} ,
+					#{item.high3co} ,
+					#{item.high3error} ,
+					#{item.middle3amOm} ,
+					#{item.middle3bmOm} ,
+					#{item.middle3cmOm} ,
+					#{item.middle3error} ,
+					#{item.high4ao} ,
+					#{item.high4bo} ,
+					#{item.high4co} ,
+					#{item.high4error} ,
+					#{item.middle4amOm} ,
+					#{item.middle4bmOm} ,
+					#{item.middle4cmOm} ,
+					#{item.middle4error} ,
+					#{item.high5ao} ,
+					#{item.high5bo} ,
+					#{item.high5co} ,
+					#{item.high5error} ,
+					#{item.middle5amOm} ,
+					#{item.middle5bmOm} ,
+					#{item.middle5cmOm} ,
+					#{item.middle5error} ,
+					#{item.high6ao} ,
+					#{item.high6bo} ,
+					#{item.high6co} ,
+					#{item.high6error} ,
+					#{item.middle6amOm} ,
+					#{item.middle6bmOm} ,
+					#{item.middle6cmOm} ,
+					#{item.middle6error} ,
+					#{item.high7ao} ,
+					#{item.high7bo} ,
+					#{item.high7co} ,
+					#{item.high7error} ,
+					#{item.middle7amOm} ,
+					#{item.middle7bmOm} ,
+					#{item.middle7cmOm} ,
+					#{item.middle7error} ,
+					#{item.high8ao} ,
+					#{item.high8bo} ,
+					#{item.high8co} ,
+					#{item.high8error} ,
+					#{item.middle8amOm} ,
+					#{item.middle8bmOm} ,
+					#{item.middle8cmOm} ,
+					#{item.middle8error} ,
+					#{item.high9bAo} ,
+					#{item.high9bBo} ,
+					#{item.high9bCo} ,
+					#{item.high9bError} ,
+					#{item.middle9bAmOm} ,
+					#{item.middle9bBmOm} ,
+					#{item.middle9bCmOm} ,
+					#{item.middle9bError} ,
+					#{item.high10Ao} ,
+					#{item.high10Bo} ,
+					#{item.high10Co} ,
+					#{item.high10Error} ,
+					#{item.middle10AmOm} ,
+					#{item.middle10BmOm} ,
+					#{item.middle10CmOm} ,
+					#{item.middle10Error} ,
+					#{item.high11Ao} ,
+					#{item.high11Bo} ,
+					#{item.high11Co} ,
+					#{item.high11Error} ,
+					#{item.middle11AmOm} ,
+					#{item.middle11BmOm} ,
+					#{item.middle11CmOm} ,
+					#{item.middle11Error} ,
+					#{item.high12Ao} ,
+					#{item.high12Bo} ,
+					#{item.high12Co} ,
+					#{item.high12Error} ,
+					#{item.middle12AmOm} ,
+					#{item.middle12BmOm} ,
+					#{item.middle12CmOm} ,
+					#{item.middle12Error} ,
+					#{item.high13Ao} ,
+					#{item.high13Bo} ,
+					#{item.high13Co} ,
+					#{item.high13Error} ,
+					#{item.middle13AmOm} ,
+					#{item.middle13BmOm} ,
+					#{item.middle13CmOm} ,
+					#{item.middle13Error} ,
+					#{item.high14Ao} ,
+					#{item.high14Bo} ,
+					#{item.high14Co} ,
+					#{item.high14Error} ,
+					#{item.middle14AmOm} ,
+					#{item.middle14BmOm} ,
+					#{item.middle14CmOm} ,
+					#{item.middle14Error} ,
+					#{item.high15Ao} ,
+					#{item.high15Bo} ,
+					#{item.high15Co} ,
+					#{item.high15Error} ,
+					#{item.middle15AmOm} ,
+					#{item.middle15BmOm} ,
+					#{item.middle15CmOm} ,
+					#{item.middle15Error} ,
+					#{item.high16Ao} ,
+					#{item.high16Bo} ,
+					#{item.high16Co} ,
+					#{item.high16Error} ,
+					#{item.middle16AmOm} ,
+					#{item.middle16BmOm} ,
+					#{item.middle16CmOm} ,
+					#{item.middle16Error} ,
+					#{item.high17Ao} ,
+					#{item.high17Bo} ,
+					#{item.high17Co} ,
+					#{item.high17Error} ,
+					#{item.middle17AmOm} ,
+					#{item.middle17BmOm} ,
+					#{item.middle17CmOm} ,
+					#{item.middle17Error} ,
+					#{item.addUserid} ,
+					#{item.addUsername} ,
+					#{item.addtime} ,
+					#{item.editUserid} ,
+					#{item.editUsername} ,
+					#{item.edittime} 
+	        	)
+			</foreach>
+	   
+	</insert>
+
+	<!-- update 条件组合 -->
+	<sql id="update_sql">
+		<set>
+			<if test="subreportId != null">
+				subreport_id = #{subreportId} ,
+			</if>
+			<if test="dcAb != null and dcAb != ''">
+				dc_ab = #{dcAb} ,
+			</if>
+			<if test="dcBc != null and dcBc != ''">
+				dc_bc = #{dcBc} ,
+			</if>
+			<if test="dcCa != null and dcCa != ''">
+				dc_ca = #{dcCa} ,
+			</if>
+			<if test="dcLast != null and dcLast != ''">
+				dc_last = #{dcLast} ,
+			</if>
+			<if test="convertAx != null and convertAx != ''">
+				convert_ax = #{convertAx} ,
+			</if>
+			<if test="convertBy != null and convertBy != ''">
+				convert_by = #{convertBy} ,
+			</if>
+			<if test="convertCz != null and convertCz != ''">
+				convert_cz = #{convertCz} ,
+			</if>
+			<if test="convertError != null and convertError != ''">
+				convert_error = #{convertError} ,
+			</if>
+			<if test="high1ao != null and high1ao != ''">
+				high_1_AO = #{high1ao} ,
+			</if>
+			<if test="high1bo != null and high1bo != ''">
+				high_1_BO = #{high1bo} ,
+			</if>
+			<if test="high1co != null and high1co != ''">
+				high_1_CO = #{high1co} ,
+			</if>
+			<if test="high1error != null and high1error != ''">
+				high_1_error = #{high1error} ,
+			</if>
+			<if test="middle1amOm != null and middle1amOm != ''">
+				middle_1_AmOm = #{middle1amOm} ,
+			</if>
+			<if test="middle1bmOm != null and middle1bmOm != ''">
+				middle_1_BmOm = #{middle1bmOm} ,
+			</if>
+			<if test="middle1cmOm != null and middle1cmOm != ''">
+				middle_1_CmOm = #{middle1cmOm} ,
+			</if>
+			<if test="middle1error != null and middle1error != ''">
+				middle_1_error = #{middle1error} ,
+			</if>
+			<if test="high2ao != null and high2ao != ''">
+				high_2_AO = #{high2ao} ,
+			</if>
+			<if test="high2bo != null and high2bo != ''">
+				high_2_BO = #{high2bo} ,
+			</if>
+			<if test="high2co != null and high2co != ''">
+				high_2_CO = #{high2co} ,
+			</if>
+			<if test="high2error != null and high2error != ''">
+				high_2_error = #{high2error} ,
+			</if>
+			<if test="middle2amOm != null and middle2amOm != ''">
+				middle_2_AmOm = #{middle2amOm} ,
+			</if>
+			<if test="middle2bmOm != null and middle2bmOm != ''">
+				middle_2_BmOm = #{middle2bmOm} ,
+			</if>
+			<if test="middle2cmOm != null and middle2cmOm != ''">
+				middle_2_CmOm = #{middle2cmOm} ,
+			</if>
+			<if test="middle2error != null and middle2error != ''">
+				middle_2_error = #{middle2error} ,
+			</if>
+			<if test="high3ao != null and high3ao != ''">
+				high_3_AO = #{high3ao} ,
+			</if>
+			<if test="high3bo != null and high3bo != ''">
+				high_3_BO = #{high3bo} ,
+			</if>
+			<if test="high3co != null and high3co != ''">
+				high_3_CO = #{high3co} ,
+			</if>
+			<if test="high3error != null and high3error != ''">
+				high_3_error = #{high3error} ,
+			</if>
+			<if test="middle3amOm != null and middle3amOm != ''">
+				middle_3_AmOm = #{middle3amOm} ,
+			</if>
+			<if test="middle3bmOm != null and middle3bmOm != ''">
+				middle_3_BmOm = #{middle3bmOm} ,
+			</if>
+			<if test="middle3cmOm != null and middle3cmOm != ''">
+				middle_3_CmOm = #{middle3cmOm} ,
+			</if>
+			<if test="middle3error != null and middle3error != ''">
+				middle_3_error = #{middle3error} ,
+			</if>
+			<if test="high4ao != null and high4ao != ''">
+				high_4_AO = #{high4ao} ,
+			</if>
+			<if test="high4bo != null and high4bo != ''">
+				high_4_BO = #{high4bo} ,
+			</if>
+			<if test="high4co != null and high4co != ''">
+				high_4_CO = #{high4co} ,
+			</if>
+			<if test="high4error != null and high4error != ''">
+				high_4_error = #{high4error} ,
+			</if>
+			<if test="middle4amOm != null and middle4amOm != ''">
+				middle_4_AmOm = #{middle4amOm} ,
+			</if>
+			<if test="middle4bmOm != null and middle4bmOm != ''">
+				middle_4_BmOm = #{middle4bmOm} ,
+			</if>
+			<if test="middle4cmOm != null and middle4cmOm != ''">
+				middle_4_CmOm = #{middle4cmOm} ,
+			</if>
+			<if test="middle4error != null and middle4error != ''">
+				middle_4_error = #{middle4error} ,
+			</if>
+			<if test="high5ao != null and high5ao != ''">
+				high_5_AO = #{high5ao} ,
+			</if>
+			<if test="high5bo != null and high5bo != ''">
+				high_5_BO = #{high5bo} ,
+			</if>
+			<if test="high5co != null and high5co != ''">
+				high_5_CO = #{high5co} ,
+			</if>
+			<if test="high5error != null and high5error != ''">
+				high_5_error = #{high5error} ,
+			</if>
+			<if test="middle5amOm != null and middle5amOm != ''">
+				middle_5_AmOm = #{middle5amOm} ,
+			</if>
+			<if test="middle5bmOm != null and middle5bmOm != ''">
+				middle_5_BmOm = #{middle5bmOm} ,
+			</if>
+			<if test="middle5cmOm != null and middle5cmOm != ''">
+				middle_5_CmOm = #{middle5cmOm} ,
+			</if>
+			<if test="middle5error != null and middle5error != ''">
+				middle_5_error = #{middle5error} ,
+			</if>
+			<if test="high6ao != null and high6ao != ''">
+				high_6_AO = #{high6ao} ,
+			</if>
+			<if test="high6bo != null and high6bo != ''">
+				high_6_BO = #{high6bo} ,
+			</if>
+			<if test="high6co != null and high6co != ''">
+				high_6_CO = #{high6co} ,
+			</if>
+			<if test="high6error != null and high6error != ''">
+				high_6_error = #{high6error} ,
+			</if>
+			<if test="middle6amOm != null and middle6amOm != ''">
+				middle_6_AmOm = #{middle6amOm} ,
+			</if>
+			<if test="middle6bmOm != null and middle6bmOm != ''">
+				middle_6_BmOm = #{middle6bmOm} ,
+			</if>
+			<if test="middle6cmOm != null and middle6cmOm != ''">
+				middle_6_CmOm = #{middle6cmOm} ,
+			</if>
+			<if test="middle6error != null and middle6error != ''">
+				middle_6_error = #{middle6error} ,
+			</if>
+			<if test="high7ao != null and high7ao != ''">
+				high_7_AO = #{high7ao} ,
+			</if>
+			<if test="high7bo != null and high7bo != ''">
+				high_7_BO = #{high7bo} ,
+			</if>
+			<if test="high7co != null and high7co != ''">
+				high_7_CO = #{high7co} ,
+			</if>
+			<if test="high7error != null and high7error != ''">
+				high_7_error = #{high7error} ,
+			</if>
+			<if test="middle7amOm != null and middle7amOm != ''">
+				middle_7_AmOm = #{middle7amOm} ,
+			</if>
+			<if test="middle7bmOm != null and middle7bmOm != ''">
+				middle_7_BmOm = #{middle7bmOm} ,
+			</if>
+			<if test="middle7cmOm != null and middle7cmOm != ''">
+				middle_7_CmOm = #{middle7cmOm} ,
+			</if>
+			<if test="middle7error != null and middle7error != ''">
+				middle_7_error = #{middle7error} ,
+			</if>
+			<if test="high8ao != null and high8ao != ''">
+				high_8_AO = #{high8ao} ,
+			</if>
+			<if test="high8bo != null and high8bo != ''">
+				high_8_BO = #{high8bo} ,
+			</if>
+			<if test="high8co != null and high8co != ''">
+				high_8_CO = #{high8co} ,
+			</if>
+			<if test="high8error != null and high8error != ''">
+				high_8_error = #{high8error} ,
+			</if>
+			<if test="middle8amOm != null and middle8amOm != ''">
+				middle_8_AmOm = #{middle8amOm} ,
+			</if>
+			<if test="middle8bmOm != null and middle8bmOm != ''">
+				middle_8_BmOm = #{middle8bmOm} ,
+			</if>
+			<if test="middle8cmOm != null and middle8cmOm != ''">
+				middle_8_CmOm = #{middle8cmOm} ,
+			</if>
+			<if test="middle8error != null and middle8error != ''">
+				middle_8_error = #{middle8error} ,
+			</if>
+			<if test="high9bAo != null and high9bAo != ''">
+				high_9b_AO = #{high9bAo} ,
+			</if>
+			<if test="high9bBo != null and high9bBo != ''">
+				high_9b_BO = #{high9bBo} ,
+			</if>
+			<if test="high9bCo != null and high9bCo != ''">
+				high_9b_CO = #{high9bCo} ,
+			</if>
+			<if test="high9bError != null and high9bError != ''">
+				high_9b_error = #{high9bError} ,
+			</if>
+			<if test="middle9bAmOm != null and middle9bAmOm != ''">
+				middle_9b_AmOm = #{middle9bAmOm} ,
+			</if>
+			<if test="middle9bBmOm != null and middle9bBmOm != ''">
+				middle_9b_BmOm = #{middle9bBmOm} ,
+			</if>
+			<if test="middle9bCmOm != null and middle9bCmOm != ''">
+				middle_9b_CmOm = #{middle9bCmOm} ,
+			</if>
+			<if test="middle9bError != null and middle9bError != ''">
+				middle_9b_error = #{middle9bError} ,
+			</if>
+			<if test="high10Ao != null and high10Ao != ''">
+				high_10_AO = #{high10Ao} ,
+			</if>
+			<if test="high10Bo != null and high10Bo != ''">
+				high_10_BO = #{high10Bo} ,
+			</if>
+			<if test="high10Co != null and high10Co != ''">
+				high_10_CO = #{high10Co} ,
+			</if>
+			<if test="high10Error != null and high10Error != ''">
+				high_10_error = #{high10Error} ,
+			</if>
+			<if test="middle10AmOm != null and middle10AmOm != ''">
+				middle_10_AmOm = #{middle10AmOm} ,
+			</if>
+			<if test="middle10BmOm != null and middle10BmOm != ''">
+				middle_10_BmOm = #{middle10BmOm} ,
+			</if>
+			<if test="middle10CmOm != null and middle10CmOm != ''">
+				middle_10_CmOm = #{middle10CmOm} ,
+			</if>
+			<if test="middle10Error != null and middle10Error != ''">
+				middle_10_error = #{middle10Error} ,
+			</if>
+			<if test="high11Ao != null and high11Ao != ''">
+				high_11_AO = #{high11Ao} ,
+			</if>
+			<if test="high11Bo != null and high11Bo != ''">
+				high_11_BO = #{high11Bo} ,
+			</if>
+			<if test="high11Co != null and high11Co != ''">
+				high_11_CO = #{high11Co} ,
+			</if>
+			<if test="high11Error != null and high11Error != ''">
+				high_11_error = #{high11Error} ,
+			</if>
+			<if test="middle11AmOm != null and middle11AmOm != ''">
+				middle_11_AmOm = #{middle11AmOm} ,
+			</if>
+			<if test="middle11BmOm != null and middle11BmOm != ''">
+				middle_11_BmOm = #{middle11BmOm} ,
+			</if>
+			<if test="middle11CmOm != null and middle11CmOm != ''">
+				middle_11_CmOm = #{middle11CmOm} ,
+			</if>
+			<if test="middle11Error != null and middle11Error != ''">
+				middle_11_error = #{middle11Error} ,
+			</if>
+			<if test="high12Ao != null and high12Ao != ''">
+				high_12_AO = #{high12Ao} ,
+			</if>
+			<if test="high12Bo != null and high12Bo != ''">
+				high_12_BO = #{high12Bo} ,
+			</if>
+			<if test="high12Co != null and high12Co != ''">
+				high_12_CO = #{high12Co} ,
+			</if>
+			<if test="high12Error != null and high12Error != ''">
+				high_12_error = #{high12Error} ,
+			</if>
+			<if test="middle12AmOm != null and middle12AmOm != ''">
+				middle_12_AmOm = #{middle12AmOm} ,
+			</if>
+			<if test="middle12BmOm != null and middle12BmOm != ''">
+				middle_12_BmOm = #{middle12BmOm} ,
+			</if>
+			<if test="middle12CmOm != null and middle12CmOm != ''">
+				middle_12_CmOm = #{middle12CmOm} ,
+			</if>
+			<if test="middle12Error != null and middle12Error != ''">
+				middle_12_error = #{middle12Error} ,
+			</if>
+			<if test="high13Ao != null and high13Ao != ''">
+				high_13_AO = #{high13Ao} ,
+			</if>
+			<if test="high13Bo != null and high13Bo != ''">
+				high_13_BO = #{high13Bo} ,
+			</if>
+			<if test="high13Co != null and high13Co != ''">
+				high_13_CO = #{high13Co} ,
+			</if>
+			<if test="high13Error != null and high13Error != ''">
+				high_13_error = #{high13Error} ,
+			</if>
+			<if test="middle13AmOm != null and middle13AmOm != ''">
+				middle_13_AmOm = #{middle13AmOm} ,
+			</if>
+			<if test="middle13BmOm != null and middle13BmOm != ''">
+				middle_13_BmOm = #{middle13BmOm} ,
+			</if>
+			<if test="middle13CmOm != null and middle13CmOm != ''">
+				middle_13_CmOm = #{middle13CmOm} ,
+			</if>
+			<if test="middle13Error != null and middle13Error != ''">
+				middle_13_error = #{middle13Error} ,
+			</if>
+			<if test="high14Ao != null and high14Ao != ''">
+				high_14_AO = #{high14Ao} ,
+			</if>
+			<if test="high14Bo != null and high14Bo != ''">
+				high_14_BO = #{high14Bo} ,
+			</if>
+			<if test="high14Co != null and high14Co != ''">
+				high_14_CO = #{high14Co} ,
+			</if>
+			<if test="high14Error != null and high14Error != ''">
+				high_14_error = #{high14Error} ,
+			</if>
+			<if test="middle14AmOm != null and middle14AmOm != ''">
+				middle_14_AmOm = #{middle14AmOm} ,
+			</if>
+			<if test="middle14BmOm != null and middle14BmOm != ''">
+				middle_14_BmOm = #{middle14BmOm} ,
+			</if>
+			<if test="middle14CmOm != null and middle14CmOm != ''">
+				middle_14_CmOm = #{middle14CmOm} ,
+			</if>
+			<if test="middle14Error != null and middle14Error != ''">
+				middle_14_error = #{middle14Error} ,
+			</if>
+			<if test="high15Ao != null and high15Ao != ''">
+				high_15_AO = #{high15Ao} ,
+			</if>
+			<if test="high15Bo != null and high15Bo != ''">
+				high_15_BO = #{high15Bo} ,
+			</if>
+			<if test="high15Co != null and high15Co != ''">
+				high_15_CO = #{high15Co} ,
+			</if>
+			<if test="high15Error != null and high15Error != ''">
+				high_15_error = #{high15Error} ,
+			</if>
+			<if test="middle15AmOm != null and middle15AmOm != ''">
+				middle_15_AmOm = #{middle15AmOm} ,
+			</if>
+			<if test="middle15BmOm != null and middle15BmOm != ''">
+				middle_15_BmOm = #{middle15BmOm} ,
+			</if>
+			<if test="middle15CmOm != null and middle15CmOm != ''">
+				middle_15_CmOm = #{middle15CmOm} ,
+			</if>
+			<if test="middle15Error != null and middle15Error != ''">
+				middle_15_error = #{middle15Error} ,
+			</if>
+			<if test="high16Ao != null and high16Ao != ''">
+				high_16_AO = #{high16Ao} ,
+			</if>
+			<if test="high16Bo != null and high16Bo != ''">
+				high_16_BO = #{high16Bo} ,
+			</if>
+			<if test="high16Co != null and high16Co != ''">
+				high_16_CO = #{high16Co} ,
+			</if>
+			<if test="high16Error != null and high16Error != ''">
+				high_16_error = #{high16Error} ,
+			</if>
+			<if test="middle16AmOm != null and middle16AmOm != ''">
+				middle_16_AmOm = #{middle16AmOm} ,
+			</if>
+			<if test="middle16BmOm != null and middle16BmOm != ''">
+				middle_16_BmOm = #{middle16BmOm} ,
+			</if>
+			<if test="middle16CmOm != null and middle16CmOm != ''">
+				middle_16_CmOm = #{middle16CmOm} ,
+			</if>
+			<if test="middle16Error != null and middle16Error != ''">
+				middle_16_error = #{middle16Error} ,
+			</if>
+			<if test="high17Ao != null and high17Ao != ''">
+				high_17_AO = #{high17Ao} ,
+			</if>
+			<if test="high17Bo != null and high17Bo != ''">
+				high_17_BO = #{high17Bo} ,
+			</if>
+			<if test="high17Co != null and high17Co != ''">
+				high_17_CO = #{high17Co} ,
+			</if>
+			<if test="high17Error != null and high17Error != ''">
+				high_17_error = #{high17Error} ,
+			</if>
+			<if test="middle17AmOm != null and middle17AmOm != ''">
+				middle_17_AmOm = #{middle17AmOm} ,
+			</if>
+			<if test="middle17BmOm != null and middle17BmOm != ''">
+				middle_17_BmOm = #{middle17BmOm} ,
+			</if>
+			<if test="middle17CmOm != null and middle17CmOm != ''">
+				middle_17_CmOm = #{middle17CmOm} ,
+			</if>
+			<if test="middle17Error != null and middle17Error != ''">
+				middle_17_error = #{middle17Error} ,
+			</if>
+			<if test="addUserid != null">
+				add_userid = #{addUserid} ,
+			</if>
+			<if test="addUsername != null and addUsername != ''">
+				add_username = #{addUsername} ,
+			</if>
+			<if test="addtime != null">
+				addtime = #{addtime} ,
+			</if>
+			<if test="editUserid != null">
+				edit_userid = #{editUserid} ,
+			</if>
+			<if test="editUsername != null and editUsername != ''">
+				edit_username = #{editUsername} ,
+			</if>
+			<if test="edittime != null">
+				edittime = #{edittime} 
+			</if>
+		</set>
+	</sql>
+	
+	<!-- 修改 -->
+	<update id="updateByPrimaryKey">
+		UPDATE power_doc_dc_resistance
+		<include refid="update_sql" />
+		WHERE
+			dc_resistance_id = #{dcResistanceId} 
+	</update>
+
+		<!-- 修改 -->
+	<update id="batchUpdateByIds">
+		UPDATE power_doc_dc_resistance
+		<include refid="update_sql" />
+		WHERE
+		dc_resistance_id IN
+			<foreach item="ids" collection="list" open="(" separator="," close=")">
+				#{ids}
+			</foreach>
+	</update>
+
+	<!-- 根据ID删除 -->
+	<delete id="deleteByPrimaryKey">
+    	<![CDATA[
+        	DELETE FROM power_doc_dc_resistance 
+        	WHERE
+        		dc_resistance_id = #{id} 
+    	]]>
+	</delete>
+	
+	<!-- 批量删除 -->
+	<delete id="batchDeleteByIds">
+        DELETE FROM power_doc_dc_resistance 
+        WHERE dc_resistance_id IN 
+        <foreach item="ids" collection="list" open="(" separator="," close=")">
+			#{ids}
+		</foreach>
+    </delete>
+
+	<!-- selsect -->
+	<select id="selectByPrimaryKey" resultMap="RM_PowerDocDcResistance">
+		SELECT
+		<include refid="columns" />
+		FROM power_doc_dc_resistance
+		WHERE
+		dc_resistance_id = #{id} 
+	</select>
+
+
+
+
+
+	<!-- 模糊查询这样： 字段名 LIKE CONCAT('%',CONCAT(#{model.userName},'%')) -->
+	<sql id="findPage_where">
+		<where>
+				<if test="dcResistanceId != null">
+					AND dc_resistance_id = #{dcResistanceId}
+				</if>
+				<if test="subreportId != null">
+					AND subreport_id = #{subreportId}
+				</if>
+				<if test="dcAb != null and dcAb !=''">
+					AND dc_ab = #{dcAb}
+				</if>
+				<if test="dcBc != null and dcBc !=''">
+					AND dc_bc = #{dcBc}
+				</if>
+				<if test="dcCa != null and dcCa !=''">
+					AND dc_ca = #{dcCa}
+				</if>
+				<if test="dcLast != null and dcLast !=''">
+					AND dc_last = #{dcLast}
+				</if>
+				<if test="convertAx != null and convertAx !=''">
+					AND convert_ax = #{convertAx}
+				</if>
+				<if test="convertBy != null and convertBy !=''">
+					AND convert_by = #{convertBy}
+				</if>
+				<if test="convertCz != null and convertCz !=''">
+					AND convert_cz = #{convertCz}
+				</if>
+				<if test="convertError != null and convertError !=''">
+					AND convert_error = #{convertError}
+				</if>
+				<if test="high1ao != null and high1ao !=''">
+					AND high_1_AO = #{high1ao}
+				</if>
+				<if test="high1bo != null and high1bo !=''">
+					AND high_1_BO = #{high1bo}
+				</if>
+				<if test="high1co != null and high1co !=''">
+					AND high_1_CO = #{high1co}
+				</if>
+				<if test="high1error != null and high1error !=''">
+					AND high_1_error = #{high1error}
+				</if>
+				<if test="middle1amOm != null and middle1amOm !=''">
+					AND middle_1_AmOm = #{middle1amOm}
+				</if>
+				<if test="middle1bmOm != null and middle1bmOm !=''">
+					AND middle_1_BmOm = #{middle1bmOm}
+				</if>
+				<if test="middle1cmOm != null and middle1cmOm !=''">
+					AND middle_1_CmOm = #{middle1cmOm}
+				</if>
+				<if test="middle1error != null and middle1error !=''">
+					AND middle_1_error = #{middle1error}
+				</if>
+				<if test="high2ao != null and high2ao !=''">
+					AND high_2_AO = #{high2ao}
+				</if>
+				<if test="high2bo != null and high2bo !=''">
+					AND high_2_BO = #{high2bo}
+				</if>
+				<if test="high2co != null and high2co !=''">
+					AND high_2_CO = #{high2co}
+				</if>
+				<if test="high2error != null and high2error !=''">
+					AND high_2_error = #{high2error}
+				</if>
+				<if test="middle2amOm != null and middle2amOm !=''">
+					AND middle_2_AmOm = #{middle2amOm}
+				</if>
+				<if test="middle2bmOm != null and middle2bmOm !=''">
+					AND middle_2_BmOm = #{middle2bmOm}
+				</if>
+				<if test="middle2cmOm != null and middle2cmOm !=''">
+					AND middle_2_CmOm = #{middle2cmOm}
+				</if>
+				<if test="middle2error != null and middle2error !=''">
+					AND middle_2_error = #{middle2error}
+				</if>
+				<if test="high3ao != null and high3ao !=''">
+					AND high_3_AO = #{high3ao}
+				</if>
+				<if test="high3bo != null and high3bo !=''">
+					AND high_3_BO = #{high3bo}
+				</if>
+				<if test="high3co != null and high3co !=''">
+					AND high_3_CO = #{high3co}
+				</if>
+				<if test="high3error != null and high3error !=''">
+					AND high_3_error = #{high3error}
+				</if>
+				<if test="middle3amOm != null and middle3amOm !=''">
+					AND middle_3_AmOm = #{middle3amOm}
+				</if>
+				<if test="middle3bmOm != null and middle3bmOm !=''">
+					AND middle_3_BmOm = #{middle3bmOm}
+				</if>
+				<if test="middle3cmOm != null and middle3cmOm !=''">
+					AND middle_3_CmOm = #{middle3cmOm}
+				</if>
+				<if test="middle3error != null and middle3error !=''">
+					AND middle_3_error = #{middle3error}
+				</if>
+				<if test="high4ao != null and high4ao !=''">
+					AND high_4_AO = #{high4ao}
+				</if>
+				<if test="high4bo != null and high4bo !=''">
+					AND high_4_BO = #{high4bo}
+				</if>
+				<if test="high4co != null and high4co !=''">
+					AND high_4_CO = #{high4co}
+				</if>
+				<if test="high4error != null and high4error !=''">
+					AND high_4_error = #{high4error}
+				</if>
+				<if test="middle4amOm != null and middle4amOm !=''">
+					AND middle_4_AmOm = #{middle4amOm}
+				</if>
+				<if test="middle4bmOm != null and middle4bmOm !=''">
+					AND middle_4_BmOm = #{middle4bmOm}
+				</if>
+				<if test="middle4cmOm != null and middle4cmOm !=''">
+					AND middle_4_CmOm = #{middle4cmOm}
+				</if>
+				<if test="middle4error != null and middle4error !=''">
+					AND middle_4_error = #{middle4error}
+				</if>
+				<if test="high5ao != null and high5ao !=''">
+					AND high_5_AO = #{high5ao}
+				</if>
+				<if test="high5bo != null and high5bo !=''">
+					AND high_5_BO = #{high5bo}
+				</if>
+				<if test="high5co != null and high5co !=''">
+					AND high_5_CO = #{high5co}
+				</if>
+				<if test="high5error != null and high5error !=''">
+					AND high_5_error = #{high5error}
+				</if>
+				<if test="middle5amOm != null and middle5amOm !=''">
+					AND middle_5_AmOm = #{middle5amOm}
+				</if>
+				<if test="middle5bmOm != null and middle5bmOm !=''">
+					AND middle_5_BmOm = #{middle5bmOm}
+				</if>
+				<if test="middle5cmOm != null and middle5cmOm !=''">
+					AND middle_5_CmOm = #{middle5cmOm}
+				</if>
+				<if test="middle5error != null and middle5error !=''">
+					AND middle_5_error = #{middle5error}
+				</if>
+				<if test="high6ao != null and high6ao !=''">
+					AND high_6_AO = #{high6ao}
+				</if>
+				<if test="high6bo != null and high6bo !=''">
+					AND high_6_BO = #{high6bo}
+				</if>
+				<if test="high6co != null and high6co !=''">
+					AND high_6_CO = #{high6co}
+				</if>
+				<if test="high6error != null and high6error !=''">
+					AND high_6_error = #{high6error}
+				</if>
+				<if test="middle6amOm != null and middle6amOm !=''">
+					AND middle_6_AmOm = #{middle6amOm}
+				</if>
+				<if test="middle6bmOm != null and middle6bmOm !=''">
+					AND middle_6_BmOm = #{middle6bmOm}
+				</if>
+				<if test="middle6cmOm != null and middle6cmOm !=''">
+					AND middle_6_CmOm = #{middle6cmOm}
+				</if>
+				<if test="middle6error != null and middle6error !=''">
+					AND middle_6_error = #{middle6error}
+				</if>
+				<if test="high7ao != null and high7ao !=''">
+					AND high_7_AO = #{high7ao}
+				</if>
+				<if test="high7bo != null and high7bo !=''">
+					AND high_7_BO = #{high7bo}
+				</if>
+				<if test="high7co != null and high7co !=''">
+					AND high_7_CO = #{high7co}
+				</if>
+				<if test="high7error != null and high7error !=''">
+					AND high_7_error = #{high7error}
+				</if>
+				<if test="middle7amOm != null and middle7amOm !=''">
+					AND middle_7_AmOm = #{middle7amOm}
+				</if>
+				<if test="middle7bmOm != null and middle7bmOm !=''">
+					AND middle_7_BmOm = #{middle7bmOm}
+				</if>
+				<if test="middle7cmOm != null and middle7cmOm !=''">
+					AND middle_7_CmOm = #{middle7cmOm}
+				</if>
+				<if test="middle7error != null and middle7error !=''">
+					AND middle_7_error = #{middle7error}
+				</if>
+				<if test="high8ao != null and high8ao !=''">
+					AND high_8_AO = #{high8ao}
+				</if>
+				<if test="high8bo != null and high8bo !=''">
+					AND high_8_BO = #{high8bo}
+				</if>
+				<if test="high8co != null and high8co !=''">
+					AND high_8_CO = #{high8co}
+				</if>
+				<if test="high8error != null and high8error !=''">
+					AND high_8_error = #{high8error}
+				</if>
+				<if test="middle8amOm != null and middle8amOm !=''">
+					AND middle_8_AmOm = #{middle8amOm}
+				</if>
+				<if test="middle8bmOm != null and middle8bmOm !=''">
+					AND middle_8_BmOm = #{middle8bmOm}
+				</if>
+				<if test="middle8cmOm != null and middle8cmOm !=''">
+					AND middle_8_CmOm = #{middle8cmOm}
+				</if>
+				<if test="middle8error != null and middle8error !=''">
+					AND middle_8_error = #{middle8error}
+				</if>
+				<if test="high9bAo != null and high9bAo !=''">
+					AND high_9b_AO = #{high9bAo}
+				</if>
+				<if test="high9bBo != null and high9bBo !=''">
+					AND high_9b_BO = #{high9bBo}
+				</if>
+				<if test="high9bCo != null and high9bCo !=''">
+					AND high_9b_CO = #{high9bCo}
+				</if>
+				<if test="high9bError != null and high9bError !=''">
+					AND high_9b_error = #{high9bError}
+				</if>
+				<if test="middle9bAmOm != null and middle9bAmOm !=''">
+					AND middle_9b_AmOm = #{middle9bAmOm}
+				</if>
+				<if test="middle9bBmOm != null and middle9bBmOm !=''">
+					AND middle_9b_BmOm = #{middle9bBmOm}
+				</if>
+				<if test="middle9bCmOm != null and middle9bCmOm !=''">
+					AND middle_9b_CmOm = #{middle9bCmOm}
+				</if>
+				<if test="middle9bError != null and middle9bError !=''">
+					AND middle_9b_error = #{middle9bError}
+				</if>
+				<if test="high10Ao != null and high10Ao !=''">
+					AND high_10_AO = #{high10Ao}
+				</if>
+				<if test="high10Bo != null and high10Bo !=''">
+					AND high_10_BO = #{high10Bo}
+				</if>
+				<if test="high10Co != null and high10Co !=''">
+					AND high_10_CO = #{high10Co}
+				</if>
+				<if test="high10Error != null and high10Error !=''">
+					AND high_10_error = #{high10Error}
+				</if>
+				<if test="middle10AmOm != null and middle10AmOm !=''">
+					AND middle_10_AmOm = #{middle10AmOm}
+				</if>
+				<if test="middle10BmOm != null and middle10BmOm !=''">
+					AND middle_10_BmOm = #{middle10BmOm}
+				</if>
+				<if test="middle10CmOm != null and middle10CmOm !=''">
+					AND middle_10_CmOm = #{middle10CmOm}
+				</if>
+				<if test="middle10Error != null and middle10Error !=''">
+					AND middle_10_error = #{middle10Error}
+				</if>
+				<if test="high11Ao != null and high11Ao !=''">
+					AND high_11_AO = #{high11Ao}
+				</if>
+				<if test="high11Bo != null and high11Bo !=''">
+					AND high_11_BO = #{high11Bo}
+				</if>
+				<if test="high11Co != null and high11Co !=''">
+					AND high_11_CO = #{high11Co}
+				</if>
+				<if test="high11Error != null and high11Error !=''">
+					AND high_11_error = #{high11Error}
+				</if>
+				<if test="middle11AmOm != null and middle11AmOm !=''">
+					AND middle_11_AmOm = #{middle11AmOm}
+				</if>
+				<if test="middle11BmOm != null and middle11BmOm !=''">
+					AND middle_11_BmOm = #{middle11BmOm}
+				</if>
+				<if test="middle11CmOm != null and middle11CmOm !=''">
+					AND middle_11_CmOm = #{middle11CmOm}
+				</if>
+				<if test="middle11Error != null and middle11Error !=''">
+					AND middle_11_error = #{middle11Error}
+				</if>
+				<if test="high12Ao != null and high12Ao !=''">
+					AND high_12_AO = #{high12Ao}
+				</if>
+				<if test="high12Bo != null and high12Bo !=''">
+					AND high_12_BO = #{high12Bo}
+				</if>
+				<if test="high12Co != null and high12Co !=''">
+					AND high_12_CO = #{high12Co}
+				</if>
+				<if test="high12Error != null and high12Error !=''">
+					AND high_12_error = #{high12Error}
+				</if>
+				<if test="middle12AmOm != null and middle12AmOm !=''">
+					AND middle_12_AmOm = #{middle12AmOm}
+				</if>
+				<if test="middle12BmOm != null and middle12BmOm !=''">
+					AND middle_12_BmOm = #{middle12BmOm}
+				</if>
+				<if test="middle12CmOm != null and middle12CmOm !=''">
+					AND middle_12_CmOm = #{middle12CmOm}
+				</if>
+				<if test="middle12Error != null and middle12Error !=''">
+					AND middle_12_error = #{middle12Error}
+				</if>
+				<if test="high13Ao != null and high13Ao !=''">
+					AND high_13_AO = #{high13Ao}
+				</if>
+				<if test="high13Bo != null and high13Bo !=''">
+					AND high_13_BO = #{high13Bo}
+				</if>
+				<if test="high13Co != null and high13Co !=''">
+					AND high_13_CO = #{high13Co}
+				</if>
+				<if test="high13Error != null and high13Error !=''">
+					AND high_13_error = #{high13Error}
+				</if>
+				<if test="middle13AmOm != null and middle13AmOm !=''">
+					AND middle_13_AmOm = #{middle13AmOm}
+				</if>
+				<if test="middle13BmOm != null and middle13BmOm !=''">
+					AND middle_13_BmOm = #{middle13BmOm}
+				</if>
+				<if test="middle13CmOm != null and middle13CmOm !=''">
+					AND middle_13_CmOm = #{middle13CmOm}
+				</if>
+				<if test="middle13Error != null and middle13Error !=''">
+					AND middle_13_error = #{middle13Error}
+				</if>
+				<if test="high14Ao != null and high14Ao !=''">
+					AND high_14_AO = #{high14Ao}
+				</if>
+				<if test="high14Bo != null and high14Bo !=''">
+					AND high_14_BO = #{high14Bo}
+				</if>
+				<if test="high14Co != null and high14Co !=''">
+					AND high_14_CO = #{high14Co}
+				</if>
+				<if test="high14Error != null and high14Error !=''">
+					AND high_14_error = #{high14Error}
+				</if>
+				<if test="middle14AmOm != null and middle14AmOm !=''">
+					AND middle_14_AmOm = #{middle14AmOm}
+				</if>
+				<if test="middle14BmOm != null and middle14BmOm !=''">
+					AND middle_14_BmOm = #{middle14BmOm}
+				</if>
+				<if test="middle14CmOm != null and middle14CmOm !=''">
+					AND middle_14_CmOm = #{middle14CmOm}
+				</if>
+				<if test="middle14Error != null and middle14Error !=''">
+					AND middle_14_error = #{middle14Error}
+				</if>
+				<if test="high15Ao != null and high15Ao !=''">
+					AND high_15_AO = #{high15Ao}
+				</if>
+				<if test="high15Bo != null and high15Bo !=''">
+					AND high_15_BO = #{high15Bo}
+				</if>
+				<if test="high15Co != null and high15Co !=''">
+					AND high_15_CO = #{high15Co}
+				</if>
+				<if test="high15Error != null and high15Error !=''">
+					AND high_15_error = #{high15Error}
+				</if>
+				<if test="middle15AmOm != null and middle15AmOm !=''">
+					AND middle_15_AmOm = #{middle15AmOm}
+				</if>
+				<if test="middle15BmOm != null and middle15BmOm !=''">
+					AND middle_15_BmOm = #{middle15BmOm}
+				</if>
+				<if test="middle15CmOm != null and middle15CmOm !=''">
+					AND middle_15_CmOm = #{middle15CmOm}
+				</if>
+				<if test="middle15Error != null and middle15Error !=''">
+					AND middle_15_error = #{middle15Error}
+				</if>
+				<if test="high16Ao != null and high16Ao !=''">
+					AND high_16_AO = #{high16Ao}
+				</if>
+				<if test="high16Bo != null and high16Bo !=''">
+					AND high_16_BO = #{high16Bo}
+				</if>
+				<if test="high16Co != null and high16Co !=''">
+					AND high_16_CO = #{high16Co}
+				</if>
+				<if test="high16Error != null and high16Error !=''">
+					AND high_16_error = #{high16Error}
+				</if>
+				<if test="middle16AmOm != null and middle16AmOm !=''">
+					AND middle_16_AmOm = #{middle16AmOm}
+				</if>
+				<if test="middle16BmOm != null and middle16BmOm !=''">
+					AND middle_16_BmOm = #{middle16BmOm}
+				</if>
+				<if test="middle16CmOm != null and middle16CmOm !=''">
+					AND middle_16_CmOm = #{middle16CmOm}
+				</if>
+				<if test="middle16Error != null and middle16Error !=''">
+					AND middle_16_error = #{middle16Error}
+				</if>
+				<if test="high17Ao != null and high17Ao !=''">
+					AND high_17_AO = #{high17Ao}
+				</if>
+				<if test="high17Bo != null and high17Bo !=''">
+					AND high_17_BO = #{high17Bo}
+				</if>
+				<if test="high17Co != null and high17Co !=''">
+					AND high_17_CO = #{high17Co}
+				</if>
+				<if test="high17Error != null and high17Error !=''">
+					AND high_17_error = #{high17Error}
+				</if>
+				<if test="middle17AmOm != null and middle17AmOm !=''">
+					AND middle_17_AmOm = #{middle17AmOm}
+				</if>
+				<if test="middle17BmOm != null and middle17BmOm !=''">
+					AND middle_17_BmOm = #{middle17BmOm}
+				</if>
+				<if test="middle17CmOm != null and middle17CmOm !=''">
+					AND middle_17_CmOm = #{middle17CmOm}
+				</if>
+				<if test="middle17Error != null and middle17Error !=''">
+					AND middle_17_error = #{middle17Error}
+				</if>
+				<if test="addUserid != null">
+					AND add_userid = #{addUserid}
+				</if>
+				<if test="addUsername != null and addUsername !=''">
+					AND add_username = #{addUsername}
+				</if>
+				<if test="addtime != null">
+					AND addtime = #{addtime}
+				</if>
+				<if test="editUserid != null">
+					AND edit_userid = #{editUserid}
+				</if>
+				<if test="editUsername != null and editUsername !=''">
+					AND edit_username = #{editUsername}
+				</if>
+				<if test="edittime != null">
+					AND edittime = #{edittime}
+				</if>
+		</where>
+	</sql>
+
+	<!-- selsect by obj -->
+	<select id="listByObj" resultMap="RM_PowerDocDcResistance" parameterType="com.putorn.powerdoc.entity.PowerDocDcResistance">
+	SELECT
+	<include refid="columns" />
+	FROM power_doc_dc_resistance
+	<include refid="findPage_where" />
+	</select>
+
+
+	<!-- 获取总数 -->
+	<select id="listPageCount" resultType="long" parameterType="map">
+		SELECT COUNT(1)
+		FROM power_doc_dc_resistance
+		<include refid="findPage_where" />
+	</select>  
+
+	<select id="listPage" resultMap="RM_PowerDocDcResistance" parameterType="map">
+		 SELECT
+		<include refid="columns" />
+		FROM power_doc_dc_resistance
+		<include refid="findPage_where" />
+
+		<if test="sortColumns != null and sortColumns !=''">
+			ORDER BY ${sortColumns}
+		</if>
+		
+		<if test="offset != null and pageSize != null">
+			LIMIT  #{offset}, #{pageSize}
+		</if>
+	</select>
+
+</mapper>

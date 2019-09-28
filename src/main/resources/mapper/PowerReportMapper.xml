@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.putorn.powerdoc.dao.PowerReportMapper">
+
+    <resultMap id="RM_PowerReport" type="com.putorn.powerdoc.entity.PowerReport">
+        <result property="id" column="id"/>
+        <result property="substationId" column="substation_id"/>
+        <result property="substationName" column="substation_name"/>
+        <result property="deviceIds" column="device_ids"/>
+        <result property="deviceNames" column="device_names"/>
+        <result property="runNo" column="run_no"/>
+        <result property="testProperties" column="test_properties"/>
+        <result property="testPeopleId" column="test_people_id"/>
+        <result property="testPeople" column="test_people"/>
+        <result property="testDutyPersonId" column="test_duty_person_id"/>
+        <result property="testDutyPerson" column="test_duty_person"/>
+        <result property="testDate" column="test_date"/>
+        <result property="reviewPersonId" column="review_person_id"/>
+        <result property="reviewPerson" column="review_person"/>
+        <result property="checkPersonId" column="check_person_id"/>
+        <result property="checkPerson" column="check_person"/>
+        <result property="approvePersonId" column="approve_person_id"/>
+        <result property="approvePerson" column="approve_person"/>
+        <result property="addUserid" column="add_userid"/>
+        <result property="addUsername" column="add_username"/>
+        <result property="addtime" column="addtime"/>
+        <result property="editUserid" column="edit_userid"/>
+        <result property="editUsername" column="edit_username"/>
+        <result property="edittime" column="edittime"/>
+        <result property="reportStatus" column="report_status"/>
+        <result property="reportType" column="report_type"/>
+    </resultMap>
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        <![CDATA[
+		id,substation_id,substation_name,device_ids,device_names,run_no,test_properties,test_people_id,test_people,test_duty_person_id,test_duty_person,test_date,review_person_id,review_person,check_person_id,check_person,approve_person_id,approve_person,add_userid,add_username,addtime,edit_userid,edit_username,edittime,report_status,report_type
+	    ]]>
+    </sql>
+
+    <!--保存 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        <![CDATA[
+	        INSERT INTO power_report (
+	        	id ,
+	        	substation_id ,
+	        	substation_name ,
+	        	device_ids ,
+	        	device_names ,
+	        	run_no ,
+	        	test_properties ,
+	        	test_people_id ,
+	        	test_people ,
+	        	test_duty_person_id ,
+	        	test_duty_person ,
+	        	test_date ,
+	        	review_person_id ,
+	        	review_person ,
+	        	check_person_id ,
+	        	check_person ,
+	        	approve_person_id ,
+	        	approve_person ,
+	        	add_userid ,
+	        	add_username ,
+	        	addtime ,
+	        	edit_userid ,
+	        	edit_username ,
+	        	edittime ,
+	        	report_status ,
+	        	report_type
+	        ) VALUES (
+	        	#{id} ,
+	        	#{substationId} ,
+	        	#{substationName} ,
+	        	#{deviceIds} ,
+	        	#{deviceNames} ,
+	        	#{runNo} ,
+	        	#{testProperties} ,
+	        	#{testPeopleId} ,
+	        	#{testPeople} ,
+	        	#{testDutyPersonId} ,
+	        	#{testDutyPerson} ,
+	        	#{testDate} ,
+	        	#{reviewPersonId} ,
+	        	#{reviewPerson} ,
+	        	#{checkPersonId} ,
+	        	#{checkPerson} ,
+	        	#{approvePersonId} ,
+	        	#{approvePerson} ,
+	        	#{addUserid} ,
+	        	#{addUsername} ,
+	        	#{addtime} ,
+	        	#{editUserid} ,
+	        	#{editUsername} ,
+	        	#{edittime} ,
+	        	#{reportStatus} ,
+	        	#{reportType}
+	        )
+	    ]]>
+    </insert>
+
+    <!-- 批量保存 -->
+    <insert id="batchInsert">
+        <![CDATA[
+	        INSERT INTO power_report (
+	        		id ,
+	        		substation_id ,
+	        		substation_name ,
+	        		device_ids ,
+	        		device_names ,
+	        		run_no ,
+	        		test_properties ,
+	        		test_people_id ,
+	        		test_people ,
+	        		test_duty_person_id ,
+	        		test_duty_person ,
+	        		test_date ,
+	        		review_person_id ,
+	        		review_person ,
+	        		check_person_id ,
+	        		check_person ,
+	        		approve_person_id ,
+	        		approve_person ,
+	        		add_userid ,
+	        		add_username ,
+	        		addtime ,
+	        		edit_userid ,
+	        		edit_username ,
+	        		edittime ,
+	        		report_status ,
+	        		report_type
+	        ) VALUES
+	         ]]>
+        <foreach item="item" collection="list"   separator=",">
+            (
+            #{item.id} ,
+            #{item.substationId} ,
+            #{item.substationName} ,
+            #{item.deviceIds} ,
+            #{item.deviceNames} ,
+            #{item.runNo} ,
+            #{item.testProperties} ,
+            #{item.testPeopleId} ,
+            #{item.testPeople} ,
+            #{item.testDutyPersonId} ,
+            #{item.testDutyPerson} ,
+            #{item.testDate} ,
+            #{item.reviewPersonId} ,
+            #{item.reviewPerson} ,
+            #{item.checkPersonId} ,
+            #{item.checkPerson} ,
+            #{item.approvePersonId} ,
+            #{item.approvePerson} ,
+            #{item.addUserid} ,
+            #{item.addUsername} ,
+            #{item.addtime} ,
+            #{item.editUserid} ,
+            #{item.editUsername} ,
+            #{item.edittime} ,
+            #{item.reportStatus} ,
+            #{item.reportType}
+            )
+        </foreach>
+
+    </insert>
+
+    <!-- update 条件组合 -->
+    <sql id="update_sql">
+        <set>
+            <if test="substationId != null">
+                substation_id = #{substationId} ,
+            </if>
+            <if test="substationName != null and substationName != ''">
+                substation_name = #{substationName} ,
+            </if>
+            <if test="deviceIds != null and deviceIds != ''">
+                device_ids = #{deviceIds} ,
+            </if>
+            <if test="deviceNames != null and deviceNames != ''">
+                device_names = #{deviceNames} ,
+            </if>
+            <if test="runNo != null and runNo != ''">
+                run_no = #{runNo} ,
+            </if>
+            <if test="testProperties != null and testProperties != ''">
+                test_properties = #{testProperties} ,
+            </if>
+            <if test="testPeopleId != null and testPeopleId != ''">
+                test_people_id = #{testPeopleId} ,
+            </if>
+            <if test="testPeople != null and testPeople != ''">
+                test_people = #{testPeople} ,
+            </if>
+            <if test="testDutyPersonId != null and testDutyPersonId != ''">
+                test_duty_person_id = #{testDutyPersonId} ,
+            </if>
+            <if test="testDutyPerson != null and testDutyPerson != ''">
+                test_duty_person = #{testDutyPerson} ,
+            </if>
+            <if test="testDate != null">
+                test_date = #{testDate} ,
+            </if>
+            <if test="reviewPersonId != null and reviewPersonId != ''">
+                review_person_id = #{reviewPersonId} ,
+            </if>
+            <if test="reviewPerson != null and reviewPerson != ''">
+                review_person = #{reviewPerson} ,
+            </if>
+            <if test="checkPersonId != null and checkPersonId != ''">
+                check_person_id = #{checkPersonId} ,
+            </if>
+            <if test="checkPerson != null and checkPerson != ''">
+                check_person = #{checkPerson} ,
+            </if>
+            <if test="approvePersonId != null and approvePersonId != ''">
+                approve_person_id = #{approvePersonId} ,
+            </if>
+            <if test="approvePerson != null and approvePerson != ''">
+                approve_person = #{approvePerson} ,
+            </if>
+            <if test="addUserid != null">
+                add_userid = #{addUserid} ,
+            </if>
+            <if test="addUsername != null and addUsername != ''">
+                add_username = #{addUsername} ,
+            </if>
+            <if test="addtime != null">
+                addtime = #{addtime} ,
+            </if>
+            <if test="editUserid != null">
+                edit_userid = #{editUserid} ,
+            </if>
+            <if test="editUsername != null and editUsername != ''">
+                edit_username = #{editUsername} ,
+            </if>
+            <if test="edittime != null">
+                edittime = #{edittime} ,
+            </if>
+            <if test="reportStatus != null and reportStatus != ''">
+                report_status = #{reportStatus} ,
+            </if>
+            <if test="reportType != null and reportType != ''">
+                report_type = #{reportType}
+            </if>
+        </set>
+    </sql>
+
+    <!-- 修改 -->
+    <update id="updateByPrimaryKey">
+        UPDATE power_report
+        <include refid="update_sql" />
+        WHERE
+        id = #{id}
+    </update>
+
+    <!-- 修改 -->
+    <update id="batchUpdateByIds">
+        UPDATE power_report
+        <include refid="update_sql" />
+        WHERE
+        id IN
+        <foreach item="ids" collection="list" open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </update>
+
+    <!-- 根据ID删除 -->
+    <delete id="deleteByPrimaryKey">
+        <![CDATA[
+        	DELETE FROM power_report
+        	WHERE
+        		id = #{id}
+    	]]>
+    </delete>
+
+    <!-- 批量删除 -->
+    <delete id="batchDeleteByIds">
+        DELETE FROM power_report
+        WHERE id IN
+        <foreach item="ids" collection="list" open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </delete>
+
+    <!-- selsect -->
+    <select id="selectByPrimaryKey" resultMap="RM_PowerReport">
+        SELECT
+        <include refid="columns" />
+        FROM power_report
+        WHERE
+        id = #{id}
+    </select>
+
+
+
+
+
+    <!-- 模糊查询这样： 字段名 LIKE CONCAT('%',CONCAT(#{model.userName},'%')) -->
+    <sql id="findPage_where">
+        <where>
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="substationId != null">
+                AND substation_id = #{substationId}
+            </if>
+            <if test="substationName != null and substationName !=''">
+                AND substation_name = #{substationName}
+            </if>
+            <if test="deviceIds != null and deviceIds !=''">
+                AND device_ids = #{deviceIds}
+            </if>
+            <if test="deviceNames != null and deviceNames !=''">
+                AND device_names = #{deviceNames}
+            </if>
+            <if test="runNo != null and runNo !=''">
+                AND run_no = #{runNo}
+            </if>
+            <if test="testProperties != null and testProperties !=''">
+                AND test_properties = #{testProperties}
+            </if>
+            <if test="testPeopleId != null and testPeopleId !=''">
+                AND test_people_id = #{testPeopleId}
+            </if>
+            <if test="testPeople != null and testPeople !=''">
+                AND test_people = #{testPeople}
+            </if>
+            <if test="testDutyPersonId != null and testDutyPersonId !=''">
+                AND test_duty_person_id = #{testDutyPersonId}
+            </if>
+            <if test="testDutyPerson != null and testDutyPerson !=''">
+                AND test_duty_person = #{testDutyPerson}
+            </if>
+            <if test="testDate != null">
+                AND test_date = #{testDate}
+            </if>
+            <if test="reviewPersonId != null and reviewPersonId !=''">
+                AND review_person_id = #{reviewPersonId}
+            </if>
+            <if test="reviewPerson != null and reviewPerson !=''">
+                AND review_person = #{reviewPerson}
+            </if>
+            <if test="checkPersonId != null and checkPersonId !=''">
+                AND check_person_id = #{checkPersonId}
+            </if>
+            <if test="checkPerson != null and checkPerson !=''">
+                AND check_person = #{checkPerson}
+            </if>
+            <if test="approvePersonId != null and approvePersonId !=''">
+                AND approve_person_id = #{approvePersonId}
+            </if>
+            <if test="approvePerson != null and approvePerson !=''">
+                AND approve_person = #{approvePerson}
+            </if>
+            <if test="addUserid != null">
+                AND add_userid = #{addUserid}
+            </if>
+            <if test="addUsername != null and addUsername !=''">
+                AND add_username = #{addUsername}
+            </if>
+            <if test="addtime != null">
+                AND addtime = #{addtime}
+            </if>
+            <if test="editUserid != null">
+                AND edit_userid = #{editUserid}
+            </if>
+            <if test="editUsername != null and editUsername !=''">
+                AND edit_username = #{editUsername}
+            </if>
+            <if test="edittime != null">
+                AND edittime = #{edittime}
+            </if>
+            <if test="reportStatus != null and reportStatus !=''">
+                AND report_status = #{reportStatus}
+            </if>
+            <if test="reportType != null and reportType !=''">
+                AND report_type = #{reportType}
+            </if>
+        </where>
+    </sql>
+
+    <!-- selsect by obj -->
+    <select id="listByObj" resultMap="RM_PowerReport" parameterType="com.putorn.powerdoc.entity.PowerReport">
+        SELECT
+        <include refid="columns" />
+        FROM power_report
+        <include refid="findPage_where" />
+    </select>
+
+
+    <!-- 获取总数 -->
+    <select id="listPageCount" resultType="long" parameterType="map">
+        SELECT COUNT(1)
+        FROM power_report
+        <include refid="findPage_where" />
+    </select>
+
+    <select id="listPage" resultMap="RM_PowerReport" parameterType="map">
+        SELECT
+        <include refid="columns" />
+        FROM power_report
+        <include refid="findPage_where" />
+
+        <if test="sortColumns != null and sortColumns !=''">
+            ORDER BY ${sortColumns}
+        </if>
+
+        <if test="offset != null and pageSize != null">
+            LIMIT  #{offset}, #{pageSize}
+        </if>
+    </select>
+
+</mapper>

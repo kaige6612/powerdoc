@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+		<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.putorn.powerdoc.dao.PowerDocVoltageTransformerMapper">
+
+	<resultMap id="RM_PowerDocVoltageTransformer" type="com.putorn.powerdoc.entity.PowerDocVoltageTransformer">
+        <result property="voltageTransformerId" column="voltage_transformer_id"/>
+        <result property="subreportId" column="subreport_id"/>
+        <result property="afirst" column="A_first"/>
+        <result property="asecond" column="A_second"/>
+        <result property="asupport" column="A_support"/>
+        <result property="bfirst" column="B_first"/>
+        <result property="bsecond" column="B_second"/>
+        <result property="bsupport" column="B_support"/>
+        <result property="cfirst" column="C_first"/>
+        <result property="csecond" column="C_second"/>
+        <result property="csupport" column="C_support"/>
+        <result property="testPosition" column="test_position"/>
+        <result property="avoltage" column="A_voltage"/>
+        <result property="bvoltage" column="B_voltage"/>
+        <result property="cvoltage" column="C_voltage"/>
+        <result property="atime" column="A_time"/>
+        <result property="btime" column="B_time"/>
+        <result property="ctime" column="C_time"/>
+        <result property="aresult" column="A_result"/>
+        <result property="bresult" column="B_result"/>
+        <result property="cresult" column="C_result"/>
+        <result property="aafter" column="A_after"/>
+        <result property="bafter" column="B_after"/>
+        <result property="cafter" column="C_after"/>
+        <result property="adirect" column="A_direct"/>
+        <result property="bdirect" column="B_direct"/>
+        <result property="cdirect" column="C_direct"/>
+        <result property="addUserid" column="add_userid"/>
+        <result property="addUsername" column="add_username"/>
+        <result property="addtime" column="addtime"/>
+        <result property="editUserid" column="edit_userid"/>
+        <result property="editUsername" column="edit_username"/>
+        <result property="edittime" column="edittime"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		voltage_transformer_id,subreport_id,A_first,A_second,A_support,B_first,B_second,B_support,C_first,C_second,C_support,test_position,A_voltage,B_voltage,C_voltage,A_time,B_time,C_time,A_result,B_result,C_result,A_after,B_after,C_after,A_direct,B_direct,C_direct,add_userid,add_username,addtime,edit_userid,edit_username,edittime
+	    ]]>
+	</sql>
+
+	<!--保存 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="voltageTransformerId">
+	    <![CDATA[
+	        INSERT INTO power_doc_voltage_transformer ( 
+	        	subreport_id ,
+	        	A_first ,
+	        	A_second ,
+	        	A_support ,
+	        	B_first ,
+	        	B_second ,
+	        	B_support ,
+	        	C_first ,
+	        	C_second ,
+	        	C_support ,
+	        	test_position ,
+	        	A_voltage ,
+	        	B_voltage ,
+	        	C_voltage ,
+	        	A_time ,
+	        	B_time ,
+	        	C_time ,
+	        	A_result ,
+	        	B_result ,
+	        	C_result ,
+	        	A_after ,
+	        	B_after ,
+	        	C_after ,
+	        	A_direct ,
+	        	B_direct ,
+	        	C_direct ,
+	        	add_userid ,
+	        	add_username ,
+	        	addtime ,
+	        	edit_userid ,
+	        	edit_username ,
+	        	edittime 
+	        ) VALUES (
+	        	#{subreportId} ,
+	        	#{afirst} ,
+	        	#{asecond} ,
+	        	#{asupport} ,
+	        	#{bfirst} ,
+	        	#{bsecond} ,
+	        	#{bsupport} ,
+	        	#{cfirst} ,
+	        	#{csecond} ,
+	        	#{csupport} ,
+	        	#{testPosition} ,
+	        	#{avoltage} ,
+	        	#{bvoltage} ,
+	        	#{cvoltage} ,
+	        	#{atime} ,
+	        	#{btime} ,
+	        	#{ctime} ,
+	        	#{aresult} ,
+	        	#{bresult} ,
+	        	#{cresult} ,
+	        	#{aafter} ,
+	        	#{bafter} ,
+	        	#{cafter} ,
+	        	#{adirect} ,
+	        	#{bdirect} ,
+	        	#{cdirect} ,
+	        	#{addUserid} ,
+	        	#{addUsername} ,
+	        	#{addtime} ,
+	        	#{editUserid} ,
+	        	#{editUsername} ,
+	        	#{edittime} 
+	        )
+	    ]]>
+	</insert>
+	
+	<!-- 批量保存 -->
+	<insert id="batchInsert">
+	    <![CDATA[
+	        INSERT INTO power_doc_voltage_transformer (
+	        		subreport_id ,
+	        		A_first ,
+	        		A_second ,
+	        		A_support ,
+	        		B_first ,
+	        		B_second ,
+	        		B_support ,
+	        		C_first ,
+	        		C_second ,
+	        		C_support ,
+	        		test_position ,
+	        		A_voltage ,
+	        		B_voltage ,
+	        		C_voltage ,
+	        		A_time ,
+	        		B_time ,
+	        		C_time ,
+	        		A_result ,
+	        		B_result ,
+	        		C_result ,
+	        		A_after ,
+	        		B_after ,
+	        		C_after ,
+	        		A_direct ,
+	        		B_direct ,
+	        		C_direct ,
+	        		add_userid ,
+	        		add_username ,
+	        		addtime ,
+	        		edit_userid ,
+	        		edit_username ,
+	        		edittime 
+	        ) VALUES 
+	         ]]>
+	        <foreach item="item" collection="list"   separator=",">
+	        	(
+					#{item.subreportId} ,
+					#{item.afirst} ,
+					#{item.asecond} ,
+					#{item.asupport} ,
+					#{item.bfirst} ,
+					#{item.bsecond} ,
+					#{item.bsupport} ,
+					#{item.cfirst} ,
+					#{item.csecond} ,
+					#{item.csupport} ,
+					#{item.testPosition} ,
+					#{item.avoltage} ,
+					#{item.bvoltage} ,
+					#{item.cvoltage} ,
+					#{item.atime} ,
+					#{item.btime} ,
+					#{item.ctime} ,
+					#{item.aresult} ,
+					#{item.bresult} ,
+					#{item.cresult} ,
+					#{item.aafter} ,
+					#{item.bafter} ,
+					#{item.cafter} ,
+					#{item.adirect} ,
+					#{item.bdirect} ,
+					#{item.cdirect} ,
+					#{item.addUserid} ,
+					#{item.addUsername} ,
+					#{item.addtime} ,
+					#{item.editUserid} ,
+					#{item.editUsername} ,
+					#{item.edittime} 
+	        	)
+			</foreach>
+	   
+	</insert>
+
+	<!-- update 条件组合 -->
+	<sql id="update_sql">
+		<set>
+			<if test="subreportId != null">
+				subreport_id = #{subreportId} ,
+			</if>
+			<if test="afirst != null and afirst != ''">
+				A_first = #{afirst} ,
+			</if>
+			<if test="asecond != null and asecond != ''">
+				A_second = #{asecond} ,
+			</if>
+			<if test="asupport != null and asupport != ''">
+				A_support = #{asupport} ,
+			</if>
+			<if test="bfirst != null and bfirst != ''">
+				B_first = #{bfirst} ,
+			</if>
+			<if test="bsecond != null and bsecond != ''">
+				B_second = #{bsecond} ,
+			</if>
+			<if test="bsupport != null and bsupport != ''">
+				B_support = #{bsupport} ,
+			</if>
+			<if test="cfirst != null and cfirst != ''">
+				C_first = #{cfirst} ,
+			</if>
+			<if test="csecond != null and csecond != ''">
+				C_second = #{csecond} ,
+			</if>
+			<if test="csupport != null and csupport != ''">
+				C_support = #{csupport} ,
+			</if>
+			<if test="testPosition != null and testPosition != ''">
+				test_position = #{testPosition} ,
+			</if>
+			<if test="avoltage != null and avoltage != ''">
+				A_voltage = #{avoltage} ,
+			</if>
+			<if test="bvoltage != null and bvoltage != ''">
+				B_voltage = #{bvoltage} ,
+			</if>
+			<if test="cvoltage != null and cvoltage != ''">
+				C_voltage = #{cvoltage} ,
+			</if>
+			<if test="atime != null and atime != ''">
+				A_time = #{atime} ,
+			</if>
+			<if test="btime != null and btime != ''">
+				B_time = #{btime} ,
+			</if>
+			<if test="ctime != null and ctime != ''">
+				C_time = #{ctime} ,
+			</if>
+			<if test="aresult != null and aresult != ''">
+				A_result = #{aresult} ,
+			</if>
+			<if test="bresult != null and bresult != ''">
+				B_result = #{bresult} ,
+			</if>
+			<if test="cresult != null and cresult != ''">
+				C_result = #{cresult} ,
+			</if>
+			<if test="aafter != null and aafter != ''">
+				A_after = #{aafter} ,
+			</if>
+			<if test="bafter != null and bafter != ''">
+				B_after = #{bafter} ,
+			</if>
+			<if test="cafter != null and cafter != ''">
+				C_after = #{cafter} ,
+			</if>
+			<if test="adirect != null and adirect != ''">
+				A_direct = #{adirect} ,
+			</if>
+			<if test="bdirect != null and bdirect != ''">
+				B_direct = #{bdirect} ,
+			</if>
+			<if test="cdirect != null and cdirect != ''">
+				C_direct = #{cdirect} ,
+			</if>
+			<if test="addUserid != null">
+				add_userid = #{addUserid} ,
+			</if>
+			<if test="addUsername != null and addUsername != ''">
+				add_username = #{addUsername} ,
+			</if>
+			<if test="addtime != null">
+				addtime = #{addtime} ,
+			</if>
+			<if test="editUserid != null">
+				edit_userid = #{editUserid} ,
+			</if>
+			<if test="editUsername != null and editUsername != ''">
+				edit_username = #{editUsername} ,
+			</if>
+			<if test="edittime != null">
+				edittime = #{edittime} 
+			</if>
+		</set>
+	</sql>
+	
+	<!-- 修改 -->
+	<update id="updateByPrimaryKey">
+		UPDATE power_doc_voltage_transformer
+		<include refid="update_sql" />
+		WHERE
+			voltage_transformer_id = #{voltageTransformerId} 
+	</update>
+
+		<!-- 修改 -->
+	<update id="batchUpdateByIds">
+		UPDATE power_doc_voltage_transformer
+		<include refid="update_sql" />
+		WHERE
+		voltage_transformer_id IN
+			<foreach item="ids" collection="list" open="(" separator="," close=")">
+				#{ids}
+			</foreach>
+	</update>
+
+	<!-- 根据ID删除 -->
+	<delete id="deleteByPrimaryKey">
+    	<![CDATA[
+        	DELETE FROM power_doc_voltage_transformer 
+        	WHERE
+        		voltage_transformer_id = #{id} 
+    	]]>
+	</delete>
+	
+	<!-- 批量删除 -->
+	<delete id="batchDeleteByIds">
+        DELETE FROM power_doc_voltage_transformer 
+        WHERE voltage_transformer_id IN 
+        <foreach item="ids" collection="list" open="(" separator="," close=")">
+			#{ids}
+		</foreach>
+    </delete>
+
+	<!-- selsect -->
+	<select id="selectByPrimaryKey" resultMap="RM_PowerDocVoltageTransformer">
+		SELECT
+		<include refid="columns" />
+		FROM power_doc_voltage_transformer
+		WHERE
+		voltage_transformer_id = #{id} 
+	</select>
+
+
+
+
+
+	<!-- 模糊查询这样： 字段名 LIKE CONCAT('%',CONCAT(#{model.userName},'%')) -->
+	<sql id="findPage_where">
+		<where>
+				<if test="voltageTransformerId != null">
+					AND voltage_transformer_id = #{voltageTransformerId}
+				</if>
+				<if test="subreportId != null">
+					AND subreport_id = #{subreportId}
+				</if>
+				<if test="afirst != null and afirst !=''">
+					AND A_first = #{afirst}
+				</if>
+				<if test="asecond != null and asecond !=''">
+					AND A_second = #{asecond}
+				</if>
+				<if test="asupport != null and asupport !=''">
+					AND A_support = #{asupport}
+				</if>
+				<if test="bfirst != null and bfirst !=''">
+					AND B_first = #{bfirst}
+				</if>
+				<if test="bsecond != null and bsecond !=''">
+					AND B_second = #{bsecond}
+				</if>
+				<if test="bsupport != null and bsupport !=''">
+					AND B_support = #{bsupport}
+				</if>
+				<if test="cfirst != null and cfirst !=''">
+					AND C_first = #{cfirst}
+				</if>
+				<if test="csecond != null and csecond !=''">
+					AND C_second = #{csecond}
+				</if>
+				<if test="csupport != null and csupport !=''">
+					AND C_support = #{csupport}
+				</if>
+				<if test="testPosition != null and testPosition !=''">
+					AND test_position = #{testPosition}
+				</if>
+				<if test="avoltage != null and avoltage !=''">
+					AND A_voltage = #{avoltage}
+				</if>
+				<if test="bvoltage != null and bvoltage !=''">
+					AND B_voltage = #{bvoltage}
+				</if>
+				<if test="cvoltage != null and cvoltage !=''">
+					AND C_voltage = #{cvoltage}
+				</if>
+				<if test="atime != null and atime !=''">
+					AND A_time = #{atime}
+				</if>
+				<if test="btime != null and btime !=''">
+					AND B_time = #{btime}
+				</if>
+				<if test="ctime != null and ctime !=''">
+					AND C_time = #{ctime}
+				</if>
+				<if test="aresult != null and aresult !=''">
+					AND A_result = #{aresult}
+				</if>
+				<if test="bresult != null and bresult !=''">
+					AND B_result = #{bresult}
+				</if>
+				<if test="cresult != null and cresult !=''">
+					AND C_result = #{cresult}
+				</if>
+				<if test="aafter != null and aafter !=''">
+					AND A_after = #{aafter}
+				</if>
+				<if test="bafter != null and bafter !=''">
+					AND B_after = #{bafter}
+				</if>
+				<if test="cafter != null and cafter !=''">
+					AND C_after = #{cafter}
+				</if>
+				<if test="adirect != null and adirect !=''">
+					AND A_direct = #{adirect}
+				</if>
+				<if test="bdirect != null and bdirect !=''">
+					AND B_direct = #{bdirect}
+				</if>
+				<if test="cdirect != null and cdirect !=''">
+					AND C_direct = #{cdirect}
+				</if>
+				<if test="addUserid != null">
+					AND add_userid = #{addUserid}
+				</if>
+				<if test="addUsername != null and addUsername !=''">
+					AND add_username = #{addUsername}
+				</if>
+				<if test="addtime != null">
+					AND addtime = #{addtime}
+				</if>
+				<if test="editUserid != null">
+					AND edit_userid = #{editUserid}
+				</if>
+				<if test="editUsername != null and editUsername !=''">
+					AND edit_username = #{editUsername}
+				</if>
+				<if test="edittime != null">
+					AND edittime = #{edittime}
+				</if>
+		</where>
+	</sql>
+
+	<!-- selsect by obj -->
+	<select id="listByObj" resultMap="RM_PowerDocVoltageTransformer" parameterType="com.putorn.powerdoc.entity.PowerDocVoltageTransformer">
+	SELECT
+	<include refid="columns" />
+	FROM power_doc_voltage_transformer
+	<include refid="findPage_where" />
+	</select>
+
+
+	<!-- 获取总数 -->
+	<select id="listPageCount" resultType="long" parameterType="map">
+		SELECT COUNT(1)
+		FROM power_doc_voltage_transformer
+		<include refid="findPage_where" />
+	</select>  
+
+	<select id="listPage" resultMap="RM_PowerDocVoltageTransformer" parameterType="map">
+		 SELECT
+		<include refid="columns" />
+		FROM power_doc_voltage_transformer
+		<include refid="findPage_where" />
+
+		<if test="sortColumns != null and sortColumns !=''">
+			ORDER BY ${sortColumns}
+		</if>
+		
+		<if test="offset != null and pageSize != null">
+			LIMIT  #{offset}, #{pageSize}
+		</if>
+	</select>
+
+</mapper>

@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+		<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.putorn.powerdoc.dao.PowerSysUserMapper">
+
+	<resultMap id="RM_PowerSysUser" type="com.putorn.powerdoc.entity.PowerSysUser">
+        <result property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="nickname" column="nickname"/>
+        <result property="icon" column="icon"/>
+        <result property="sex" column="sex"/>
+        <result property="phone" column="phone"/>
+        <result property="email" column="email"/>
+        <result property="lastip" column="lastip"/>
+        <result property="lasttime" column="lasttime"/>
+        <result property="regip" column="regip"/>
+        <result property="regtime" column="regtime"/>
+        <result property="loginErrorNum" column="login_error_num"/>
+        <result property="isSysadmin" column="is_sysadmin"/>
+        <result property="isDutyPerson" column="is_duty_person"/>
+        <result property="status" column="status"/>
+        <result property="remark" column="remark"/>
+        <result property="addUserid" column="add_userid"/>
+        <result property="addUsername" column="add_username"/>
+        <result property="addtime" column="addtime"/>
+        <result property="editUserid" column="edit_userid"/>
+        <result property="editUsername" column="edit_username"/>
+        <result property="edittime" column="edittime"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		id,username,password,nickname,icon,sex,phone,email,lastip,lasttime,regip,regtime,login_error_num,is_sysadmin,is_duty_person,status,remark,add_userid,add_username,addtime,edit_userid,edit_username,edittime
+	    ]]>
+	</sql>
+
+	<!--保存 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+	    <![CDATA[
+	        INSERT INTO power_sys_user ( 
+	        	id ,
+	        	username ,
+	        	password ,
+	        	nickname ,
+	        	icon ,
+	        	sex ,
+	        	phone ,
+	        	email ,
+	        	lastip ,
+	        	lasttime ,
+	        	regip ,
+	        	regtime ,
+	        	login_error_num ,
+	        	is_sysadmin ,
+	        	is_duty_person ,
+	        	status ,
+	        	remark ,
+	        	add_userid ,
+	        	add_username ,
+	        	addtime ,
+	        	edit_userid ,
+	        	edit_username ,
+	        	edittime 
+	        ) VALUES (
+	        	#{id} ,
+	        	#{username} ,
+	        	#{password} ,
+	        	#{nickname} ,
+	        	#{icon} ,
+	        	#{sex} ,
+	        	#{phone} ,
+	        	#{email} ,
+	        	#{lastip} ,
+	        	#{lasttime} ,
+	        	#{regip} ,
+	        	#{regtime} ,
+	        	#{loginErrorNum} ,
+	        	#{isSysadmin} ,
+	        	#{isDutyPerson} ,
+	        	#{status} ,
+	        	#{remark} ,
+	        	#{addUserid} ,
+	        	#{addUsername} ,
+	        	#{addtime} ,
+	        	#{editUserid} ,
+	        	#{editUsername} ,
+	        	#{edittime} 
+	        )
+	    ]]>
+	</insert>
+	
+	<!-- 批量保存 -->
+	<insert id="batchInsert">
+	    <![CDATA[
+	        INSERT INTO power_sys_user (
+	        		id ,
+	        		username ,
+	        		password ,
+	        		nickname ,
+	        		icon ,
+	        		sex ,
+	        		phone ,
+	        		email ,
+	        		lastip ,
+	        		lasttime ,
+	        		regip ,
+	        		regtime ,
+	        		login_error_num ,
+	        		is_sysadmin ,
+	        		is_duty_person ,
+	        		status ,
+	        		remark ,
+	        		add_userid ,
+	        		add_username ,
+	        		addtime ,
+	        		edit_userid ,
+	        		edit_username ,
+	        		edittime 
+	        ) VALUES 
+	         ]]>
+	        <foreach item="item" collection="list"   separator=",">
+	        	(
+					#{item.id} ,
+					#{item.username} ,
+					#{item.password} ,
+					#{item.nickname} ,
+					#{item.icon} ,
+					#{item.sex} ,
+					#{item.phone} ,
+					#{item.email} ,
+					#{item.lastip} ,
+					#{item.lasttime} ,
+					#{item.regip} ,
+					#{item.regtime} ,
+					#{item.loginErrorNum} ,
+					#{item.isSysadmin} ,
+					#{item.isDutyPerson} ,
+					#{item.status} ,
+					#{item.remark} ,
+					#{item.addUserid} ,
+					#{item.addUsername} ,
+					#{item.addtime} ,
+					#{item.editUserid} ,
+					#{item.editUsername} ,
+					#{item.edittime} 
+	        	)
+			</foreach>
+	   
+	</insert>
+
+	<!-- update 条件组合 -->
+	<sql id="update_sql">
+		<set>
+			<if test="username != null and username != ''">
+				username = #{username} ,
+			</if>
+			<if test="password != null and password != ''">
+				password = #{password} ,
+			</if>
+			<if test="nickname != null and nickname != ''">
+				nickname = #{nickname} ,
+			</if>
+			<if test="icon != null and icon != ''">
+				icon = #{icon} ,
+			</if>
+			<if test="sex != null">
+				sex = #{sex} ,
+			</if>
+			<if test="phone != null and phone != ''">
+				phone = #{phone} ,
+			</if>
+			<if test="email != null and email != ''">
+				email = #{email} ,
+			</if>
+			<if test="lastip != null and lastip != ''">
+				lastip = #{lastip} ,
+			</if>
+			<if test="lasttime != null">
+				lasttime = #{lasttime} ,
+			</if>
+			<if test="regip != null and regip != ''">
+				regip = #{regip} ,
+			</if>
+			<if test="regtime != null">
+				regtime = #{regtime} ,
+			</if>
+			<if test="loginErrorNum != null">
+				login_error_num = #{loginErrorNum} ,
+			</if>
+			<if test="isSysadmin != null">
+				is_sysadmin = #{isSysadmin} ,
+			</if>
+			<if test="isDutyPerson != null">
+				is_duty_person = #{isDutyPerson} ,
+			</if>
+			<if test="status != null">
+				status = #{status} ,
+			</if>
+			<if test="remark != null and remark != ''">
+				remark = #{remark} ,
+			</if>
+			<if test="addUserid != null">
+				add_userid = #{addUserid} ,
+			</if>
+			<if test="addUsername != null and addUsername != ''">
+				add_username = #{addUsername} ,
+			</if>
+			<if test="addtime != null">
+				addtime = #{addtime} ,
+			</if>
+			<if test="editUserid != null">
+				edit_userid = #{editUserid} ,
+			</if>
+			<if test="editUsername != null and editUsername != ''">
+				edit_username = #{editUsername} ,
+			</if>
+			<if test="edittime != null">
+				edittime = #{edittime} 
+			</if>
+		</set>
+	</sql>
+	
+	<!-- 修改 -->
+	<update id="updateByPrimaryKey">
+		UPDATE power_sys_user
+		<include refid="update_sql" />
+		WHERE
+			id = #{id} 
+	</update>
+
+		<!-- 修改 -->
+	<update id="batchUpdateByIds">
+		UPDATE power_sys_user
+		<include refid="update_sql" />
+		WHERE
+		id IN
+			<foreach item="ids" collection="list" open="(" separator="," close=")">
+				#{ids}
+			</foreach>
+	</update>
+
+	<!-- 根据ID删除 -->
+	<delete id="deleteByPrimaryKey">
+    	<![CDATA[
+        	DELETE FROM power_sys_user 
+        	WHERE
+        		id = #{id} 
+    	]]>
+	</delete>
+	
+	<!-- 批量删除 -->
+	<delete id="batchDeleteByIds">
+        DELETE FROM power_sys_user 
+        WHERE id IN 
+        <foreach item="ids" collection="list" open="(" separator="," close=")">
+			#{ids}
+		</foreach>
+    </delete>
+
+	<!-- selsect -->
+	<select id="selectByPrimaryKey" resultMap="RM_PowerSysUser">
+		SELECT
+		<include refid="columns" />
+		FROM power_sys_user
+		WHERE
+		id = #{id} 
+	</select>
+
+
+
+
+
+	<!-- 模糊查询这样： 字段名 LIKE CONCAT('%',CONCAT(#{model.userName},'%')) -->
+	<sql id="findPage_where">
+		<where>
+				<if test="id != null">
+					AND id = #{id}
+				</if>
+				<if test="username != null and username !=''">
+					AND username = #{username}
+				</if>
+				<if test="password != null and password !=''">
+					AND password = #{password}
+				</if>
+				<if test="nickname != null and nickname !=''">
+					AND nickname = #{nickname}
+				</if>
+				<if test="icon != null and icon !=''">
+					AND icon = #{icon}
+				</if>
+				<if test="sex != null">
+					AND sex = #{sex}
+				</if>
+				<if test="phone != null and phone !=''">
+					AND phone = #{phone}
+				</if>
+				<if test="email != null and email !=''">
+					AND email = #{email}
+				</if>
+				<if test="lastip != null and lastip !=''">
+					AND lastip = #{lastip}
+				</if>
+				<if test="lasttime != null">
+					AND lasttime = #{lasttime}
+				</if>
+				<if test="regip != null and regip !=''">
+					AND regip = #{regip}
+				</if>
+				<if test="regtime != null">
+					AND regtime = #{regtime}
+				</if>
+				<if test="loginErrorNum != null">
+					AND login_error_num = #{loginErrorNum}
+				</if>
+				<if test="isSysadmin != null">
+					AND is_sysadmin = #{isSysadmin}
+				</if>
+				<if test="isDutyPerson != null">
+					AND is_duty_person = #{isDutyPerson}
+				</if>
+				<if test="status != null">
+					AND status = #{status}
+				</if>
+				<if test="remark != null and remark !=''">
+					AND remark = #{remark}
+				</if>
+				<if test="addUserid != null">
+					AND add_userid = #{addUserid}
+				</if>
+				<if test="addUsername != null and addUsername !=''">
+					AND add_username = #{addUsername}
+				</if>
+				<if test="addtime != null">
+					AND addtime = #{addtime}
+				</if>
+				<if test="editUserid != null">
+					AND edit_userid = #{editUserid}
+				</if>
+				<if test="editUsername != null and editUsername !=''">
+					AND edit_username = #{editUsername}
+				</if>
+				<if test="edittime != null">
+					AND edittime = #{edittime}
+				</if>
+		</where>
+	</sql>
+
+	<!-- selsect by obj -->
+	<select id="listByObj" resultMap="RM_PowerSysUser" parameterType="com.putorn.powerdoc.entity.PowerSysUser">
+	SELECT
+	<include refid="columns" />
+	FROM power_sys_user
+	<include refid="findPage_where" />
+	</select>
+
+
+	<!-- 获取总数 -->
+	<select id="listPageCount" resultType="long" parameterType="map">
+		SELECT COUNT(1)
+		FROM power_sys_user
+		<include refid="findPage_where" />
+	</select>  
+
+	<select id="listPage" resultMap="RM_PowerSysUser" parameterType="map">
+		 SELECT
+		<include refid="columns" />
+		FROM power_sys_user
+		<include refid="findPage_where" />
+
+		<if test="sortColumns != null and sortColumns !=''">
+			ORDER BY ${sortColumns}
+		</if>
+		
+		<if test="offset != null and pageSize != null">
+			LIMIT  #{offset}, #{pageSize}
+		</if>
+	</select>
+
+</mapper>

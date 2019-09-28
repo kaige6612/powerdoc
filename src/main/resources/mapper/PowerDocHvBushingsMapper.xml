@@ -1,0 +1,497 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+		<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.putorn.powerdoc.dao.PowerDocHvBushingsMapper">
+
+	<resultMap id="RM_PowerDocHvBushings" type="com.putorn.powerdoc.entity.PowerDocHvBushings">
+        <result property="hvBushingsId" column="hv_bushings_id"/>
+        <result property="subreportId" column="subreport_id"/>
+        <result property="aonce" column="A_once"/>
+        <result property="aland" column="A_land"/>
+        <result property="bonce" column="B_once"/>
+        <result property="bland" column="B_land"/>
+        <result property="conce" column="C_once"/>
+        <result property="cland" column="C_land"/>
+        <result property="donce" column="D_once"/>
+        <result property="dland" column="D_land"/>
+        <result property="testPosition" column="test_position"/>
+        <result property="testVoltage" column="test_voltage"/>
+        <result property="acx" column="A_Cx"/>
+        <result property="atg" column="A_tg"/>
+        <result property="apf" column="A_pF"/>
+        <result property="ac" column="A_C"/>
+        <result property="bcx" column="B_Cx"/>
+        <result property="btg" column="B_tg"/>
+        <result property="bpf" column="B_pF"/>
+        <result property="bc" column="B_C"/>
+        <result property="ccx" column="C_Cx"/>
+        <result property="ctg" column="C_tg"/>
+        <result property="cpf" column="C_pF"/>
+        <result property="cc" column="C_C"/>
+        <result property="dcx" column="D_Cx"/>
+        <result property="dtg" column="D_tg"/>
+        <result property="dpf" column="D_pF"/>
+        <result property="dc" column="D_C"/>
+        <result property="addUserid" column="add_userid"/>
+        <result property="addUsername" column="add_username"/>
+        <result property="addtime" column="addtime"/>
+        <result property="editUserid" column="edit_userid"/>
+        <result property="editUsername" column="edit_username"/>
+        <result property="edittime" column="edittime"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		hv_bushings_id,subreport_id,A_once,A_land,B_once,B_land,C_once,C_land,D_once,D_land,test_position,test_voltage,A_Cx,A_tg,A_pF,A_C,B_Cx,B_tg,B_pF,B_C,C_Cx,C_tg,C_pF,C_C,D_Cx,D_tg,D_pF,D_C,add_userid,add_username,addtime,edit_userid,edit_username,edittime
+	    ]]>
+	</sql>
+
+	<!--保存 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="hvBushingsId">
+	    <![CDATA[
+	        INSERT INTO power_doc_hv_bushings ( 
+	        	subreport_id ,
+	        	A_once ,
+	        	A_land ,
+	        	B_once ,
+	        	B_land ,
+	        	C_once ,
+	        	C_land ,
+	        	D_once ,
+	        	D_land ,
+	        	test_position ,
+	        	test_voltage ,
+	        	A_Cx ,
+	        	A_tg ,
+	        	A_pF ,
+	        	A_C ,
+	        	B_Cx ,
+	        	B_tg ,
+	        	B_pF ,
+	        	B_C ,
+	        	C_Cx ,
+	        	C_tg ,
+	        	C_pF ,
+	        	C_C ,
+	        	D_Cx ,
+	        	D_tg ,
+	        	D_pF ,
+	        	D_C ,
+	        	add_userid ,
+	        	add_username ,
+	        	addtime ,
+	        	edit_userid ,
+	        	edit_username ,
+	        	edittime 
+	        ) VALUES (
+	        	#{subreportId} ,
+	        	#{aonce} ,
+	        	#{aland} ,
+	        	#{bonce} ,
+	        	#{bland} ,
+	        	#{conce} ,
+	        	#{cland} ,
+	        	#{donce} ,
+	        	#{dland} ,
+	        	#{testPosition} ,
+	        	#{testVoltage} ,
+	        	#{acx} ,
+	        	#{atg} ,
+	        	#{apf} ,
+	        	#{ac} ,
+	        	#{bcx} ,
+	        	#{btg} ,
+	        	#{bpf} ,
+	        	#{bc} ,
+	        	#{ccx} ,
+	        	#{ctg} ,
+	        	#{cpf} ,
+	        	#{cc} ,
+	        	#{dcx} ,
+	        	#{dtg} ,
+	        	#{dpf} ,
+	        	#{dc} ,
+	        	#{addUserid} ,
+	        	#{addUsername} ,
+	        	#{addtime} ,
+	        	#{editUserid} ,
+	        	#{editUsername} ,
+	        	#{edittime} 
+	        )
+	    ]]>
+	</insert>
+	
+	<!-- 批量保存 -->
+	<insert id="batchInsert">
+	    <![CDATA[
+	        INSERT INTO power_doc_hv_bushings (
+	        		subreport_id ,
+	        		A_once ,
+	        		A_land ,
+	        		B_once ,
+	        		B_land ,
+	        		C_once ,
+	        		C_land ,
+	        		D_once ,
+	        		D_land ,
+	        		test_position ,
+	        		test_voltage ,
+	        		A_Cx ,
+	        		A_tg ,
+	        		A_pF ,
+	        		A_C ,
+	        		B_Cx ,
+	        		B_tg ,
+	        		B_pF ,
+	        		B_C ,
+	        		C_Cx ,
+	        		C_tg ,
+	        		C_pF ,
+	        		C_C ,
+	        		D_Cx ,
+	        		D_tg ,
+	        		D_pF ,
+	        		D_C ,
+	        		add_userid ,
+	        		add_username ,
+	        		addtime ,
+	        		edit_userid ,
+	        		edit_username ,
+	        		edittime 
+	        ) VALUES 
+	         ]]>
+	        <foreach item="item" collection="list"   separator=",">
+	        	(
+					#{item.subreportId} ,
+					#{item.aonce} ,
+					#{item.aland} ,
+					#{item.bonce} ,
+					#{item.bland} ,
+					#{item.conce} ,
+					#{item.cland} ,
+					#{item.donce} ,
+					#{item.dland} ,
+					#{item.testPosition} ,
+					#{item.testVoltage} ,
+					#{item.acx} ,
+					#{item.atg} ,
+					#{item.apf} ,
+					#{item.ac} ,
+					#{item.bcx} ,
+					#{item.btg} ,
+					#{item.bpf} ,
+					#{item.bc} ,
+					#{item.ccx} ,
+					#{item.ctg} ,
+					#{item.cpf} ,
+					#{item.cc} ,
+					#{item.dcx} ,
+					#{item.dtg} ,
+					#{item.dpf} ,
+					#{item.dc} ,
+					#{item.addUserid} ,
+					#{item.addUsername} ,
+					#{item.addtime} ,
+					#{item.editUserid} ,
+					#{item.editUsername} ,
+					#{item.edittime} 
+	        	)
+			</foreach>
+	   
+	</insert>
+
+	<!-- update 条件组合 -->
+	<sql id="update_sql">
+		<set>
+			<if test="subreportId != null">
+				subreport_id = #{subreportId} ,
+			</if>
+			<if test="aonce != null and aonce != ''">
+				A_once = #{aonce} ,
+			</if>
+			<if test="aland != null and aland != ''">
+				A_land = #{aland} ,
+			</if>
+			<if test="bonce != null and bonce != ''">
+				B_once = #{bonce} ,
+			</if>
+			<if test="bland != null and bland != ''">
+				B_land = #{bland} ,
+			</if>
+			<if test="conce != null and conce != ''">
+				C_once = #{conce} ,
+			</if>
+			<if test="cland != null and cland != ''">
+				C_land = #{cland} ,
+			</if>
+			<if test="donce != null and donce != ''">
+				D_once = #{donce} ,
+			</if>
+			<if test="dland != null and dland != ''">
+				D_land = #{dland} ,
+			</if>
+			<if test="testPosition != null and testPosition != ''">
+				test_position = #{testPosition} ,
+			</if>
+			<if test="testVoltage != null and testVoltage != ''">
+				test_voltage = #{testVoltage} ,
+			</if>
+			<if test="acx != null and acx != ''">
+				A_Cx = #{acx} ,
+			</if>
+			<if test="atg != null and atg != ''">
+				A_tg = #{atg} ,
+			</if>
+			<if test="apf != null and apf != ''">
+				A_pF = #{apf} ,
+			</if>
+			<if test="ac != null and ac != ''">
+				A_C = #{ac} ,
+			</if>
+			<if test="bcx != null and bcx != ''">
+				B_Cx = #{bcx} ,
+			</if>
+			<if test="btg != null and btg != ''">
+				B_tg = #{btg} ,
+			</if>
+			<if test="bpf != null and bpf != ''">
+				B_pF = #{bpf} ,
+			</if>
+			<if test="bc != null and bc != ''">
+				B_C = #{bc} ,
+			</if>
+			<if test="ccx != null and ccx != ''">
+				C_Cx = #{ccx} ,
+			</if>
+			<if test="ctg != null and ctg != ''">
+				C_tg = #{ctg} ,
+			</if>
+			<if test="cpf != null and cpf != ''">
+				C_pF = #{cpf} ,
+			</if>
+			<if test="cc != null and cc != ''">
+				C_C = #{cc} ,
+			</if>
+			<if test="dcx != null and dcx != ''">
+				D_Cx = #{dcx} ,
+			</if>
+			<if test="dtg != null and dtg != ''">
+				D_tg = #{dtg} ,
+			</if>
+			<if test="dpf != null and dpf != ''">
+				D_pF = #{dpf} ,
+			</if>
+			<if test="dc != null and dc != ''">
+				D_C = #{dc} ,
+			</if>
+			<if test="addUserid != null">
+				add_userid = #{addUserid} ,
+			</if>
+			<if test="addUsername != null and addUsername != ''">
+				add_username = #{addUsername} ,
+			</if>
+			<if test="addtime != null">
+				addtime = #{addtime} ,
+			</if>
+			<if test="editUserid != null">
+				edit_userid = #{editUserid} ,
+			</if>
+			<if test="editUsername != null and editUsername != ''">
+				edit_username = #{editUsername} ,
+			</if>
+			<if test="edittime != null">
+				edittime = #{edittime} 
+			</if>
+		</set>
+	</sql>
+	
+	<!-- 修改 -->
+	<update id="updateByPrimaryKey">
+		UPDATE power_doc_hv_bushings
+		<include refid="update_sql" />
+		WHERE
+			hv_bushings_id = #{hvBushingsId} 
+	</update>
+
+		<!-- 修改 -->
+	<update id="batchUpdateByIds">
+		UPDATE power_doc_hv_bushings
+		<include refid="update_sql" />
+		WHERE
+		hv_bushings_id IN
+			<foreach item="ids" collection="list" open="(" separator="," close=")">
+				#{ids}
+			</foreach>
+	</update>
+
+	<!-- 根据ID删除 -->
+	<delete id="deleteByPrimaryKey">
+    	<![CDATA[
+        	DELETE FROM power_doc_hv_bushings 
+        	WHERE
+        		hv_bushings_id = #{id} 
+    	]]>
+	</delete>
+	
+	<!-- 批量删除 -->
+	<delete id="batchDeleteByIds">
+        DELETE FROM power_doc_hv_bushings 
+        WHERE hv_bushings_id IN 
+        <foreach item="ids" collection="list" open="(" separator="," close=")">
+			#{ids}
+		</foreach>
+    </delete>
+
+	<!-- selsect -->
+	<select id="selectByPrimaryKey" resultMap="RM_PowerDocHvBushings">
+		SELECT
+		<include refid="columns" />
+		FROM power_doc_hv_bushings
+		WHERE
+		hv_bushings_id = #{id} 
+	</select>
+
+
+
+
+
+	<!-- 模糊查询这样： 字段名 LIKE CONCAT('%',CONCAT(#{model.userName},'%')) -->
+	<sql id="findPage_where">
+		<where>
+				<if test="hvBushingsId != null">
+					AND hv_bushings_id = #{hvBushingsId}
+				</if>
+				<if test="subreportId != null">
+					AND subreport_id = #{subreportId}
+				</if>
+				<if test="aonce != null and aonce !=''">
+					AND A_once = #{aonce}
+				</if>
+				<if test="aland != null and aland !=''">
+					AND A_land = #{aland}
+				</if>
+				<if test="bonce != null and bonce !=''">
+					AND B_once = #{bonce}
+				</if>
+				<if test="bland != null and bland !=''">
+					AND B_land = #{bland}
+				</if>
+				<if test="conce != null and conce !=''">
+					AND C_once = #{conce}
+				</if>
+				<if test="cland != null and cland !=''">
+					AND C_land = #{cland}
+				</if>
+				<if test="donce != null and donce !=''">
+					AND D_once = #{donce}
+				</if>
+				<if test="dland != null and dland !=''">
+					AND D_land = #{dland}
+				</if>
+				<if test="testPosition != null and testPosition !=''">
+					AND test_position = #{testPosition}
+				</if>
+				<if test="testVoltage != null and testVoltage !=''">
+					AND test_voltage = #{testVoltage}
+				</if>
+				<if test="acx != null and acx !=''">
+					AND A_Cx = #{acx}
+				</if>
+				<if test="atg != null and atg !=''">
+					AND A_tg = #{atg}
+				</if>
+				<if test="apf != null and apf !=''">
+					AND A_pF = #{apf}
+				</if>
+				<if test="ac != null and ac !=''">
+					AND A_C = #{ac}
+				</if>
+				<if test="bcx != null and bcx !=''">
+					AND B_Cx = #{bcx}
+				</if>
+				<if test="btg != null and btg !=''">
+					AND B_tg = #{btg}
+				</if>
+				<if test="bpf != null and bpf !=''">
+					AND B_pF = #{bpf}
+				</if>
+				<if test="bc != null and bc !=''">
+					AND B_C = #{bc}
+				</if>
+				<if test="ccx != null and ccx !=''">
+					AND C_Cx = #{ccx}
+				</if>
+				<if test="ctg != null and ctg !=''">
+					AND C_tg = #{ctg}
+				</if>
+				<if test="cpf != null and cpf !=''">
+					AND C_pF = #{cpf}
+				</if>
+				<if test="cc != null and cc !=''">
+					AND C_C = #{cc}
+				</if>
+				<if test="dcx != null and dcx !=''">
+					AND D_Cx = #{dcx}
+				</if>
+				<if test="dtg != null and dtg !=''">
+					AND D_tg = #{dtg}
+				</if>
+				<if test="dpf != null and dpf !=''">
+					AND D_pF = #{dpf}
+				</if>
+				<if test="dc != null and dc !=''">
+					AND D_C = #{dc}
+				</if>
+				<if test="addUserid != null">
+					AND add_userid = #{addUserid}
+				</if>
+				<if test="addUsername != null and addUsername !=''">
+					AND add_username = #{addUsername}
+				</if>
+				<if test="addtime != null">
+					AND addtime = #{addtime}
+				</if>
+				<if test="editUserid != null">
+					AND edit_userid = #{editUserid}
+				</if>
+				<if test="editUsername != null and editUsername !=''">
+					AND edit_username = #{editUsername}
+				</if>
+				<if test="edittime != null">
+					AND edittime = #{edittime}
+				</if>
+		</where>
+	</sql>
+
+	<!-- selsect by obj -->
+	<select id="listByObj" resultMap="RM_PowerDocHvBushings" parameterType="com.putorn.powerdoc.entity.PowerDocHvBushings">
+	SELECT
+	<include refid="columns" />
+	FROM power_doc_hv_bushings
+	<include refid="findPage_where" />
+	</select>
+
+
+	<!-- 获取总数 -->
+	<select id="listPageCount" resultType="long" parameterType="map">
+		SELECT COUNT(1)
+		FROM power_doc_hv_bushings
+		<include refid="findPage_where" />
+	</select>  
+
+	<select id="listPage" resultMap="RM_PowerDocHvBushings" parameterType="map">
+		 SELECT
+		<include refid="columns" />
+		FROM power_doc_hv_bushings
+		<include refid="findPage_where" />
+
+		<if test="sortColumns != null and sortColumns !=''">
+			ORDER BY ${sortColumns}
+		</if>
+		
+		<if test="offset != null and pageSize != null">
+			LIMIT  #{offset}, #{pageSize}
+		</if>
+	</select>
+
+</mapper>

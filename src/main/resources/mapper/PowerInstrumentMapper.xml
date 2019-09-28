@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+		<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.putorn.powerdoc.dao.PowerInstrumentMapper">
+
+	<resultMap id="RM_PowerInstrument" type="com.putorn.powerdoc.entity.PowerInstrument">
+        <result property="instrumentId" column="instrument_id"/>
+        <result property="instrumentName" column="instrument_name"/>
+        <result property="instrumentType" column="instrument_type"/>
+        <result property="instrumentStatus" column="instrument_status"/>
+        <result property="addUserid" column="add_userid"/>
+        <result property="addUsername" column="add_username"/>
+        <result property="addtime" column="addtime"/>
+        <result property="editUserid" column="edit_userid"/>
+        <result property="editUsername" column="edit_username"/>
+        <result property="edittime" column="edittime"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		instrument_id,instrument_name,instrument_type,instrument_status,add_userid,add_username,addtime,edit_userid,edit_username,edittime
+	    ]]>
+	</sql>
+
+	<!--保存 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="instrumentId">
+	    <![CDATA[
+	        INSERT INTO power_instrument ( 
+	        	instrument_id ,
+	        	instrument_name ,
+	        	instrument_type ,
+	        	instrument_status ,
+	        	add_userid ,
+	        	add_username ,
+	        	addtime ,
+	        	edit_userid ,
+	        	edit_username ,
+	        	edittime 
+	        ) VALUES (
+	        	#{instrumentId} ,
+	        	#{instrumentName} ,
+	        	#{instrumentType} ,
+	        	#{instrumentStatus} ,
+	        	#{addUserid} ,
+	        	#{addUsername} ,
+	        	#{addtime} ,
+	        	#{editUserid} ,
+	        	#{editUsername} ,
+	        	#{edittime} 
+	        )
+	    ]]>
+	</insert>
+	
+	<!-- 批量保存 -->
+	<insert id="batchInsert">
+	    <![CDATA[
+	        INSERT INTO power_instrument (
+	        		instrument_id ,
+	        		instrument_name ,
+	        		instrument_type ,
+	        		instrument_status ,
+	        		add_userid ,
+	        		add_username ,
+	        		addtime ,
+	        		edit_userid ,
+	        		edit_username ,
+	        		edittime 
+	        ) VALUES 
+	         ]]>
+	        <foreach item="item" collection="list"   separator=",">
+	        	(
+					#{item.instrumentId} ,
+					#{item.instrumentName} ,
+					#{item.instrumentType} ,
+					#{item.instrumentStatus} ,
+					#{item.addUserid} ,
+					#{item.addUsername} ,
+					#{item.addtime} ,
+					#{item.editUserid} ,
+					#{item.editUsername} ,
+					#{item.edittime} 
+	        	)
+			</foreach>
+	   
+	</insert>
+
+	<!-- update 条件组合 -->
+	<sql id="update_sql">
+		<set>
+			<if test="instrumentName != null and instrumentName != ''">
+				instrument_name = #{instrumentName} ,
+			</if>
+			<if test="instrumentType != null and instrumentType != ''">
+				instrument_type = #{instrumentType} ,
+			</if>
+			<if test="instrumentStatus != null and instrumentStatus != ''">
+				instrument_status = #{instrumentStatus} ,
+			</if>
+			<if test="addUserid != null">
+				add_userid = #{addUserid} ,
+			</if>
+			<if test="addUsername != null and addUsername != ''">
+				add_username = #{addUsername} ,
+			</if>
+			<if test="addtime != null">
+				addtime = #{addtime} ,
+			</if>
+			<if test="editUserid != null">
+				edit_userid = #{editUserid} ,
+			</if>
+			<if test="editUsername != null and editUsername != ''">
+				edit_username = #{editUsername} ,
+			</if>
+			<if test="edittime != null">
+				edittime = #{edittime} 
+			</if>
+		</set>
+	</sql>
+	
+	<!-- 修改 -->
+	<update id="updateByPrimaryKey">
+		UPDATE power_instrument
+		<include refid="update_sql" />
+		WHERE
+			instrument_id = #{instrumentId} 
+	</update>
+
+		<!-- 修改 -->
+	<update id="batchUpdateByIds">
+		UPDATE power_instrument
+		<include refid="update_sql" />
+		WHERE
+		instrument_id IN
+			<foreach item="ids" collection="list" open="(" separator="," close=")">
+				#{ids}
+			</foreach>
+	</update>
+
+	<!-- 根据ID删除 -->
+	<delete id="deleteByPrimaryKey">
+    	<![CDATA[
+        	DELETE FROM power_instrument 
+        	WHERE
+        		instrument_id = #{id} 
+    	]]>
+	</delete>
+	
+	<!-- 批量删除 -->
+	<delete id="batchDeleteByIds">
+        DELETE FROM power_instrument 
+        WHERE instrument_id IN 
+        <foreach item="ids" collection="list" open="(" separator="," close=")">
+			#{ids}
+		</foreach>
+    </delete>
+
+	<!-- selsect -->
+	<select id="selectByPrimaryKey" resultMap="RM_PowerInstrument">
+		SELECT
+		<include refid="columns" />
+		FROM power_instrument
+		WHERE
+		instrument_id = #{id} 
+	</select>
+
+
+
+
+
+	<!-- 模糊查询这样： 字段名 LIKE CONCAT('%',CONCAT(#{model.userName},'%')) -->
+	<sql id="findPage_where">
+		<where>
+				<if test="instrumentId != null">
+					AND instrument_id = #{instrumentId}
+				</if>
+				<if test="instrumentName != null and instrumentName !=''">
+					AND instrument_name = #{instrumentName}
+				</if>
+				<if test="instrumentType != null and instrumentType !=''">
+					AND instrument_type = #{instrumentType}
+				</if>
+				<if test="instrumentStatus != null and instrumentStatus !=''">
+					AND instrument_status = #{instrumentStatus}
+				</if>
+				<if test="addUserid != null">
+					AND add_userid = #{addUserid}
+				</if>
+				<if test="addUsername != null and addUsername !=''">
+					AND add_username = #{addUsername}
+				</if>
+				<if test="addtime != null">
+					AND addtime = #{addtime}
+				</if>
+				<if test="editUserid != null">
+					AND edit_userid = #{editUserid}
+				</if>
+				<if test="editUsername != null and editUsername !=''">
+					AND edit_username = #{editUsername}
+				</if>
+				<if test="edittime != null">
+					AND edittime = #{edittime}
+				</if>
+		</where>
+	</sql>
+
+	<!-- selsect by obj -->
+	<select id="listByObj" resultMap="RM_PowerInstrument" parameterType="com.putorn.powerdoc.entity.PowerInstrument">
+	SELECT
+	<include refid="columns" />
+	FROM power_instrument
+	<include refid="findPage_where" />
+	</select>
+
+
+	<!-- 获取总数 -->
+	<select id="listPageCount" resultType="long" parameterType="map">
+		SELECT COUNT(1)
+		FROM power_instrument
+		<include refid="findPage_where" />
+	</select>  
+
+	<select id="listPage" resultMap="RM_PowerInstrument" parameterType="map">
+		 SELECT
+		<include refid="columns" />
+		FROM power_instrument
+		<include refid="findPage_where" />
+
+		<if test="sortColumns != null and sortColumns !=''">
+			ORDER BY ${sortColumns}
+		</if>
+		
+		<if test="offset != null and pageSize != null">
+			LIMIT  #{offset}, #{pageSize}
+		</if>
+	</select>
+
+</mapper>

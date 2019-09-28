@@ -1,0 +1,497 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.putorn.powerdoc.dao.PowerDocInsulationMapper">
+
+    <resultMap id="RM_PowerDocInsulation" type="com.putorn.powerdoc.entity.PowerDocInsulation">
+        <result property="insulationId" column="insulation_id"/>
+        <result property="subreportId" column="subreport_id"/>
+        <result property="ironCore" column="iron_core"/>
+        <result property="clip" column="clip"/>
+        <result property="highMidR15" column="high_mid_R15"/>
+        <result property="midHighR15" column="mid_high_R15"/>
+        <result property="lowHighR15" column="low_high_R15"/>
+        <result property="highMidR60" column="high_mid_R60"/>
+        <result property="midHighR60" column="mid_high_R60"/>
+        <result property="lowHighR60" column="low_high_R60"/>
+        <result property="highMidR10" column="high_mid_R10"/>
+        <result property="midHighR10" column="mid_high_R10"/>
+        <result property="lowHighR10" column="low_high_R10"/>
+        <result property="highMidRatio" column="high_mid_ratio"/>
+        <result property="midHighRatio" column="mid_high_ratio"/>
+        <result property="lowHighRatio" column="low_high_ratio"/>
+        <result property="highMidIndex" column="high_mid_index"/>
+        <result property="midHighIndex" column="mid_high_index"/>
+        <result property="lowHighIndex" column="low_high_index"/>
+        <result property="highMidKv" column="high_mid_kv"/>
+        <result property="midHighKv" column="mid_high_kv"/>
+        <result property="lowHighKv" column="low_high_kv"/>
+        <result property="highMidNf" column="high_mid_nf"/>
+        <result property="midHighNf" column="mid_high_nf"/>
+        <result property="lowHighNf" column="low_high_nf"/>
+        <result property="highMidTg" column="high_mid_tg"/>
+        <result property="midHighTg" column="mid_high_tg"/>
+        <result property="lowHighTg" column="low_high_tg"/>
+        <result property="addUserid" column="add_userid"/>
+        <result property="addUsername" column="add_username"/>
+        <result property="addtime" column="addtime"/>
+        <result property="editUserid" column="edit_userid"/>
+        <result property="editUsername" column="edit_username"/>
+        <result property="edittime" column="edittime"/>
+    </resultMap>
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        <![CDATA[
+		insulation_id,subreport_id,iron_core,clip,high_mid_R15,mid_high_R15,low_high_R15,high_mid_R60,mid_high_R60,low_high_R60,high_mid_R10,mid_high_R10,low_high_R10,high_mid_ratio,mid_high_ratio,low_high_ratio,high_mid_index,mid_high_index,low_high_index,high_mid_kv,mid_high_kv,low_high_kv,high_mid_nf,mid_high_nf,low_high_nf,high_mid_tg,mid_high_tg,low_high_tg,add_userid,add_username,addtime,edit_userid,edit_username,edittime
+	    ]]>
+    </sql>
+
+    <!--保存 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="insulationId">
+        <![CDATA[
+	        INSERT INTO power_doc_insulation (
+	        	subreport_id ,
+	        	iron_core ,
+	        	clip ,
+	        	high_mid_R15 ,
+	        	mid_high_R15 ,
+	        	low_high_R15 ,
+	        	high_mid_R60 ,
+	        	mid_high_R60 ,
+	        	low_high_R60 ,
+	        	high_mid_R10 ,
+	        	mid_high_R10 ,
+	        	low_high_R10 ,
+	        	high_mid_ratio ,
+	        	mid_high_ratio ,
+	        	low_high_ratio ,
+	        	high_mid_index ,
+	        	mid_high_index ,
+	        	low_high_index ,
+	        	high_mid_kv ,
+	        	mid_high_kv ,
+	        	low_high_kv ,
+	        	high_mid_nf ,
+	        	mid_high_nf ,
+	        	low_high_nf ,
+	        	high_mid_tg ,
+	        	mid_high_tg ,
+	        	low_high_tg ,
+	        	add_userid ,
+	        	add_username ,
+	        	addtime ,
+	        	edit_userid ,
+	        	edit_username ,
+	        	edittime
+	        ) VALUES (
+	        	#{subreportId} ,
+	        	#{ironCore} ,
+	        	#{clip} ,
+	        	#{highMidR15} ,
+	        	#{midHighR15} ,
+	        	#{lowHighR15} ,
+	        	#{highMidR60} ,
+	        	#{midHighR60} ,
+	        	#{lowHighR60} ,
+	        	#{highMidR10} ,
+	        	#{midHighR10} ,
+	        	#{lowHighR10} ,
+	        	#{highMidRatio} ,
+	        	#{midHighRatio} ,
+	        	#{lowHighRatio} ,
+	        	#{highMidIndex} ,
+	        	#{midHighIndex} ,
+	        	#{lowHighIndex} ,
+	        	#{highMidKv} ,
+	        	#{midHighKv} ,
+	        	#{lowHighKv} ,
+	        	#{highMidNf} ,
+	        	#{midHighNf} ,
+	        	#{lowHighNf} ,
+	        	#{highMidTg} ,
+	        	#{midHighTg} ,
+	        	#{lowHighTg} ,
+	        	#{addUserid} ,
+	        	#{addUsername} ,
+	        	#{addtime} ,
+	        	#{editUserid} ,
+	        	#{editUsername} ,
+	        	#{edittime}
+	        )
+	    ]]>
+    </insert>
+
+    <!-- 批量保存 -->
+    <insert id="batchInsert">
+        <![CDATA[
+	        INSERT INTO power_doc_insulation (
+	        		subreport_id ,
+	        		iron_core ,
+	        		clip ,
+	        		high_mid_R15 ,
+	        		mid_high_R15 ,
+	        		low_high_R15 ,
+	        		high_mid_R60 ,
+	        		mid_high_R60 ,
+	        		low_high_R60 ,
+	        		high_mid_R10 ,
+	        		mid_high_R10 ,
+	        		low_high_R10 ,
+	        		high_mid_ratio ,
+	        		mid_high_ratio ,
+	        		low_high_ratio ,
+	        		high_mid_index ,
+	        		mid_high_index ,
+	        		low_high_index ,
+	        		high_mid_kv ,
+	        		mid_high_kv ,
+	        		low_high_kv ,
+	        		high_mid_nf ,
+	        		mid_high_nf ,
+	        		low_high_nf ,
+	        		high_mid_tg ,
+	        		mid_high_tg ,
+	        		low_high_tg ,
+	        		add_userid ,
+	        		add_username ,
+	        		addtime ,
+	        		edit_userid ,
+	        		edit_username ,
+	        		edittime
+	        ) VALUES
+	         ]]>
+        <foreach item="item" collection="list"   separator=",">
+            (
+            #{item.subreportId} ,
+            #{item.ironCore} ,
+            #{item.clip} ,
+            #{item.highMidR15} ,
+            #{item.midHighR15} ,
+            #{item.lowHighR15} ,
+            #{item.highMidR60} ,
+            #{item.midHighR60} ,
+            #{item.lowHighR60} ,
+            #{item.highMidR10} ,
+            #{item.midHighR10} ,
+            #{item.lowHighR10} ,
+            #{item.highMidRatio} ,
+            #{item.midHighRatio} ,
+            #{item.lowHighRatio} ,
+            #{item.highMidIndex} ,
+            #{item.midHighIndex} ,
+            #{item.lowHighIndex} ,
+            #{item.highMidKv} ,
+            #{item.midHighKv} ,
+            #{item.lowHighKv} ,
+            #{item.highMidNf} ,
+            #{item.midHighNf} ,
+            #{item.lowHighNf} ,
+            #{item.highMidTg} ,
+            #{item.midHighTg} ,
+            #{item.lowHighTg} ,
+            #{item.addUserid} ,
+            #{item.addUsername} ,
+            #{item.addtime} ,
+            #{item.editUserid} ,
+            #{item.editUsername} ,
+            #{item.edittime}
+            )
+        </foreach>
+
+    </insert>
+
+    <!-- update 条件组合 -->
+    <sql id="update_sql">
+        <set>
+            <if test="subreportId != null">
+                subreport_id = #{subreportId} ,
+            </if>
+            <if test="ironCore != null and ironCore != ''">
+                iron_core = #{ironCore} ,
+            </if>
+            <if test="clip != null and clip != ''">
+                clip = #{clip} ,
+            </if>
+            <if test="highMidR15 != null and highMidR15 != ''">
+                high_mid_R15 = #{highMidR15} ,
+            </if>
+            <if test="midHighR15 != null and midHighR15 != ''">
+                mid_high_R15 = #{midHighR15} ,
+            </if>
+            <if test="lowHighR15 != null and lowHighR15 != ''">
+                low_high_R15 = #{lowHighR15} ,
+            </if>
+            <if test="highMidR60 != null and highMidR60 != ''">
+                high_mid_R60 = #{highMidR60} ,
+            </if>
+            <if test="midHighR60 != null and midHighR60 != ''">
+                mid_high_R60 = #{midHighR60} ,
+            </if>
+            <if test="lowHighR60 != null and lowHighR60 != ''">
+                low_high_R60 = #{lowHighR60} ,
+            </if>
+            <if test="highMidR10 != null and highMidR10 != ''">
+                high_mid_R10 = #{highMidR10} ,
+            </if>
+            <if test="midHighR10 != null and midHighR10 != ''">
+                mid_high_R10 = #{midHighR10} ,
+            </if>
+            <if test="lowHighR10 != null and lowHighR10 != ''">
+                low_high_R10 = #{lowHighR10} ,
+            </if>
+            <if test="highMidRatio != null and highMidRatio != ''">
+                high_mid_ratio = #{highMidRatio} ,
+            </if>
+            <if test="midHighRatio != null and midHighRatio != ''">
+                mid_high_ratio = #{midHighRatio} ,
+            </if>
+            <if test="lowHighRatio != null and lowHighRatio != ''">
+                low_high_ratio = #{lowHighRatio} ,
+            </if>
+            <if test="highMidIndex != null and highMidIndex != ''">
+                high_mid_index = #{highMidIndex} ,
+            </if>
+            <if test="midHighIndex != null and midHighIndex != ''">
+                mid_high_index = #{midHighIndex} ,
+            </if>
+            <if test="lowHighIndex != null and lowHighIndex != ''">
+                low_high_index = #{lowHighIndex} ,
+            </if>
+            <if test="highMidKv != null and highMidKv != ''">
+                high_mid_kv = #{highMidKv} ,
+            </if>
+            <if test="midHighKv != null and midHighKv != ''">
+                mid_high_kv = #{midHighKv} ,
+            </if>
+            <if test="lowHighKv != null and lowHighKv != ''">
+                low_high_kv = #{lowHighKv} ,
+            </if>
+            <if test="highMidNf != null and highMidNf != ''">
+                high_mid_nf = #{highMidNf} ,
+            </if>
+            <if test="midHighNf != null and midHighNf != ''">
+                mid_high_nf = #{midHighNf} ,
+            </if>
+            <if test="lowHighNf != null and lowHighNf != ''">
+                low_high_nf = #{lowHighNf} ,
+            </if>
+            <if test="highMidTg != null and highMidTg != ''">
+                high_mid_tg = #{highMidTg} ,
+            </if>
+            <if test="midHighTg != null and midHighTg != ''">
+                mid_high_tg = #{midHighTg} ,
+            </if>
+            <if test="lowHighTg != null and lowHighTg != ''">
+                low_high_tg = #{lowHighTg} ,
+            </if>
+            <if test="addUserid != null">
+                add_userid = #{addUserid} ,
+            </if>
+            <if test="addUsername != null and addUsername != ''">
+                add_username = #{addUsername} ,
+            </if>
+            <if test="addtime != null">
+                addtime = #{addtime} ,
+            </if>
+            <if test="editUserid != null">
+                edit_userid = #{editUserid} ,
+            </if>
+            <if test="editUsername != null and editUsername != ''">
+                edit_username = #{editUsername} ,
+            </if>
+            <if test="edittime != null">
+                edittime = #{edittime}
+            </if>
+        </set>
+    </sql>
+
+    <!-- 修改 -->
+    <update id="updateByPrimaryKey">
+        UPDATE power_doc_insulation
+        <include refid="update_sql" />
+        WHERE
+        insulation_id = #{insulationId}
+    </update>
+
+    <!-- 修改 -->
+    <update id="batchUpdateByIds">
+        UPDATE power_doc_insulation
+        <include refid="update_sql" />
+        WHERE
+        insulation_id IN
+        <foreach item="ids" collection="list" open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </update>
+
+    <!-- 根据ID删除 -->
+    <delete id="deleteByPrimaryKey">
+        <![CDATA[
+        	DELETE FROM power_doc_insulation
+        	WHERE
+        		insulation_id = #{id}
+    	]]>
+    </delete>
+
+    <!-- 批量删除 -->
+    <delete id="batchDeleteByIds">
+        DELETE FROM power_doc_insulation
+        WHERE insulation_id IN
+        <foreach item="ids" collection="list" open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </delete>
+
+    <!-- selsect -->
+    <select id="selectByPrimaryKey" resultMap="RM_PowerDocInsulation">
+        SELECT
+        <include refid="columns" />
+        FROM power_doc_insulation
+        WHERE
+        insulation_id = #{id}
+    </select>
+
+
+
+
+
+    <!-- 模糊查询这样： 字段名 LIKE CONCAT('%',CONCAT(#{model.userName},'%')) -->
+    <sql id="findPage_where">
+        <where>
+            <if test="insulationId != null">
+                AND insulation_id = #{insulationId}
+            </if>
+            <if test="subreportId != null">
+                AND subreport_id = #{subreportId}
+            </if>
+            <if test="ironCore != null and ironCore !=''">
+                AND iron_core = #{ironCore}
+            </if>
+            <if test="clip != null and clip !=''">
+                AND clip = #{clip}
+            </if>
+            <if test="highMidR15 != null and highMidR15 !=''">
+                AND high_mid_R15 = #{highMidR15}
+            </if>
+            <if test="midHighR15 != null and midHighR15 !=''">
+                AND mid_high_R15 = #{midHighR15}
+            </if>
+            <if test="lowHighR15 != null and lowHighR15 !=''">
+                AND low_high_R15 = #{lowHighR15}
+            </if>
+            <if test="highMidR60 != null and highMidR60 !=''">
+                AND high_mid_R60 = #{highMidR60}
+            </if>
+            <if test="midHighR60 != null and midHighR60 !=''">
+                AND mid_high_R60 = #{midHighR60}
+            </if>
+            <if test="lowHighR60 != null and lowHighR60 !=''">
+                AND low_high_R60 = #{lowHighR60}
+            </if>
+            <if test="highMidR10 != null and highMidR10 !=''">
+                AND high_mid_R10 = #{highMidR10}
+            </if>
+            <if test="midHighR10 != null and midHighR10 !=''">
+                AND mid_high_R10 = #{midHighR10}
+            </if>
+            <if test="lowHighR10 != null and lowHighR10 !=''">
+                AND low_high_R10 = #{lowHighR10}
+            </if>
+            <if test="highMidRatio != null and highMidRatio !=''">
+                AND high_mid_ratio = #{highMidRatio}
+            </if>
+            <if test="midHighRatio != null and midHighRatio !=''">
+                AND mid_high_ratio = #{midHighRatio}
+            </if>
+            <if test="lowHighRatio != null and lowHighRatio !=''">
+                AND low_high_ratio = #{lowHighRatio}
+            </if>
+            <if test="highMidIndex != null and highMidIndex !=''">
+                AND high_mid_index = #{highMidIndex}
+            </if>
+            <if test="midHighIndex != null and midHighIndex !=''">
+                AND mid_high_index = #{midHighIndex}
+            </if>
+            <if test="lowHighIndex != null and lowHighIndex !=''">
+                AND low_high_index = #{lowHighIndex}
+            </if>
+            <if test="highMidKv != null and highMidKv !=''">
+                AND high_mid_kv = #{highMidKv}
+            </if>
+            <if test="midHighKv != null and midHighKv !=''">
+                AND mid_high_kv = #{midHighKv}
+            </if>
+            <if test="lowHighKv != null and lowHighKv !=''">
+                AND low_high_kv = #{lowHighKv}
+            </if>
+            <if test="highMidNf != null and highMidNf !=''">
+                AND high_mid_nf = #{highMidNf}
+            </if>
+            <if test="midHighNf != null and midHighNf !=''">
+                AND mid_high_nf = #{midHighNf}
+            </if>
+            <if test="lowHighNf != null and lowHighNf !=''">
+                AND low_high_nf = #{lowHighNf}
+            </if>
+            <if test="highMidTg != null and highMidTg !=''">
+                AND high_mid_tg = #{highMidTg}
+            </if>
+            <if test="midHighTg != null and midHighTg !=''">
+                AND mid_high_tg = #{midHighTg}
+            </if>
+            <if test="lowHighTg != null and lowHighTg !=''">
+                AND low_high_tg = #{lowHighTg}
+            </if>
+            <if test="addUserid != null">
+                AND add_userid = #{addUserid}
+            </if>
+            <if test="addUsername != null and addUsername !=''">
+                AND add_username = #{addUsername}
+            </if>
+            <if test="addtime != null">
+                AND addtime = #{addtime}
+            </if>
+            <if test="editUserid != null">
+                AND edit_userid = #{editUserid}
+            </if>
+            <if test="editUsername != null and editUsername !=''">
+                AND edit_username = #{editUsername}
+            </if>
+            <if test="edittime != null">
+                AND edittime = #{edittime}
+            </if>
+        </where>
+    </sql>
+
+    <!-- selsect by obj -->
+    <select id="listByObj" resultMap="RM_PowerDocInsulation" parameterType="com.putorn.powerdoc.entity.PowerDocInsulation">
+        SELECT
+        <include refid="columns" />
+        FROM power_doc_insulation
+        <include refid="findPage_where" />
+    </select>
+
+
+    <!-- 获取总数 -->
+    <select id="listPageCount" resultType="long" parameterType="map">
+        SELECT COUNT(1)
+        FROM power_doc_insulation
+        <include refid="findPage_where" />
+    </select>
+
+    <select id="listPage" resultMap="RM_PowerDocInsulation" parameterType="map">
+        SELECT
+        <include refid="columns" />
+        FROM power_doc_insulation
+        <include refid="findPage_where" />
+
+        <if test="sortColumns != null and sortColumns !=''">
+            ORDER BY ${sortColumns}
+        </if>
+
+        <if test="offset != null and pageSize != null">
+            LIMIT  #{offset}, #{pageSize}
+        </if>
+    </select>
+
+</mapper>
