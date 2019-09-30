@@ -263,22 +263,82 @@ public class PowerReportServiceImpl extends BaseServiceImpl<PowerReport> impleme
                 if(deviceId != null) {
                     PowerDevice powerDevice = deviceMapper.selectByPrimaryKey(deviceId);
                     if(powerDevice != null) {
+
                         subReport.setDeviceName(powerDevice.getDeviceName());
                         subReport.setDeviceType(powerDevice.getDeviceType());
-                        subReport.setAirTemperature(powerDevice.getAirTemperature());
-                        subReport.setHumidity(powerDevice.getHumidity());
-                        subReport.setRunHumidity(powerDevice.getRunHumidity());
-                        subReport.setConnectGroup(powerDevice.getConnectGroup());
-                        subReport.setModelNo(powerDevice.getModelNo());
-                        subReport.setProducer(powerDevice.getProducer());
-                        subReport.setCapacity(powerDevice.getCapacity());
-                        subReport.setRunNo(powerDevice.getRunNo());
-                        subReport.setRunDate(powerDevice.getRunDate());
-                        subReport.setProductionDate(powerDevice.getProductionDate());
-                        subReport.setProductionNo(powerDevice.getProductionNo());
+
+                        //气温，运行电压，油温，湿度，容量等字段如果前端有值则优先使用前端的，否则取数据库设备信息
+                        if(StringUtils.isEmpty(subReportVo.getAirTemperature())) {
+                            subReport.setAirTemperature(subReportVo.getAirTemperature());
+                        }else {
+                            subReport.setAirTemperature(powerDevice.getAirTemperature());
+                        }
+
+                        if(StringUtils.isEmpty(subReportVo.getHumidity())) {
+                            subReport.setAirTemperature(subReportVo.getHumidity());
+                        }else {
+                            subReport.setAirTemperature(powerDevice.getHumidity());
+                        }
+
+                        if(StringUtils.isEmpty(subReportVo.getRunHumidity())) {
+                            subReport.setAirTemperature(subReportVo.getRunHumidity());
+                        }else {
+                            subReport.setAirTemperature(powerDevice.getRunHumidity());
+                        }
+
+                        if(StringUtils.isEmpty(subReportVo.getConnectGroup())) {
+                            subReport.setAirTemperature(subReportVo.getConnectGroup());
+                        }else {
+                            subReport.setAirTemperature(powerDevice.getConnectGroup());
+                        }
+
+                        if(StringUtils.isEmpty(subReportVo.getModelNo())) {
+                            subReport.setAirTemperature(subReportVo.getModelNo());
+                        }else {
+                            subReport.setAirTemperature(powerDevice.getModelNo());
+                        }
+
+
+                        if(StringUtils.isEmpty(subReportVo.getProducer())) {
+                            subReport.setAirTemperature(subReportVo.getProducer());
+                        }else {
+                            subReport.setAirTemperature(powerDevice.getProducer());
+                        }
+
+
+                        if(StringUtils.isEmpty(subReportVo.getCapacity())) {
+                            subReport.setAirTemperature(subReportVo.getCapacity());
+                        }else {
+                            subReport.setAirTemperature(powerDevice.getCapacity());
+                        }
+
+                        if(StringUtils.isEmpty(subReportVo.getRunNo())) {
+                            subReport.setAirTemperature(subReportVo.getRunNo());
+                        }else {
+                            subReport.setAirTemperature(powerDevice.getRunNo());
+                        }
+
+                        if(StringUtils.isEmpty(subReportVo.getRunDate())) {
+                            subReport.setAirTemperature(subReportVo.getRunDate());
+                        }else {
+                            subReport.setAirTemperature(powerDevice.getRunDate());
+                        }
+
+                        if(StringUtils.isEmpty(subReportVo.getProductionDate())) {
+                            subReport.setAirTemperature(subReportVo.getProductionDate());
+                        }else {
+                            subReport.setAirTemperature(powerDevice.getProductionDate());
+                        }
+
+                        if(StringUtils.isEmpty(subReportVo.getProductionNo())) {
+                            subReport.setAirTemperature(subReportVo.getProductionNo());
+                        }else {
+                            subReport.setAirTemperature(powerDevice.getProductionNo());
+                        }
+
                     }
                 }
-                StringBuilder instrumentNamesSb = new StringBuilder("");
+                StringBuilder instrumentNamesSb = new StringBuilder();
                 String instrumentIds = subReportVo.getInstrumentIds();
                 subReport.setInstrumentIds(instrumentIds);
                 // 仪器设备非空
