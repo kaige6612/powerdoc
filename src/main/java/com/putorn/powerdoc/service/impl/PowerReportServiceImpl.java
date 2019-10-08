@@ -5,6 +5,7 @@ import com.putorn.powerdoc.base.BaseEntity;
 import com.putorn.powerdoc.dao.*;
 import com.putorn.powerdoc.base.BaseDao;
 import com.putorn.powerdoc.entity.*;
+import com.putorn.powerdoc.entity.vo.PowerDocDcResistanceVo;
 import com.putorn.powerdoc.entity.vo.PowerReportVo;
 import com.putorn.powerdoc.entity.vo.PowerSubReportVo;
 import com.putorn.powerdoc.entity.vo.SubReportDetailInterface;
@@ -57,6 +58,20 @@ public class PowerReportServiceImpl extends BaseServiceImpl<PowerReport> impleme
     @Autowired
     private PowerDocInsulationMapper insulationMapper;
 
+    @Autowired
+    private PowerDocDcResistanceMapper dcResistanceMapper;
+
+    @Autowired
+    private PowerDocHvBushingsMapper hvBushingsMapper;
+
+    @Autowired
+    private PowerDocVoltageTransformerMapper voltageTransformerMapper;
+
+    @Autowired
+    private PowerDocCurrentTransformerMapper currentTransformerMapper;
+
+    @Autowired
+    private PowerDocResistanceDetailMapper resistanceDetailMapper;
     @Override
     protected BaseDao getBaseDao() {
         return this.powerReportMapper;
@@ -94,34 +109,8 @@ public class PowerReportServiceImpl extends BaseServiceImpl<PowerReport> impleme
                             PowerDeviceModel powerDeviceModel = deviceModelMapper.selectByPrimaryKey(Long.parseLong(modelDeviceId));
                             PowerModel powerModel = modelMapper.selectByPrimaryKey(powerDeviceModel.getModelId());
 
-                            String modelTableName = powerModel.getModelTableName();
-
-                            //获取具体报告内容
-                            JSONObject subReportDerail = subReportVo.getReportDetail();
-
-                            //判断报告内容，并保存相应的报告信息
-                            switch (modelTableName) {
-                                //变压器绝缘试验报告
-                                case "power_doc_insulation":
-                                    PowerDocInsulation insulation = JSON.toJavaObject(subReportDerail,PowerDocInsulation.class);
-                                    insulation.setSubreportId(Long.parseLong(subReportId));
-
-                                    insulationMapper.insert(insulation);
-                                    //保存报告具体信息
-                                    break;
-
-                                //变压器直流电阻试验报告
-                                case "":
-
-                                    break;
-                                //变压器直流电阻试验报告
-                                case " ":
-
-                                    break;
-                                default:
-                                    break;
-                            }
-
+                            //保存具体的报告信息
+                            saveSubDetail(powerModel,subReportVo,subReportId);
                         }
 
                     }
@@ -131,6 +120,72 @@ public class PowerReportServiceImpl extends BaseServiceImpl<PowerReport> impleme
             }
         }
         return errorList;
+    }
+
+    /**
+     * 保存报告详细数据信息
+     * @param powerModel
+     * @param subReportVo
+     * @param subReportId
+     */
+    private void saveSubDetail(PowerModel powerModel,PowerSubReportVo subReportVo,String subReportId){
+        String modelTableName = powerModel.getModelTableName();
+
+        //获取具体报告内容
+        JSONObject subReportDerail = subReportVo.getReportDetail();
+
+        //判断报告内容，并保存相应的报告信息
+        switch (modelTableName) {
+            //变压器绝缘试验报告
+            case "power_doc_insulation":
+                PowerDocInsulation insulation = JSON.toJavaObject(subReportDerail,PowerDocInsulation.class);
+                insulation.setSubreportId(Long.parseLong(subReportId));
+
+                insulationMapper.insert(insulation);
+                //保存报告具体信息
+                break;
+
+            //变压器直流电阻试验报告
+            case "power_doc_dc_resistance":
+                PowerDocDcResistanceVo resistanceVo = JSON.toJavaObject(subReportDerail, PowerDocDcResistanceVo.class);
+
+                subReportDerail.remove("details");
+                PowerDocDcResistance resistance = JSON.toJavaObject(subReportDerail,PowerDocDcResistance.class);
+                resistance.setSubreportId(Long.parseLong(subReportId));
+                dcResistanceMapper.insert(resistance);
+
+                List<PowerDocResistanceDetail> details = resistanceVo.getDetails();
+                //遍历并保存每行数据的信息
+                for (PowerDocResistanceDetail detail: details) {
+                    detail.setSubreportId(Long.parseLong(subReportId));
+                    resistanceDetailMapper.insert(detail);
+                }
+
+                break;
+
+            //高压套管试验报告
+            case "power_doc_hv_bushings":
+                PowerDocHvBushings hvBushings = JSON.toJavaObject(subReportDerail,PowerDocHvBushings.class);
+                hvBushings.setSubreportId(Long.parseLong(subReportId));
+                hvBushingsMapper.insert(hvBushings);
+                break;
+
+            //电压互感器试验报告
+            case "power_doc_voltage_transformer":
+                PowerDocVoltageTransformer voltageTransformer = JSON.toJavaObject(subReportDerail, PowerDocVoltageTransformer.class);
+                voltageTransformer.setSubreportId(Long.parseLong(subReportId));
+                voltageTransformerMapper.insert(voltageTransformer);
+                break;
+
+            //电流互感器试验报告
+            case "power_doc_current_transformer":
+                PowerDocCurrentTransformer currentTransformer = JSON.toJavaObject(subReportDerail, PowerDocCurrentTransformer.class);
+                currentTransformer.setSubreportId(Long.parseLong(subReportId));
+                currentTransformerMapper.insert(currentTransformer);
+                break;
+            default:
+                break;
+        }
     }
 
     /**
