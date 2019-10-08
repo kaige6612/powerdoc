@@ -28,10 +28,11 @@ import java.util.Map;
 @RestController
 @RequestMapping("powerInstrument")
 public class PowerInstrumentController{
-    private final Log logger = LogFactory.getLog(this.getClass());
+
     @Autowired
     private PowerInstrumentService powerInstrumentService;
 
+    private final Log logger = LogFactory.getLog(this.getClass());
     @PostMapping("saveInstrument")
     @ApiImplicitParam(name = "instrument",value = "添加仪器",dataType = "PowerInstrument",required = true)
     @ApiOperation(value = "添加仪器",notes = "添加仪器对象,主键自增",produces = "application/json")

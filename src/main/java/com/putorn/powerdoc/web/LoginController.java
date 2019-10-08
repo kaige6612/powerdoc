@@ -1,6 +1,7 @@
 package com.putorn.powerdoc.web;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.putorn.powerdoc.common.UserSessionContext;
 import com.putorn.powerdoc.entity.*;
 import com.putorn.powerdoc.enumconst.SystemStatusEnum;
@@ -51,11 +52,6 @@ public class LoginController {
     private PowerModelService powerModelService;
 
     @PostMapping("userLogin")
-//    @ApiImplicitParams({
-//            @ApiImplicitParam(name = "userName",value = "用户姓名",required = true),
-//            @ApiImplicitParam(name = "password",value = "密码",required = true)
-//    })
-//    @ApiImplicitParam(name = "paramUser",value = "单个用户",dataType = "PowerSysUser",required = true)
     @ApiOperation(value = "用户登录",notes = "根据用户名和密码进行登录",produces = "application/json")
     @ApiResponse(code = 200,message = "success")
     public ResponseEntity<Map<String,Object>> saveUpUser(@RequestBody PowerSysUser paramUser, HttpServletRequest request){
@@ -115,42 +111,42 @@ public class LoginController {
     public ResponseEntity<Map<String,Object>> getBasicData(){
         Map<String,Object> result = new HashMap<>();
 
+        JSONObject resultJson = new JSONObject();
         try {
             //查询所有有效用户
             PowerSysUser queryUser = new PowerSysUser();
             queryUser.setStatus(Integer.parseInt(SystemStatusEnum.SYSTEM_STATUS_EFFECTIVE.getKey()));
             List<PowerSysUser> powerSysUsers = userService.listByObj(queryUser);
-            result.put("userList",powerSysUsers);
+            resultJson.put("userList",powerSysUsers);
 
             //查询所有变电站信息
             PowerSubstation powerSubstation = new PowerSubstation();
             List<PowerSubstation> powerSubstations = powerSubstationService.listByObj(powerSubstation);
-            result.put("substationsList",powerSubstations);
+            resultJson.put("substationsList",powerSubstations);
 
             //所有有效仪器信息
             PowerInstrument instrument = new PowerInstrument();
             instrument.setInstrumentStatus(SystemStatusEnum.SYSTEM_STATUS_EFFECTIVE.getKey());
             List<PowerInstrument> powerInstruments = powerInstrumentService.listByObj(instrument);
-            result.put("instrumentList",powerInstruments);
+            resultJson.put("instrumentList",powerInstruments);
 
             //获取所有有效设备信息
             PowerDevice powerDevice = new PowerDevice();
             powerDevice.setStatus(SystemStatusEnum.SYSTEM_STATUS_EFFECTIVE.getKey());
             List<PowerDevice> powerDevices = powerDeviceService.listByObj(powerDevice);
-            result.put("deviceList",powerDevices);
+            resultJson.put("deviceList",powerDevices);
 
             //获取所有有效模板信息
             PowerModel powerModel = new PowerModel();
             powerModel.setModelStatus(SystemStatusEnum.SYSTEM_STATUS_EFFECTIVE.getKey());
             List<PowerModel> powerModels = powerModelService.listByObj(powerModel);
-            result.put("modelList",powerModels);
+            resultJson.put("modelList",powerModels);
 
             //获取所有配置的模板设备关系
             PowerDeviceModel powerDeviceModel = new PowerDeviceModel();
 
             List<PowerDeviceModel> powerDeviceModels = powerDeviceModelService.effectiveList(powerDeviceModel);
-//            List<PowerDeviceModel> powerDeviceModels = powerDeviceModelService.listByObj(powerDeviceModel);
-            result.put("deviceModelList",powerDeviceModels);
+            resultJson.put("deviceModelList",powerDeviceModels);
 
             result.put("code","200");
             result.put("message","查询成功");
@@ -161,6 +157,7 @@ public class LoginController {
             logger.error("服务异常!!! result="+ JSON.toJSONString(result),e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(result);
         }
+        result.put("result",resultJson.toJSONString());
         logger.info("获取基础数据 ："+JSON.toJSONString(result));
         return ResponseEntity.ok(result);
     }
