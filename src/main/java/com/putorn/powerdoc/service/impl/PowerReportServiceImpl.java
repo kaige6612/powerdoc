@@ -20,6 +20,7 @@ import com.putorn.powerdoc.base.BaseServiceImpl;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.lang.reflect.Field;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -89,31 +90,48 @@ public class PowerReportServiceImpl extends BaseServiceImpl<PowerReport> impleme
                 continue;
             }else {
                 //保存正常，则继续保存各个设备详细报告
-                List<PowerSubReportVo> subReportList = powerReportVo.getSubReportList();
-                for (PowerSubReportVo subReportVo:subReportList) {
+                List<JSONObject> subReportList = powerReportVo.getSubReportList();
+                for (JSONObject subReportJson:subReportList) {
 
-                    //保存设备报告公共信息
-                    Map<String, Object> subReportResultMap = this.saveSubReportFromVo(subReportVo, powerReportVo);
-                    if(subReportResultMap.containsKey("errorMsg") && !StringUtils.isEmpty(subReportResultMap.get("errorMsg"))) {
-                        errorList.add(error);
+                    Map<String, Object> map = devideSubReportAndDetail(subReportJson);
+                    Map<String,Object> subreportMap = (Map<String,Object>)map.get("subReport");
+                    Map<String,Object> detailMap = (Map<String,Object>)map.get("detail");
+
+                    if(!subreportMap.containsKey("modelDeviceId")) {
+                        errorList.add(String.valueOf(powerReportVo.getId()));
+                        logger.error("不包含modelDeviceId字段，无法保存信息");
                         continue;
                     }else {
-                        //获取插入的子报告id
-                        String subReportId = subReportResultMap.get("subReportId").toString();
 
-                        //根据选择的模板和设备对应关系，确定使用的模板，以确定需要插入数据的表格
-                        String modelDeviceId = subReportVo.getModelDeviceId();
+                        //转为子报告首页信息
+                        PowerSubReport subReport = JSON.toJavaObject(JSON.parseObject(JSON.toJSONString(subreportMap)),PowerSubReport.class);
 
-                        //必须存在此字段，否则无法判别需要转换的类及需要使用的模板
-                        if(!StringUtils.isEmpty(modelDeviceId)) {
-                            PowerDeviceModel powerDeviceModel = deviceModelMapper.selectByPrimaryKey(Long.parseLong(modelDeviceId));
-                            PowerModel powerModel = modelMapper.selectByPrimaryKey(powerDeviceModel.getModelId());
+                        //保存设备报告公共信息
+                        Map<String, Object> subReportResultMap = this.saveSubReportFromVo(subReport, powerReportVo);
+                        if(subReportResultMap.containsKey("errorMsg") && !StringUtils.isEmpty(subReportResultMap.get("errorMsg"))) {
+                            errorList.add(error);
+                            continue;
+                        }else {
+                            //获取插入的子报告id
+                            String subReportId = subReportResultMap.get("subReportId").toString();
 
-                            //保存具体的报告信息
-                            saveSubDetail(powerModel,subReportVo,subReportId);
+                            //根据选择的模板和设备对应关系，确定使用的模板，以确定需要插入数据的表格
+//                            String modelDeviceId = subReport.getModelDeviceId();
+                            String modelDeviceId = "";
+
+                            //必须存在此字段，否则无法判别需要转换的类及需要使用的模板
+                            if(!StringUtils.isEmpty(modelDeviceId)) {
+                                PowerDeviceModel powerDeviceModel = deviceModelMapper.selectByPrimaryKey(Long.parseLong(modelDeviceId));
+                                PowerModel powerModel = modelMapper.selectByPrimaryKey(powerDeviceModel.getModelId());
+
+                                //保存具体的报告信息
+                                saveSubDetail(powerModel,detailMap,subReportId);
+                            }
+
                         }
-
+                        
                     }
+                   
 
                 }
                 
@@ -123,16 +141,44 @@ public class PowerReportServiceImpl extends BaseServiceImpl<PowerReport> impleme
     }
 
     /**
+     * 将jsonObject划分为子报告和详细内容，以便于直接转换为对应的javabean
+     * @param jsonObject
+     * @return
+     */
+    public Map<String,Object> devideSubReportAndDetail(JSONObject jsonObject) {
+        Map<String,Object> map = new HashMap<>();
+        Map<String,Object> subReportMap = new HashMap<>();
+        Map<String,Object> detailMap = new HashMap<>();
+
+        Class clazz = PowerSubReport.class;
+        Field[] fields = clazz.getFields();
+        List<Field> fieldsList = Arrays.asList(fields);
+        Set<String> keySet = jsonObject.keySet();
+        for(String key: keySet) {
+            if(fieldsList.contains(key)) {
+                subReportMap.put(key,jsonObject.get(key));
+            }else {
+                detailMap.put(key,jsonObject.get(key));
+            }
+        }
+
+        map.put("subReport",subReportMap);
+        map.put("detail",detailMap);
+        return map;
+
+    }
+
+    /**
      * 保存报告详细数据信息
      * @param powerModel
-     * @param subReportVo
+     * @param detailMap
      * @param subReportId
      */
-    private void saveSubDetail(PowerModel powerModel,PowerSubReportVo subReportVo,String subReportId){
+    private void saveSubDetail(PowerModel powerModel,Map<String,Object> detailMap,String subReportId){
         String modelTableName = powerModel.getModelTableName();
 
         //获取具体报告内容
-        JSONObject subReportDerail = subReportVo.getReportDetail();
+        JSONObject subReportDerail = JSON.parseObject(JSON.toJSONString(detailMap));
 
         //判断报告内容，并保存相应的报告信息
         switch (modelTableName) {
@@ -296,15 +342,15 @@ public class PowerReportServiceImpl extends BaseServiceImpl<PowerReport> impleme
 
     /**
      * 插入子报告信息，并返回错误信息和主键
-     * @param subReportVo
+     * @param subReportRemote
      * @param powerReportVo
      * @return
      */
-    private Map<String,Object> saveSubReportFromVo(PowerSubReportVo subReportVo, PowerReportVo powerReportVo) {
+    private Map<String,Object> saveSubReportFromVo(PowerSubReport subReportRemote, PowerReportVo powerReportVo) {
         Map<String,Object> returnMap = new HashMap<>();
         String errorMsg = null;
         Long id = null;
-        if(subReportVo != null && powerReportVo != null) {
+        if(subReportRemote != null && powerReportVo != null) {
             try {
                 PowerSubReport subReport = new PowerSubReport();
                 //默认有效
@@ -313,7 +359,7 @@ public class PowerReportServiceImpl extends BaseServiceImpl<PowerReport> impleme
                 subReport.setReportId(powerReportVo.getId());
                 subReport.setTestDate(powerReportVo.getTestDate());
 
-                Long deviceId = subReportVo.getDeviceId();
+                Long deviceId = subReportRemote.getDeviceId();
                 subReport.setDeviceId(deviceId);
                 if(deviceId != null) {
                     PowerDevice powerDevice = deviceMapper.selectByPrimaryKey(deviceId);
@@ -323,70 +369,70 @@ public class PowerReportServiceImpl extends BaseServiceImpl<PowerReport> impleme
                         subReport.setDeviceType(powerDevice.getDeviceType());
 
                         //气温，运行电压，油温，湿度，容量等字段如果前端有值则优先使用前端的，否则取数据库设备信息
-                        if(StringUtils.isEmpty(subReportVo.getAirTemperature())) {
-                            subReport.setAirTemperature(subReportVo.getAirTemperature());
+                        if(StringUtils.isEmpty(subReportRemote.getAirTemperature())) {
+                            subReport.setAirTemperature(subReportRemote.getAirTemperature());
                         }else {
                             subReport.setAirTemperature(powerDevice.getAirTemperature());
                         }
 
-                        if(StringUtils.isEmpty(subReportVo.getHumidity())) {
-                            subReport.setAirTemperature(subReportVo.getHumidity());
+                        if(StringUtils.isEmpty(subReportRemote.getHumidity())) {
+                            subReport.setAirTemperature(subReportRemote.getHumidity());
                         }else {
                             subReport.setAirTemperature(powerDevice.getHumidity());
                         }
 
-                        if(StringUtils.isEmpty(subReportVo.getRunHumidity())) {
-                            subReport.setAirTemperature(subReportVo.getRunHumidity());
+                        if(StringUtils.isEmpty(subReportRemote.getRunHumidity())) {
+                            subReport.setAirTemperature(subReportRemote.getRunHumidity());
                         }else {
                             subReport.setAirTemperature(powerDevice.getRunHumidity());
                         }
 
-                        if(StringUtils.isEmpty(subReportVo.getConnectGroup())) {
-                            subReport.setAirTemperature(subReportVo.getConnectGroup());
+                        if(StringUtils.isEmpty(subReportRemote.getConnectGroup())) {
+                            subReport.setAirTemperature(subReportRemote.getConnectGroup());
                         }else {
                             subReport.setAirTemperature(powerDevice.getConnectGroup());
                         }
 
-                        if(StringUtils.isEmpty(subReportVo.getModelNo())) {
-                            subReport.setAirTemperature(subReportVo.getModelNo());
+                        if(StringUtils.isEmpty(subReportRemote.getModelNo())) {
+                            subReport.setAirTemperature(subReportRemote.getModelNo());
                         }else {
                             subReport.setAirTemperature(powerDevice.getModelNo());
                         }
 
 
-                        if(StringUtils.isEmpty(subReportVo.getProducer())) {
-                            subReport.setAirTemperature(subReportVo.getProducer());
+                        if(StringUtils.isEmpty(subReportRemote.getProducer())) {
+                            subReport.setAirTemperature(subReportRemote.getProducer());
                         }else {
                             subReport.setAirTemperature(powerDevice.getProducer());
                         }
 
 
-                        if(StringUtils.isEmpty(subReportVo.getCapacity())) {
-                            subReport.setAirTemperature(subReportVo.getCapacity());
+                        if(StringUtils.isEmpty(subReportRemote.getCapacity())) {
+                            subReport.setAirTemperature(subReportRemote.getCapacity());
                         }else {
                             subReport.setAirTemperature(powerDevice.getCapacity());
                         }
 
-                        if(StringUtils.isEmpty(subReportVo.getRunNo())) {
-                            subReport.setAirTemperature(subReportVo.getRunNo());
+                        if(StringUtils.isEmpty(subReportRemote.getRunNo())) {
+                            subReport.setAirTemperature(subReportRemote.getRunNo());
                         }else {
                             subReport.setAirTemperature(powerDevice.getRunNo());
                         }
 
-                        if(StringUtils.isEmpty(subReportVo.getRunDate())) {
-                            subReport.setAirTemperature(subReportVo.getRunDate());
+                        if(StringUtils.isEmpty(subReportRemote.getRunDate())) {
+                            subReport.setAirTemperature(subReportRemote.getRunDate());
                         }else {
                             subReport.setAirTemperature(powerDevice.getRunDate());
                         }
 
-                        if(StringUtils.isEmpty(subReportVo.getProductionDate())) {
-                            subReport.setAirTemperature(subReportVo.getProductionDate());
+                        if(StringUtils.isEmpty(subReportRemote.getProductionDate())) {
+                            subReport.setAirTemperature(subReportRemote.getProductionDate());
                         }else {
                             subReport.setAirTemperature(powerDevice.getProductionDate());
                         }
 
-                        if(StringUtils.isEmpty(subReportVo.getProductionNo())) {
-                            subReport.setAirTemperature(subReportVo.getProductionNo());
+                        if(StringUtils.isEmpty(subReportRemote.getProductionNo())) {
+                            subReport.setAirTemperature(subReportRemote.getProductionNo());
                         }else {
                             subReport.setAirTemperature(powerDevice.getProductionNo());
                         }
@@ -394,7 +440,7 @@ public class PowerReportServiceImpl extends BaseServiceImpl<PowerReport> impleme
                     }
                 }
                 StringBuilder instrumentNamesSb = new StringBuilder();
-                String instrumentIds = subReportVo.getInstrumentIds();
+                String instrumentIds = subReportRemote.getInstrumentIds();
                 subReport.setInstrumentIds(instrumentIds);
                 // 仪器设备非空
                 if(!StringUtils.isEmpty(instrumentIds)) {
@@ -414,8 +460,8 @@ public class PowerReportServiceImpl extends BaseServiceImpl<PowerReport> impleme
                     }
                 }
                 subReport.setInstrumentNames(instrumentNamesSb.toString());
-                subReport.setConclusion(subReportVo.getConclusion());
-                subReport.setRemark(subReportVo.getRemark());
+                subReport.setConclusion(subReportRemote.getConclusion());
+                subReport.setRemark(subReportRemote.getRemark());
                 subReportMapper.insert(subReport);
                 id = subReport.getId();
             }catch (Exception e) {
