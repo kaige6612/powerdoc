@@ -97,15 +97,18 @@ public class PowerReportServiceImpl extends BaseServiceImpl<PowerReport> impleme
                     Map<String,Object> subreportMap = (Map<String,Object>)map.get("subReport");
                     Map<String,Object> detailMap = (Map<String,Object>)map.get("detail");
 
-                    if(!subreportMap.containsKey("modelDeviceId")) {
+                    if(!subreportMap.containsKey("deviceModelId")) {
                         errorList.add(String.valueOf(powerReportVo.getId()));
-                        logger.error("不包含modelDeviceId字段，无法保存信息");
+                        logger.error("不包含deviceModelId字段，无法保存信息");
                         continue;
                     }else {
 
                         //转为子报告首页信息
                         PowerSubReport subReport = JSON.toJavaObject(JSON.parseObject(JSON.toJSONString(subreportMap)),PowerSubReport.class);
-
+                        String deviceModelId = String.valueOf(subReport.getDeviceModelId());
+                        PowerDeviceModel powerDeviceModel = deviceModelMapper.selectByPrimaryKey(Long.parseLong(deviceModelId));
+                        subReport.setDeviceId(powerDeviceModel.getDeviceId());
+                        subReport.setDeviceName(powerDeviceModel.getDevieName());
                         //保存设备报告公共信息
                         Map<String, Object> subReportResultMap = this.saveSubReportFromVo(subReport, powerReportVo);
                         if(subReportResultMap.containsKey("errorMsg") && !StringUtils.isEmpty(subReportResultMap.get("errorMsg"))) {
@@ -117,16 +120,13 @@ public class PowerReportServiceImpl extends BaseServiceImpl<PowerReport> impleme
 
                             //根据选择的模板和设备对应关系，确定使用的模板，以确定需要插入数据的表格
 //                            String modelDeviceId = subReport.getModelDeviceId();
-                            String modelDeviceId = "";
+
 
                             //必须存在此字段，否则无法判别需要转换的类及需要使用的模板
-                            if(!StringUtils.isEmpty(modelDeviceId)) {
-                                PowerDeviceModel powerDeviceModel = deviceModelMapper.selectByPrimaryKey(Long.parseLong(modelDeviceId));
-                                PowerModel powerModel = modelMapper.selectByPrimaryKey(powerDeviceModel.getModelId());
+                            PowerModel powerModel = modelMapper.selectByPrimaryKey(powerDeviceModel.getModelId());
 
-                                //保存具体的报告信息
-                                saveSubDetail(powerModel,detailMap,subReportId);
-                            }
+                            //保存具体的报告信息
+                            saveSubDetail(powerModel,detailMap,subReportId);
 
                         }
                         
@@ -203,6 +203,7 @@ public class PowerReportServiceImpl extends BaseServiceImpl<PowerReport> impleme
                 List<PowerDocResistanceDetail> details = resistanceVo.getDetails();
                 //遍历并保存每行数据的信息
                 for (PowerDocResistanceDetail detail: details) {
+
                     detail.setSubreportId(Long.parseLong(subReportId));
                     resistanceDetailMapper.insert(detail);
                 }

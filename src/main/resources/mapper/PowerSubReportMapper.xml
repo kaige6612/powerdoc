@@ -4,6 +4,7 @@
 
     <resultMap id="RM_PowerSubReport" type="com.putorn.powerdoc.entity.PowerSubReport">
         <result property="id" column="id"/>
+        <result property="deviceModelId" column="device_model_id"/>
         <result property="reportId" column="report_id"/>
         <result property="deviceId" column="device_id"/>
         <result property="deviceName" column="device_name"/>
@@ -37,7 +38,7 @@
     <!-- 用于select查询公用抽取的列 -->
     <sql id="columns">
         <![CDATA[
-		id,report_id,device_id,device_name,device_type,air_temperature,humidity,run_humidity,oil_temperature,connect_group,model_no,producer,capacity,run_no,run_date,production_date,production_no,instrument_ids,instrument_names,test_date,status,conclusion,remark,add_userid,add_username,addtime,edit_userid,edit_username,edittime
+		id,device_model_id,report_id,device_id,device_name,device_type,air_temperature,humidity,run_humidity,oil_temperature,connect_group,model_no,producer,capacity,run_no,run_date,production_date,production_no,instrument_ids,instrument_names,test_date,status,conclusion,remark,add_userid,add_username,addtime,edit_userid,edit_username,edittime
 	    ]]>
     </sql>
 
@@ -45,6 +46,7 @@
     <insert id="insert" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         <![CDATA[
 	        INSERT INTO power_sub_report (
+	        	device_model_id ,
 	        	report_id ,
 	        	device_id ,
 	        	device_name ,
@@ -74,6 +76,7 @@
 	        	edit_username ,
 	        	edittime
 	        ) VALUES (
+	        	#{deviceModelId} ,
 	        	#{reportId} ,
 	        	#{deviceId} ,
 	        	#{deviceName} ,
@@ -110,7 +113,7 @@
     <insert id="batchInsert">
         <![CDATA[
 	        INSERT INTO power_sub_report (
-	        		id ,
+	        		device_model_id ,
 	        		report_id ,
 	        		device_id ,
 	        		device_name ,
@@ -143,7 +146,7 @@
 	         ]]>
         <foreach item="item" collection="list"   separator=",">
             (
-            #{item.id} ,
+            #{item.deviceModelId} ,
             #{item.reportId} ,
             #{item.deviceId} ,
             #{item.deviceName} ,
@@ -180,6 +183,9 @@
     <!-- update 条件组合 -->
     <sql id="update_sql">
         <set>
+            <if test="deviceModelId != null">
+                device_model_id = #{deviceModelId} ,
+            </if>
             <if test="reportId != null">
                 report_id = #{reportId} ,
             </if>
@@ -234,7 +240,7 @@
             <if test="instrumentNames != null and instrumentNames != ''">
                 instrument_names = #{instrumentNames} ,
             </if>
-            <if test="testDate != null">
+            <if test="testDate != null and testDate != ''">
                 test_date = #{testDate} ,
             </if>
             <if test="status != null and status != ''">
@@ -323,6 +329,9 @@
             <if test="id != null">
                 AND id = #{id}
             </if>
+            <if test="deviceModelId != null">
+                AND device_model_id = #{deviceModelId}
+            </if>
             <if test="reportId != null">
                 AND report_id = #{reportId}
             </if>
@@ -377,7 +386,7 @@
             <if test="instrumentNames != null and instrumentNames !=''">
                 AND instrument_names = #{instrumentNames}
             </if>
-            <if test="testDate != null">
+            <if test="testDate != null and testDate !=''">
                 AND test_date = #{testDate}
             </if>
             <if test="status != null and status !=''">
