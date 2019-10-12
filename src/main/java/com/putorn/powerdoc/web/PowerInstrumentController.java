@@ -58,7 +58,7 @@ public class PowerInstrumentController{
     public ResponseEntity<Map<String,Object>> updatePowerInstrument(@RequestBody PowerInstrument instrument){
         Map<String,Object> result = new HashMap<>();
         try {
-            Long id = instrument.getId();
+            Long id = instrument.getInstrumentId();
             //校验仪器id不能为空
             if(id == null) {
                 result.put("state","error");
@@ -114,7 +114,7 @@ public class PowerInstrumentController{
         try {
             PageParam pageParam = PageParamHelper.getPageParam(request);
             Map<String, Object> params = JSONObject.parseObject(JSON.toJSONString(instrument), new TypeReference<Map<String, Object>>(){});
-            params.put("instrument_status", SystemStatusEnum.SYSTEM_STATUS_EFFECTIVE.getKey());
+            params.put("instrumentStatus", SystemStatusEnum.SYSTEM_STATUS_EFFECTIVE.getKey());
             pageParam.setParams(params);
             PageBean pageInfo =this.powerInstrumentService.listPage(pageParam);
             return ResponseEntity.ok(pageInfo);

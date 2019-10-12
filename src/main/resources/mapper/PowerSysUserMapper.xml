@@ -319,7 +319,7 @@
 				<if test="isDutyPerson != null">
 					AND is_duty_person = #{isDutyPerson}
 				</if>
-				<if test="status != null">
+				<if test="status != null" >
 					AND status = #{status}
 				</if>
 				<if test="remark != null and remark !=''">

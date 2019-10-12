@@ -60,7 +60,7 @@ public class PowerSubstationController{
     public ResponseEntity<Map<String,Object>> updatePowerSubstation(@RequestBody PowerSubstation substation){
         Map<String,Object> result = new HashMap<>();
         try {
-            Long id = substation.getId();
+            Long id = substation.getSubstationId();
             //校验变电站id不能为空
             if(id == null) {
                 result.put("state","error");

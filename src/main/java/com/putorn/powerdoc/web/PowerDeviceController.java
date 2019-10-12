@@ -34,6 +34,7 @@ public class PowerDeviceController{
     private PowerDeviceService powerDeviceService;
 
     private final Log logger = LogFactory.getLog(this.getClass());
+
     @PostMapping("saveDevice")
     @ApiImplicitParam(name = "device",value = "添加设备",dataType = "PowerDevice",required = true)
     @ApiOperation(value = "添加设备",notes = "添加设备对象,主键自增",produces = "application/json")
@@ -48,7 +49,7 @@ public class PowerDeviceController{
             logger.error("服务异常!!! result="+ JSON.toJSONString(result),e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(result);
         }
-        logger.info("添加设备结果："+JSON.toJSONString(result));
+        logger.info("添加设备结果："+JSON.toJSONString(result)+", 设备信息："+JSON.toJSONString(device));
         return ResponseEntity.ok(result);
     }
 
@@ -59,7 +60,7 @@ public class PowerDeviceController{
     public ResponseEntity<Map<String,Object>> updatePowerDevice(@RequestBody PowerDevice device){
         Map<String,Object> result = new HashMap<>();
         try {
-            Long id = device.getId();
+            Long id = device.getDeviceId();
             //校验设备id不能为空
             if(id == null) {
                 result.put("state","error");
@@ -115,7 +116,7 @@ public class PowerDeviceController{
         try {
             PageParam pageParam = PageParamHelper.getPageParam(request);
             Map<String, Object> params = JSONObject.parseObject(JSON.toJSONString(device), new TypeReference<Map<String, Object>>(){});
-            params.put("device_status", SystemStatusEnum.SYSTEM_STATUS_EFFECTIVE.getKey());
+            params.put("status", SystemStatusEnum.SYSTEM_STATUS_EFFECTIVE.getKey());
             pageParam.setParams(params);
             PageBean pageInfo =this.powerDeviceService.listPage(pageParam);
             return ResponseEntity.ok(pageInfo);
