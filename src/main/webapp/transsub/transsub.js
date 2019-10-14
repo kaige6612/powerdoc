@@ -16,8 +16,8 @@ var TableInit = function () {
     //初始化Table
     oTableInit.Init = function () {
         $('#tableList').bootstrapTable({
-            url: 'bootstrap_table_test.json',         //请求后台的URL（*）
-            method: 'get',                      //请求方式（*）
+            url: '/powerSubstation/querySubstationList',         //请求后台的URL（*）
+            method: 'post',                      //请求方式（*）
             toolbar: '#tableListToolbar',       //工具按钮用哪个容器
             striped: true,                      //是否显示行间隔色
             cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）

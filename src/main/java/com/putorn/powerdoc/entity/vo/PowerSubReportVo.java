@@ -7,16 +7,6 @@ import com.putorn.powerdoc.entity.PowerSubReport;
 public class PowerSubReportVo extends PowerSubReport  {
     private JSONObject reportDetail;
 
-    private String modelDeviceId;
-
-    public String getModelDeviceId() {
-        return modelDeviceId;
-    }
-
-    public void setModelDeviceId(String modelDeviceId) {
-        this.modelDeviceId = modelDeviceId;
-    }
-
     public JSONObject getReportDetail() {
         return reportDetail;
     }

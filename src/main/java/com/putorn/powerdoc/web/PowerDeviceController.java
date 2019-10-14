@@ -21,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -109,7 +110,7 @@ public class PowerDeviceController{
         return ResponseEntity.ok(result);
     }
 
-    @PostMapping("queryDeviceList")
+   /* @PostMapping("queryDeviceList")
     @ApiImplicitParam(name = "device",value = "设备查询条件，可为空",paramType = "PowerDevice" ,required = false)
     @ApiOperation(value = "分页按条件查询设备" ,notes="分页查询所有设备")
     public ResponseEntity<PageBean> queryPowerDevice(HttpServletRequest request, PowerDevice device){
@@ -120,6 +121,25 @@ public class PowerDeviceController{
             pageParam.setParams(params);
             PageBean pageInfo =this.powerDeviceService.listPage(pageParam);
             return ResponseEntity.ok(pageInfo);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+    */
+
+    @PostMapping("queryDeviceList")
+    @ApiImplicitParam(name = "device",value = "设备查询条件，可为空",paramType = "PowerDevice" ,required = false)
+    @ApiOperation(value = "分页按条件查询设备" ,notes="分页查询所有设备")
+    public ResponseEntity<List<PowerDevice>> queryPowerDevice(HttpServletRequest request, PowerDevice device){
+        try {
+            PageParam pageParam = PageParamHelper.getPageParam(request);
+            Map<String, Object> params = JSONObject.parseObject(JSON.toJSONString(device), new TypeReference<Map<String, Object>>(){});
+            params.put("status", SystemStatusEnum.SYSTEM_STATUS_EFFECTIVE.getKey());
+            pageParam.setParams(params);
+            PageBean pageInfo =this.powerDeviceService.listPage(pageParam);
+            List<PowerDevice> devices = pageInfo.getRecordList();
+            return ResponseEntity.ok(devices);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);

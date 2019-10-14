@@ -58,16 +58,14 @@
                                     <thead>
                                         <tr>
                                             <th data-field="state" data-checkbox="true"></th>
-                                            <th data-field="id">运行编号</th>
-                                            <th data-field="name">设备名称</th>
-                                            <th data-field="price">运行电压</th>
-                                            <th data-field="column1">气温</th>
-                                            <th data-field="column1">湿度</th>
-                                            <th data-field="column1">型号</th>
-                                            <th data-field="column1">制造厂家</th>
-                                            <th data-field="column1">容量</th>
-                                            <th data-field="column1">出厂日期</th>
-                                            <th data-field="column1">出厂编号</th>
+                                            <th data-field="deviceId" hidden="hidden">运行id</th>
+                                            <th data-field="deviceName">设备名称</th>
+                                            <th data-field="runHumidity">运行电压</th>
+                                            <th data-field="modelNo">型号</th>
+                                            <th data-field="producer">制造厂家</th>
+                                            <th data-field="capacity">容量</th>
+                                            <th data-field="productionDate">出厂日期</th>
+                                            <th data-field="productionNo">出厂编号</th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -83,10 +81,11 @@
     <script src="../static/js/jquery.min.js?v=2.1.4"></script>
     <script src="../static/js/bootstrap.min.js?v=3.3.6"></script>
     <script src="../static/js/content.min.js?v=1.0.0"></script>
-    <script src="../static/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
-    <script src="../static/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
-    <script src="../static/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
     <script src="../static/js/plugins/layer/layer.min.js"></script>
+    <script src="../static/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+<!--    <script src="../static/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>-->
+    <script src="../static/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+
     <script src="equipment.js"></script>
 </body>
 </html>

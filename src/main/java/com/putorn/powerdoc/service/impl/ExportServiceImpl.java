@@ -1,6 +1,7 @@
 package com.putorn.powerdoc.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.deepoove.poi.data.DocxRenderData;
 import com.putorn.powerdoc.dao.*;
 import com.putorn.powerdoc.entity.*;
 import com.putorn.powerdoc.service.ExportService;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -70,7 +72,6 @@ public class ExportServiceImpl implements ExportService {
         PowerSubReport subReportQuery = new PowerSubReport();
         subReportQuery.setReportId(reportIdLong);
         List<PowerSubReport> powerSubReports = subReportMapper.listByObj(subReportQuery);
-
         for (PowerSubReport subReport: powerSubReports) {
 
 
@@ -86,7 +87,7 @@ public class ExportServiceImpl implements ExportService {
      * @param subReport
      * @return
      */
-    private String getSubRepost(PowerSubReport subReport) throws Exception{
+    private String getSubReportDetail(PowerSubReport subReport) throws Exception{
         String errMsg = null;
         Long subReportId = subReport.getId();
         Long deviceModelId = subReport.getDeviceModelId();
@@ -109,6 +110,8 @@ public class ExportServiceImpl implements ExportService {
                     insulation = powerDocInsulations.get(0);
                     detailMap = DataConvertUtil.javaBeanToMap(insulation);
                 }
+                //获取字模板输出
+//                DocxRenderData segment = new DocxRenderData(new File("src/test/resources/story/segment.docx"), detailMap );
                 break;
             case "power_doc_dc_resistance":
                 PowerDocDcResistance dcResistance = new PowerDocDcResistance();

@@ -3,7 +3,10 @@ package com.putorn.powerdoc;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
+import com.deepoove.poi.data.DocxRenderData;
+import com.putorn.powerdoc.entity.vo.PowerSubReportVo;
 
+import java.io.File;
 import java.util.*;
 
 /**
@@ -61,6 +64,11 @@ public class TestCommon {
 	}*/
 
 	public static void maxLong() {
-
+		List<PowerSubReportVo> segments = new ArrayList<>();
+		DocxRenderData segment = new DocxRenderData(new File("src/test/resources/story/segment.docx"), segments );
+//		segment.getRenderDatas()getRenderDatas
 	}
+
+
+
 }

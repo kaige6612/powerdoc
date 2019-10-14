@@ -22,6 +22,7 @@ import org.springframework.http.ResponseEntity;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -121,14 +122,14 @@ public class PowerSysUserController{
     @PostMapping("queryUserList")
     @ApiImplicitParam(name = "sysUser",value = "sysUser可为空的json",paramType = "PowerSysUser" ,required = false)
     @ApiOperation(value = "分页按条件查询用户" ,notes="分页查询所有用户")
-    public ResponseEntity<PageBean> queryPowerSysUser(HttpServletRequest request, PowerSysUser sysUser){
+    public ResponseEntity<List<PowerSysUser>> queryPowerSysUser(HttpServletRequest request, PowerSysUser sysUser){
         try {
             PageParam pageParam = PageParamHelper.getPageParam(request);
             Map<String, Object> params = JSONObject.parseObject(JSON.toJSONString(sysUser), new TypeReference<Map<String, Object>>(){});
             params.put("status",SystemStatusEnum.SYSTEM_STATUS_EFFECTIVE.getKey());
             pageParam.setParams(params);
             PageBean pageInfo =this.powerSysUserService.listPage(pageParam);
-            return ResponseEntity.ok(pageInfo);
+            return ResponseEntity.ok(pageInfo.getRecordList());
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);

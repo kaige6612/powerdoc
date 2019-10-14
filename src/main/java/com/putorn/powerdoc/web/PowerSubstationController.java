@@ -23,6 +23,7 @@ import org.springframework.http.ResponseEntity;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -111,13 +112,13 @@ public class PowerSubstationController{
     @PostMapping("querySubstationList")
     @ApiImplicitParam(name = "substation",value = "substation可为空的json",paramType = "PowerSubstation" ,required = false)
     @ApiOperation(value = "分页按条件查询变电站" ,notes="分页查询所有变电站")
-    public ResponseEntity<PageBean> queryPowerSubstation(HttpServletRequest request, PowerSubstation substation){
+    public ResponseEntity<List<PowerSubstation>> queryPowerSubstation(HttpServletRequest request, PowerSubstation substation){
         try {
             PageParam pageParam = PageParamHelper.getPageParam(request);
             Map<String, Object> params = JSONObject.parseObject(JSON.toJSONString(substation), new TypeReference<Map<String, Object>>(){});
             pageParam.setParams(params);
             PageBean pageInfo =this.powerSubstationService.listPage(pageParam);
-            return ResponseEntity.ok(pageInfo);
+            return ResponseEntity.ok(pageInfo.getRecordList());
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);

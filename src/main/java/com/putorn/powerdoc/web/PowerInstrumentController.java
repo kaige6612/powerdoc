@@ -20,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -35,11 +36,13 @@ public class PowerInstrumentController{
     private final Log logger = LogFactory.getLog(this.getClass());
     @PostMapping("saveInstrument")
     @ApiImplicitParam(name = "instrument",value = "添加仪器",dataType = "PowerInstrument",required = true)
-    @ApiOperation(value = "添加仪器",notes = "添加仪器对象,主键自增",produces = "application/json")
+    @ApiOperation(value = "添加仪器",notes = "添加仪器对象,主键自增"/*,produces = "application/json"*/)
     @ApiResponse(code = 200,message = "success")
-    public ResponseEntity<Map<String,Object>> savePowerInstrument(@RequestBody PowerInstrument instrument){
+//    public ResponseEntity<Map<String,Object>> savePowerInstrument(@RequestBody PowerInstrument instrument){
+    public ResponseEntity<Map<String,Object>> savePowerInstrument(HttpServletRequest request){
         Map<String,Object> result = new HashMap<>();
         try {
+            PowerInstrument instrument = new PowerInstrument();
             result = powerInstrumentService.saveInstrument(instrument);
         }catch (Exception e){
             result.put("state","error");
@@ -107,17 +110,19 @@ public class PowerInstrumentController{
         return ResponseEntity.ok(result);
     }
 
+
+
     @PostMapping("queryInstrumentList")
     @ApiImplicitParam(name = "instrument",value = "设备查询条件，可为空",paramType = "PowerInstrument" ,required = false)
     @ApiOperation(value = "分页按条件查询仪器" ,notes="分页查询所有仪器")
-    public ResponseEntity<PageBean> queryPowerInstrument(HttpServletRequest request, PowerInstrument instrument){
+    public ResponseEntity<List<PowerInstrument>> queryPowerInstrument(HttpServletRequest request, PowerInstrument instrument){
         try {
             PageParam pageParam = PageParamHelper.getPageParam(request);
             Map<String, Object> params = JSONObject.parseObject(JSON.toJSONString(instrument), new TypeReference<Map<String, Object>>(){});
             params.put("instrumentStatus", SystemStatusEnum.SYSTEM_STATUS_EFFECTIVE.getKey());
             pageParam.setParams(params);
             PageBean pageInfo =this.powerInstrumentService.listPage(pageParam);
-            return ResponseEntity.ok(pageInfo);
+            return ResponseEntity.ok(pageInfo.getRecordList());
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
