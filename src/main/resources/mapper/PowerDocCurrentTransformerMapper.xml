@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-		<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.putorn.powerdoc.dao.PowerDocCurrentTransformerMapper">
 
-	<resultMap id="RM_PowerDocCurrentTransformer" type="com.putorn.powerdoc.entity.PowerDocCurrentTransformer">
+    <resultMap id="RM_PowerDocCurrentTransformer" type="com.putorn.powerdoc.entity.PowerDocCurrentTransformer">
         <result property="currentTransformerId" column="current_transformer_id"/>
         <result property="subreportId" column="subreport_id"/>
         <result property="afirst" column="A_first"/>
@@ -14,6 +14,7 @@
         <result property="asecond" column="A_second"/>
         <result property="bsecond" column="B_second"/>
         <result property="csecond" column="C_second"/>
+        <result property="voltagePositive" column="voltage_Positive"/>
         <result property="testPositionPositive" column="test_position_positive"/>
         <result property="acxPositive" column="A_Cx_positive"/>
         <result property="bcxPositive" column="B_Cx_positive"/>
@@ -27,6 +28,7 @@
         <result property="acpositive" column="A_C_positive"/>
         <result property="bcpositive" column="B_C_positive"/>
         <result property="ccpositive" column="C_C_positive"/>
+        <result property="voltageReverse" column="voltage_reverse"/>
         <result property="testPositionReverse" column="test_position_reverse"/>
         <result property="acxReverse" column="A_Cx_reverse"/>
         <result property="bcxReverse" column="B_Cx_reverse"/>
@@ -46,19 +48,19 @@
         <result property="editUserid" column="edit_userid"/>
         <result property="editUsername" column="edit_username"/>
         <result property="edittime" column="edittime"/>
-	</resultMap>
-	
-	<!-- 用于select查询公用抽取的列 -->
-	<sql id="columns">
-	    <![CDATA[
-		current_transformer_id,subreport_id,A_first,B_first,C_first,A_last,B_last,C_last,A_second,B_second,C_second,test_position_positive,A_Cx_positive,B_Cx_positive,C_Cx_positive,A_tg_positive,B_tg_positive,C_tg_positive,A_pf_positive,B_pf_positive,C_pf_positive,A_C_positive,B_C_positive,C_C_positive,test_position_reverse,A_Cx_reverse,B_Cx_reverse,C_Cx_reverse,A_tg_reverse,B_tg_reverse,C_tg_reverse,A_pf_reverse,B_pf_reverse,C_pf_reverse,A_C_reverse,B_C_reverse,C_C_reverse,add_userid,add_username,addtime,edit_userid,edit_username,edittime
-	    ]]>
-	</sql>
+    </resultMap>
 
-	<!--保存 -->
-	<insert id="insert" useGeneratedKeys="true" keyProperty="currentTransformerId">
-	    <![CDATA[
-	        INSERT INTO power_doc_current_transformer ( 
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        <![CDATA[
+		current_transformer_id,subreport_id,A_first,B_first,C_first,A_last,B_last,C_last,A_second,B_second,C_second,voltage_Positive,test_position_positive,A_Cx_positive,B_Cx_positive,C_Cx_positive,A_tg_positive,B_tg_positive,C_tg_positive,A_pf_positive,B_pf_positive,C_pf_positive,A_C_positive,B_C_positive,C_C_positive,voltage_reverse,test_position_reverse,A_Cx_reverse,B_Cx_reverse,C_Cx_reverse,A_tg_reverse,B_tg_reverse,C_tg_reverse,A_pf_reverse,B_pf_reverse,C_pf_reverse,A_C_reverse,B_C_reverse,C_C_reverse,add_userid,add_username,addtime,edit_userid,edit_username,edittime
+	    ]]>
+    </sql>
+
+    <!--保存 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="currentTransformerId">
+        <![CDATA[
+	        INSERT INTO power_doc_current_transformer (
 	        	subreport_id ,
 	        	A_first ,
 	        	B_first ,
@@ -69,6 +71,7 @@
 	        	A_second ,
 	        	B_second ,
 	        	C_second ,
+	        	voltage_Positive ,
 	        	test_position_positive ,
 	        	A_Cx_positive ,
 	        	B_Cx_positive ,
@@ -82,6 +85,7 @@
 	        	A_C_positive ,
 	        	B_C_positive ,
 	        	C_C_positive ,
+	        	voltage_reverse ,
 	        	test_position_reverse ,
 	        	A_Cx_reverse ,
 	        	B_Cx_reverse ,
@@ -100,7 +104,7 @@
 	        	addtime ,
 	        	edit_userid ,
 	        	edit_username ,
-	        	edittime 
+	        	edittime
 	        ) VALUES (
 	        	#{subreportId} ,
 	        	#{afirst} ,
@@ -112,6 +116,7 @@
 	        	#{asecond} ,
 	        	#{bsecond} ,
 	        	#{csecond} ,
+	        	#{voltagePositive} ,
 	        	#{testPositionPositive} ,
 	        	#{acxPositive} ,
 	        	#{bcxPositive} ,
@@ -125,6 +130,7 @@
 	        	#{acpositive} ,
 	        	#{bcpositive} ,
 	        	#{ccpositive} ,
+	        	#{voltageReverse} ,
 	        	#{testPositionReverse} ,
 	        	#{acxReverse} ,
 	        	#{bcxReverse} ,
@@ -143,14 +149,14 @@
 	        	#{addtime} ,
 	        	#{editUserid} ,
 	        	#{editUsername} ,
-	        	#{edittime} 
+	        	#{edittime}
 	        )
 	    ]]>
-	</insert>
-	
-	<!-- 批量保存 -->
-	<insert id="batchInsert">
-	    <![CDATA[
+    </insert>
+
+    <!-- 批量保存 -->
+    <insert id="batchInsert">
+        <![CDATA[
 	        INSERT INTO power_doc_current_transformer (
 	        		subreport_id ,
 	        		A_first ,
@@ -162,6 +168,7 @@
 	        		A_second ,
 	        		B_second ,
 	        		C_second ,
+	        		voltage_Positive ,
 	        		test_position_positive ,
 	        		A_Cx_positive ,
 	        		B_Cx_positive ,
@@ -175,6 +182,7 @@
 	        		A_C_positive ,
 	        		B_C_positive ,
 	        		C_C_positive ,
+	        		voltage_reverse ,
 	        		test_position_reverse ,
 	        		A_Cx_reverse ,
 	        		B_Cx_reverse ,
@@ -193,404 +201,418 @@
 	        		addtime ,
 	        		edit_userid ,
 	        		edit_username ,
-	        		edittime 
-	        ) VALUES 
+	        		edittime
+	        ) VALUES
 	         ]]>
-	        <foreach item="item" collection="list"   separator=",">
-	        	(
-					#{item.subreportId} ,
-					#{item.afirst} ,
-					#{item.bfirst} ,
-					#{item.cfirst} ,
-					#{item.alast} ,
-					#{item.blast} ,
-					#{item.clast} ,
-					#{item.asecond} ,
-					#{item.bsecond} ,
-					#{item.csecond} ,
-					#{item.testPositionPositive} ,
-					#{item.acxPositive} ,
-					#{item.bcxPositive} ,
-					#{item.ccxPositive} ,
-					#{item.atgPositive} ,
-					#{item.btgPositive} ,
-					#{item.ctgPositive} ,
-					#{item.apfPositive} ,
-					#{item.bpfPositive} ,
-					#{item.cpfPositive} ,
-					#{item.acpositive} ,
-					#{item.bcpositive} ,
-					#{item.ccpositive} ,
-					#{item.testPositionReverse} ,
-					#{item.acxReverse} ,
-					#{item.bcxReverse} ,
-					#{item.ccxReverse} ,
-					#{item.atgReverse} ,
-					#{item.btgReverse} ,
-					#{item.ctgReverse} ,
-					#{item.apfReverse} ,
-					#{item.bpfReverse} ,
-					#{item.cpfReverse} ,
-					#{item.acreverse} ,
-					#{item.bcreverse} ,
-					#{item.ccreverse} ,
-					#{item.addUserid} ,
-					#{item.addUsername} ,
-					#{item.addtime} ,
-					#{item.editUserid} ,
-					#{item.editUsername} ,
-					#{item.edittime} 
-	        	)
-			</foreach>
-	   
-	</insert>
+        <foreach item="item" collection="list"   separator=",">
+            (
+            #{item.subreportId} ,
+            #{item.afirst} ,
+            #{item.bfirst} ,
+            #{item.cfirst} ,
+            #{item.alast} ,
+            #{item.blast} ,
+            #{item.clast} ,
+            #{item.asecond} ,
+            #{item.bsecond} ,
+            #{item.csecond} ,
+            #{item.voltagePositive} ,
+            #{item.testPositionPositive} ,
+            #{item.acxPositive} ,
+            #{item.bcxPositive} ,
+            #{item.ccxPositive} ,
+            #{item.atgPositive} ,
+            #{item.btgPositive} ,
+            #{item.ctgPositive} ,
+            #{item.apfPositive} ,
+            #{item.bpfPositive} ,
+            #{item.cpfPositive} ,
+            #{item.acpositive} ,
+            #{item.bcpositive} ,
+            #{item.ccpositive} ,
+            #{item.voltageReverse} ,
+            #{item.testPositionReverse} ,
+            #{item.acxReverse} ,
+            #{item.bcxReverse} ,
+            #{item.ccxReverse} ,
+            #{item.atgReverse} ,
+            #{item.btgReverse} ,
+            #{item.ctgReverse} ,
+            #{item.apfReverse} ,
+            #{item.bpfReverse} ,
+            #{item.cpfReverse} ,
+            #{item.acreverse} ,
+            #{item.bcreverse} ,
+            #{item.ccreverse} ,
+            #{item.addUserid} ,
+            #{item.addUsername} ,
+            #{item.addtime} ,
+            #{item.editUserid} ,
+            #{item.editUsername} ,
+            #{item.edittime}
+            )
+        </foreach>
 
-	<!-- update 条件组合 -->
-	<sql id="update_sql">
-		<set>
-			<if test="subreportId != null">
-				subreport_id = #{subreportId} ,
-			</if>
-			<if test="afirst != null and afirst != ''">
-				A_first = #{afirst} ,
-			</if>
-			<if test="bfirst != null and bfirst != ''">
-				B_first = #{bfirst} ,
-			</if>
-			<if test="cfirst != null and cfirst != ''">
-				C_first = #{cfirst} ,
-			</if>
-			<if test="alast != null and alast != ''">
-				A_last = #{alast} ,
-			</if>
-			<if test="blast != null and blast != ''">
-				B_last = #{blast} ,
-			</if>
-			<if test="clast != null and clast != ''">
-				C_last = #{clast} ,
-			</if>
-			<if test="asecond != null and asecond != ''">
-				A_second = #{asecond} ,
-			</if>
-			<if test="bsecond != null and bsecond != ''">
-				B_second = #{bsecond} ,
-			</if>
-			<if test="csecond != null and csecond != ''">
-				C_second = #{csecond} ,
-			</if>
-			<if test="testPositionPositive != null and testPositionPositive != ''">
-				test_position_positive = #{testPositionPositive} ,
-			</if>
-			<if test="acxPositive != null and acxPositive != ''">
-				A_Cx_positive = #{acxPositive} ,
-			</if>
-			<if test="bcxPositive != null and bcxPositive != ''">
-				B_Cx_positive = #{bcxPositive} ,
-			</if>
-			<if test="ccxPositive != null and ccxPositive != ''">
-				C_Cx_positive = #{ccxPositive} ,
-			</if>
-			<if test="atgPositive != null and atgPositive != ''">
-				A_tg_positive = #{atgPositive} ,
-			</if>
-			<if test="btgPositive != null and btgPositive != ''">
-				B_tg_positive = #{btgPositive} ,
-			</if>
-			<if test="ctgPositive != null and ctgPositive != ''">
-				C_tg_positive = #{ctgPositive} ,
-			</if>
-			<if test="apfPositive != null and apfPositive != ''">
-				A_pf_positive = #{apfPositive} ,
-			</if>
-			<if test="bpfPositive != null and bpfPositive != ''">
-				B_pf_positive = #{bpfPositive} ,
-			</if>
-			<if test="cpfPositive != null and cpfPositive != ''">
-				C_pf_positive = #{cpfPositive} ,
-			</if>
-			<if test="acpositive != null and acpositive != ''">
-				A_C_positive = #{acpositive} ,
-			</if>
-			<if test="bcpositive != null and bcpositive != ''">
-				B_C_positive = #{bcpositive} ,
-			</if>
-			<if test="ccpositive != null and ccpositive != ''">
-				C_C_positive = #{ccpositive} ,
-			</if>
-			<if test="testPositionReverse != null and testPositionReverse != ''">
-				test_position_reverse = #{testPositionReverse} ,
-			</if>
-			<if test="acxReverse != null and acxReverse != ''">
-				A_Cx_reverse = #{acxReverse} ,
-			</if>
-			<if test="bcxReverse != null and bcxReverse != ''">
-				B_Cx_reverse = #{bcxReverse} ,
-			</if>
-			<if test="ccxReverse != null and ccxReverse != ''">
-				C_Cx_reverse = #{ccxReverse} ,
-			</if>
-			<if test="atgReverse != null and atgReverse != ''">
-				A_tg_reverse = #{atgReverse} ,
-			</if>
-			<if test="btgReverse != null and btgReverse != ''">
-				B_tg_reverse = #{btgReverse} ,
-			</if>
-			<if test="ctgReverse != null and ctgReverse != ''">
-				C_tg_reverse = #{ctgReverse} ,
-			</if>
-			<if test="apfReverse != null and apfReverse != ''">
-				A_pf_reverse = #{apfReverse} ,
-			</if>
-			<if test="bpfReverse != null and bpfReverse != ''">
-				B_pf_reverse = #{bpfReverse} ,
-			</if>
-			<if test="cpfReverse != null and cpfReverse != ''">
-				C_pf_reverse = #{cpfReverse} ,
-			</if>
-			<if test="acreverse != null and acreverse != ''">
-				A_C_reverse = #{acreverse} ,
-			</if>
-			<if test="bcreverse != null and bcreverse != ''">
-				B_C_reverse = #{bcreverse} ,
-			</if>
-			<if test="ccreverse != null and ccreverse != ''">
-				C_C_reverse = #{ccreverse} ,
-			</if>
-			<if test="addUserid != null">
-				add_userid = #{addUserid} ,
-			</if>
-			<if test="addUsername != null and addUsername != ''">
-				add_username = #{addUsername} ,
-			</if>
-			<if test="addtime != null">
-				addtime = #{addtime} ,
-			</if>
-			<if test="editUserid != null">
-				edit_userid = #{editUserid} ,
-			</if>
-			<if test="editUsername != null and editUsername != ''">
-				edit_username = #{editUsername} ,
-			</if>
-			<if test="edittime != null">
-				edittime = #{edittime} 
-			</if>
-		</set>
-	</sql>
-	
-	<!-- 修改 -->
-	<update id="updateByPrimaryKey">
-		UPDATE power_doc_current_transformer
-		<include refid="update_sql" />
-		WHERE
-			current_transformer_id = #{currentTransformerId} 
-	</update>
+    </insert>
 
-		<!-- 修改 -->
-	<update id="batchUpdateByIds">
-		UPDATE power_doc_current_transformer
-		<include refid="update_sql" />
-		WHERE
-		current_transformer_id IN
-			<foreach item="ids" collection="list" open="(" separator="," close=")">
-				#{ids}
-			</foreach>
-	</update>
+    <!-- update 条件组合 -->
+    <sql id="update_sql">
+        <set>
+            <if test="subreportId != null">
+                subreport_id = #{subreportId} ,
+            </if>
+            <if test="afirst != null and afirst != ''">
+                A_first = #{afirst} ,
+            </if>
+            <if test="bfirst != null and bfirst != ''">
+                B_first = #{bfirst} ,
+            </if>
+            <if test="cfirst != null and cfirst != ''">
+                C_first = #{cfirst} ,
+            </if>
+            <if test="alast != null and alast != ''">
+                A_last = #{alast} ,
+            </if>
+            <if test="blast != null and blast != ''">
+                B_last = #{blast} ,
+            </if>
+            <if test="clast != null and clast != ''">
+                C_last = #{clast} ,
+            </if>
+            <if test="asecond != null and asecond != ''">
+                A_second = #{asecond} ,
+            </if>
+            <if test="bsecond != null and bsecond != ''">
+                B_second = #{bsecond} ,
+            </if>
+            <if test="csecond != null and csecond != ''">
+                C_second = #{csecond} ,
+            </if>
+            <if test="voltagePositive != null and voltagePositive != ''">
+                voltage_Positive = #{voltagePositive} ,
+            </if>
+            <if test="testPositionPositive != null and testPositionPositive != ''">
+                test_position_positive = #{testPositionPositive} ,
+            </if>
+            <if test="acxPositive != null and acxPositive != ''">
+                A_Cx_positive = #{acxPositive} ,
+            </if>
+            <if test="bcxPositive != null and bcxPositive != ''">
+                B_Cx_positive = #{bcxPositive} ,
+            </if>
+            <if test="ccxPositive != null and ccxPositive != ''">
+                C_Cx_positive = #{ccxPositive} ,
+            </if>
+            <if test="atgPositive != null and atgPositive != ''">
+                A_tg_positive = #{atgPositive} ,
+            </if>
+            <if test="btgPositive != null and btgPositive != ''">
+                B_tg_positive = #{btgPositive} ,
+            </if>
+            <if test="ctgPositive != null and ctgPositive != ''">
+                C_tg_positive = #{ctgPositive} ,
+            </if>
+            <if test="apfPositive != null and apfPositive != ''">
+                A_pf_positive = #{apfPositive} ,
+            </if>
+            <if test="bpfPositive != null and bpfPositive != ''">
+                B_pf_positive = #{bpfPositive} ,
+            </if>
+            <if test="cpfPositive != null and cpfPositive != ''">
+                C_pf_positive = #{cpfPositive} ,
+            </if>
+            <if test="acpositive != null and acpositive != ''">
+                A_C_positive = #{acpositive} ,
+            </if>
+            <if test="bcpositive != null and bcpositive != ''">
+                B_C_positive = #{bcpositive} ,
+            </if>
+            <if test="ccpositive != null and ccpositive != ''">
+                C_C_positive = #{ccpositive} ,
+            </if>
+            <if test="voltageReverse != null and voltageReverse != ''">
+                voltage_reverse = #{voltageReverse} ,
+            </if>
+            <if test="testPositionReverse != null and testPositionReverse != ''">
+                test_position_reverse = #{testPositionReverse} ,
+            </if>
+            <if test="acxReverse != null and acxReverse != ''">
+                A_Cx_reverse = #{acxReverse} ,
+            </if>
+            <if test="bcxReverse != null and bcxReverse != ''">
+                B_Cx_reverse = #{bcxReverse} ,
+            </if>
+            <if test="ccxReverse != null and ccxReverse != ''">
+                C_Cx_reverse = #{ccxReverse} ,
+            </if>
+            <if test="atgReverse != null and atgReverse != ''">
+                A_tg_reverse = #{atgReverse} ,
+            </if>
+            <if test="btgReverse != null and btgReverse != ''">
+                B_tg_reverse = #{btgReverse} ,
+            </if>
+            <if test="ctgReverse != null and ctgReverse != ''">
+                C_tg_reverse = #{ctgReverse} ,
+            </if>
+            <if test="apfReverse != null and apfReverse != ''">
+                A_pf_reverse = #{apfReverse} ,
+            </if>
+            <if test="bpfReverse != null and bpfReverse != ''">
+                B_pf_reverse = #{bpfReverse} ,
+            </if>
+            <if test="cpfReverse != null and cpfReverse != ''">
+                C_pf_reverse = #{cpfReverse} ,
+            </if>
+            <if test="acreverse != null and acreverse != ''">
+                A_C_reverse = #{acreverse} ,
+            </if>
+            <if test="bcreverse != null and bcreverse != ''">
+                B_C_reverse = #{bcreverse} ,
+            </if>
+            <if test="ccreverse != null and ccreverse != ''">
+                C_C_reverse = #{ccreverse} ,
+            </if>
+            <if test="addUserid != null">
+                add_userid = #{addUserid} ,
+            </if>
+            <if test="addUsername != null and addUsername != ''">
+                add_username = #{addUsername} ,
+            </if>
+            <if test="addtime != null">
+                addtime = #{addtime} ,
+            </if>
+            <if test="editUserid != null">
+                edit_userid = #{editUserid} ,
+            </if>
+            <if test="editUsername != null and editUsername != ''">
+                edit_username = #{editUsername} ,
+            </if>
+            <if test="edittime != null">
+                edittime = #{edittime}
+            </if>
+        </set>
+    </sql>
 
-	<!-- 根据ID删除 -->
-	<delete id="deleteByPrimaryKey">
-    	<![CDATA[
-        	DELETE FROM power_doc_current_transformer 
-        	WHERE
-        		current_transformer_id = #{id} 
-    	]]>
-	</delete>
-	
-	<!-- 批量删除 -->
-	<delete id="batchDeleteByIds">
-        DELETE FROM power_doc_current_transformer 
-        WHERE current_transformer_id IN 
+    <!-- 修改 -->
+    <update id="updateByPrimaryKey">
+        UPDATE power_doc_current_transformer
+        <include refid="update_sql" />
+        WHERE
+        current_transformer_id = #{currentTransformerId}
+    </update>
+
+    <!-- 修改 -->
+    <update id="batchUpdateByIds">
+        UPDATE power_doc_current_transformer
+        <include refid="update_sql" />
+        WHERE
+        current_transformer_id IN
         <foreach item="ids" collection="list" open="(" separator="," close=")">
-			#{ids}
-		</foreach>
+            #{ids}
+        </foreach>
+    </update>
+
+    <!-- 根据ID删除 -->
+    <delete id="deleteByPrimaryKey">
+        <![CDATA[
+        	DELETE FROM power_doc_current_transformer
+        	WHERE
+        		current_transformer_id = #{id}
+    	]]>
     </delete>
 
-	<!-- selsect -->
-	<select id="selectByPrimaryKey" resultMap="RM_PowerDocCurrentTransformer">
-		SELECT
-		<include refid="columns" />
-		FROM power_doc_current_transformer
-		WHERE
-		current_transformer_id = #{id} 
-	</select>
+    <!-- 批量删除 -->
+    <delete id="batchDeleteByIds">
+        DELETE FROM power_doc_current_transformer
+        WHERE current_transformer_id IN
+        <foreach item="ids" collection="list" open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </delete>
+
+    <!-- selsect -->
+    <select id="selectByPrimaryKey" resultMap="RM_PowerDocCurrentTransformer">
+        SELECT
+        <include refid="columns" />
+        FROM power_doc_current_transformer
+        WHERE
+        current_transformer_id = #{id}
+    </select>
 
 
 
 
 
-	<!-- 模糊查询这样： 字段名 LIKE CONCAT('%',CONCAT(#{model.userName},'%')) -->
-	<sql id="findPage_where">
-		<where>
-				<if test="currentTransformerId != null">
-					AND current_transformer_id = #{currentTransformerId}
-				</if>
-				<if test="subreportId != null">
-					AND subreport_id = #{subreportId}
-				</if>
-				<if test="afirst != null and afirst !=''">
-					AND A_first = #{afirst}
-				</if>
-				<if test="bfirst != null and bfirst !=''">
-					AND B_first = #{bfirst}
-				</if>
-				<if test="cfirst != null and cfirst !=''">
-					AND C_first = #{cfirst}
-				</if>
-				<if test="alast != null and alast !=''">
-					AND A_last = #{alast}
-				</if>
-				<if test="blast != null and blast !=''">
-					AND B_last = #{blast}
-				</if>
-				<if test="clast != null and clast !=''">
-					AND C_last = #{clast}
-				</if>
-				<if test="asecond != null and asecond !=''">
-					AND A_second = #{asecond}
-				</if>
-				<if test="bsecond != null and bsecond !=''">
-					AND B_second = #{bsecond}
-				</if>
-				<if test="csecond != null and csecond !=''">
-					AND C_second = #{csecond}
-				</if>
-				<if test="testPositionPositive != null and testPositionPositive !=''">
-					AND test_position_positive = #{testPositionPositive}
-				</if>
-				<if test="acxPositive != null and acxPositive !=''">
-					AND A_Cx_positive = #{acxPositive}
-				</if>
-				<if test="bcxPositive != null and bcxPositive !=''">
-					AND B_Cx_positive = #{bcxPositive}
-				</if>
-				<if test="ccxPositive != null and ccxPositive !=''">
-					AND C_Cx_positive = #{ccxPositive}
-				</if>
-				<if test="atgPositive != null and atgPositive !=''">
-					AND A_tg_positive = #{atgPositive}
-				</if>
-				<if test="btgPositive != null and btgPositive !=''">
-					AND B_tg_positive = #{btgPositive}
-				</if>
-				<if test="ctgPositive != null and ctgPositive !=''">
-					AND C_tg_positive = #{ctgPositive}
-				</if>
-				<if test="apfPositive != null and apfPositive !=''">
-					AND A_pf_positive = #{apfPositive}
-				</if>
-				<if test="bpfPositive != null and bpfPositive !=''">
-					AND B_pf_positive = #{bpfPositive}
-				</if>
-				<if test="cpfPositive != null and cpfPositive !=''">
-					AND C_pf_positive = #{cpfPositive}
-				</if>
-				<if test="acpositive != null and acpositive !=''">
-					AND A_C_positive = #{acpositive}
-				</if>
-				<if test="bcpositive != null and bcpositive !=''">
-					AND B_C_positive = #{bcpositive}
-				</if>
-				<if test="ccpositive != null and ccpositive !=''">
-					AND C_C_positive = #{ccpositive}
-				</if>
-				<if test="testPositionReverse != null and testPositionReverse !=''">
-					AND test_position_reverse = #{testPositionReverse}
-				</if>
-				<if test="acxReverse != null and acxReverse !=''">
-					AND A_Cx_reverse = #{acxReverse}
-				</if>
-				<if test="bcxReverse != null and bcxReverse !=''">
-					AND B_Cx_reverse = #{bcxReverse}
-				</if>
-				<if test="ccxReverse != null and ccxReverse !=''">
-					AND C_Cx_reverse = #{ccxReverse}
-				</if>
-				<if test="atgReverse != null and atgReverse !=''">
-					AND A_tg_reverse = #{atgReverse}
-				</if>
-				<if test="btgReverse != null and btgReverse !=''">
-					AND B_tg_reverse = #{btgReverse}
-				</if>
-				<if test="ctgReverse != null and ctgReverse !=''">
-					AND C_tg_reverse = #{ctgReverse}
-				</if>
-				<if test="apfReverse != null and apfReverse !=''">
-					AND A_pf_reverse = #{apfReverse}
-				</if>
-				<if test="bpfReverse != null and bpfReverse !=''">
-					AND B_pf_reverse = #{bpfReverse}
-				</if>
-				<if test="cpfReverse != null and cpfReverse !=''">
-					AND C_pf_reverse = #{cpfReverse}
-				</if>
-				<if test="acreverse != null and acreverse !=''">
-					AND A_C_reverse = #{acreverse}
-				</if>
-				<if test="bcreverse != null and bcreverse !=''">
-					AND B_C_reverse = #{bcreverse}
-				</if>
-				<if test="ccreverse != null and ccreverse !=''">
-					AND C_C_reverse = #{ccreverse}
-				</if>
-				<if test="addUserid != null">
-					AND add_userid = #{addUserid}
-				</if>
-				<if test="addUsername != null and addUsername !=''">
-					AND add_username = #{addUsername}
-				</if>
-				<if test="addtime != null">
-					AND addtime = #{addtime}
-				</if>
-				<if test="editUserid != null">
-					AND edit_userid = #{editUserid}
-				</if>
-				<if test="editUsername != null and editUsername !=''">
-					AND edit_username = #{editUsername}
-				</if>
-				<if test="edittime != null">
-					AND edittime = #{edittime}
-				</if>
-		</where>
-	</sql>
+    <!-- 模糊查询这样： 字段名 LIKE CONCAT('%',CONCAT(#{model.userName},'%')) -->
+    <sql id="findPage_where">
+        <where>
+            <if test="currentTransformerId != null">
+                AND current_transformer_id = #{currentTransformerId}
+            </if>
+            <if test="subreportId != null">
+                AND subreport_id = #{subreportId}
+            </if>
+            <if test="afirst != null and afirst !=''">
+                AND A_first = #{afirst}
+            </if>
+            <if test="bfirst != null and bfirst !=''">
+                AND B_first = #{bfirst}
+            </if>
+            <if test="cfirst != null and cfirst !=''">
+                AND C_first = #{cfirst}
+            </if>
+            <if test="alast != null and alast !=''">
+                AND A_last = #{alast}
+            </if>
+            <if test="blast != null and blast !=''">
+                AND B_last = #{blast}
+            </if>
+            <if test="clast != null and clast !=''">
+                AND C_last = #{clast}
+            </if>
+            <if test="asecond != null and asecond !=''">
+                AND A_second = #{asecond}
+            </if>
+            <if test="bsecond != null and bsecond !=''">
+                AND B_second = #{bsecond}
+            </if>
+            <if test="csecond != null and csecond !=''">
+                AND C_second = #{csecond}
+            </if>
+            <if test="voltagePositive != null and voltagePositive !=''">
+                AND voltage_Positive = #{voltagePositive}
+            </if>
+            <if test="testPositionPositive != null and testPositionPositive !=''">
+                AND test_position_positive = #{testPositionPositive}
+            </if>
+            <if test="acxPositive != null and acxPositive !=''">
+                AND A_Cx_positive = #{acxPositive}
+            </if>
+            <if test="bcxPositive != null and bcxPositive !=''">
+                AND B_Cx_positive = #{bcxPositive}
+            </if>
+            <if test="ccxPositive != null and ccxPositive !=''">
+                AND C_Cx_positive = #{ccxPositive}
+            </if>
+            <if test="atgPositive != null and atgPositive !=''">
+                AND A_tg_positive = #{atgPositive}
+            </if>
+            <if test="btgPositive != null and btgPositive !=''">
+                AND B_tg_positive = #{btgPositive}
+            </if>
+            <if test="ctgPositive != null and ctgPositive !=''">
+                AND C_tg_positive = #{ctgPositive}
+            </if>
+            <if test="apfPositive != null and apfPositive !=''">
+                AND A_pf_positive = #{apfPositive}
+            </if>
+            <if test="bpfPositive != null and bpfPositive !=''">
+                AND B_pf_positive = #{bpfPositive}
+            </if>
+            <if test="cpfPositive != null and cpfPositive !=''">
+                AND C_pf_positive = #{cpfPositive}
+            </if>
+            <if test="acpositive != null and acpositive !=''">
+                AND A_C_positive = #{acpositive}
+            </if>
+            <if test="bcpositive != null and bcpositive !=''">
+                AND B_C_positive = #{bcpositive}
+            </if>
+            <if test="ccpositive != null and ccpositive !=''">
+                AND C_C_positive = #{ccpositive}
+            </if>
+            <if test="voltageReverse != null and voltageReverse !=''">
+                AND voltage_reverse = #{voltageReverse}
+            </if>
+            <if test="testPositionReverse != null and testPositionReverse !=''">
+                AND test_position_reverse = #{testPositionReverse}
+            </if>
+            <if test="acxReverse != null and acxReverse !=''">
+                AND A_Cx_reverse = #{acxReverse}
+            </if>
+            <if test="bcxReverse != null and bcxReverse !=''">
+                AND B_Cx_reverse = #{bcxReverse}
+            </if>
+            <if test="ccxReverse != null and ccxReverse !=''">
+                AND C_Cx_reverse = #{ccxReverse}
+            </if>
+            <if test="atgReverse != null and atgReverse !=''">
+                AND A_tg_reverse = #{atgReverse}
+            </if>
+            <if test="btgReverse != null and btgReverse !=''">
+                AND B_tg_reverse = #{btgReverse}
+            </if>
+            <if test="ctgReverse != null and ctgReverse !=''">
+                AND C_tg_reverse = #{ctgReverse}
+            </if>
+            <if test="apfReverse != null and apfReverse !=''">
+                AND A_pf_reverse = #{apfReverse}
+            </if>
+            <if test="bpfReverse != null and bpfReverse !=''">
+                AND B_pf_reverse = #{bpfReverse}
+            </if>
+            <if test="cpfReverse != null and cpfReverse !=''">
+                AND C_pf_reverse = #{cpfReverse}
+            </if>
+            <if test="acreverse != null and acreverse !=''">
+                AND A_C_reverse = #{acreverse}
+            </if>
+            <if test="bcreverse != null and bcreverse !=''">
+                AND B_C_reverse = #{bcreverse}
+            </if>
+            <if test="ccreverse != null and ccreverse !=''">
+                AND C_C_reverse = #{ccreverse}
+            </if>
+            <if test="addUserid != null">
+                AND add_userid = #{addUserid}
+            </if>
+            <if test="addUsername != null and addUsername !=''">
+                AND add_username = #{addUsername}
+            </if>
+            <if test="addtime != null">
+                AND addtime = #{addtime}
+            </if>
+            <if test="editUserid != null">
+                AND edit_userid = #{editUserid}
+            </if>
+            <if test="editUsername != null and editUsername !=''">
+                AND edit_username = #{editUsername}
+            </if>
+            <if test="edittime != null">
+                AND edittime = #{edittime}
+            </if>
+        </where>
+    </sql>
 
-	<!-- selsect by obj -->
-	<select id="listByObj" resultMap="RM_PowerDocCurrentTransformer" parameterType="com.putorn.powerdoc.entity.PowerDocCurrentTransformer">
-	SELECT
-	<include refid="columns" />
-	FROM power_doc_current_transformer
-	<include refid="findPage_where" />
-	</select>
+    <!-- selsect by obj -->
+    <select id="listByObj" resultMap="RM_PowerDocCurrentTransformer" parameterType="com.putorn.powerdoc.entity.PowerDocCurrentTransformer">
+        SELECT
+        <include refid="columns" />
+        FROM power_doc_current_transformer
+        <include refid="findPage_where" />
+    </select>
 
 
-	<!-- 获取总数 -->
-	<select id="listPageCount" resultType="long" parameterType="map">
-		SELECT COUNT(1)
-		FROM power_doc_current_transformer
-		<include refid="findPage_where" />
-	</select>  
+    <!-- 获取总数 -->
+    <select id="listPageCount" resultType="long" parameterType="map">
+        SELECT COUNT(1)
+        FROM power_doc_current_transformer
+        <include refid="findPage_where" />
+    </select>
 
-	<select id="listPage" resultMap="RM_PowerDocCurrentTransformer" parameterType="map">
-		 SELECT
-		<include refid="columns" />
-		FROM power_doc_current_transformer
-		<include refid="findPage_where" />
+    <select id="listPage" resultMap="RM_PowerDocCurrentTransformer" parameterType="map">
+        SELECT
+        <include refid="columns" />
+        FROM power_doc_current_transformer
+        <include refid="findPage_where" />
 
-		<if test="sortColumns != null and sortColumns !=''">
-			ORDER BY ${sortColumns}
-		</if>
-		
-		<if test="offset != null and pageSize != null">
-			LIMIT  #{offset}, #{pageSize}
-		</if>
-	</select>
+        <if test="sortColumns != null and sortColumns !=''">
+            ORDER BY ${sortColumns}
+        </if>
+
+        <if test="offset != null and pageSize != null">
+            LIMIT  #{offset}, #{pageSize}
+        </if>
+    </select>
 
 </mapper>
