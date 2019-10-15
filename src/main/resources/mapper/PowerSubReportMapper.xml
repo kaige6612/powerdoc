@@ -425,6 +425,7 @@
         <include refid="columns" />
         FROM power_sub_report
         <include refid="findPage_where" />
+
     </select>
 
 
@@ -449,5 +450,6 @@
             LIMIT  #{offset}, #{pageSize}
         </if>
     </select>
+
 
 </mapper>
