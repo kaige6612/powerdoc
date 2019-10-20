@@ -87,7 +87,7 @@ public class ExportServiceImpl implements ExportService {
             List<PowerModel> powerModels = modelMapper.listByObj(new PowerModel());
             for (PowerModel model : powerModels) {
                 String tableName = model.getModelTableName();
-                if(keySet.contains(tableName)) {
+                if(!keySet.contains(tableName)) {
                     // 不包含，则直接生成空文档
                     exportEntity = this.setDocRenderNull(exportEntity,tableName);
                 }else {
@@ -107,8 +107,8 @@ public class ExportServiceImpl implements ExportService {
 //        生成报告
             XWPFTemplate template = XWPFTemplate.compile("src/main/resources/template/0_first.docx").render(exportEntity);
 
-            String docName = "实验报告"+ DateUtil.getDateTime2();
-            docName = URLEncoder.encode(docName,"UTF-8");
+            String docName = "实验报告"+ DateUtil.getDateTime2()+".docx";
+//            docName = URLEncoder.encode(docName,"UTF-8");
             //设置响应流
             response.addHeader("Content-Type", "application/octet-stream");
             response.addHeader("Content-Disposition", "attachment; filename=" +docName);
@@ -211,7 +211,7 @@ public class ExportServiceImpl implements ExportService {
                         detailMap = DataConvertUtil.javaBeanToMap(insulation);
                     }
                     subReportMap.putAll(detailMap);
-                    list.add(detailMap);
+                    list.add(subReportMap);
                 }
 
                 //获取字模板输出
@@ -259,7 +259,7 @@ public class ExportServiceImpl implements ExportService {
                         }
                     }
                     subReportMap.putAll(detailMap);
-                    list.add(detailMap);
+                    list.add(subReportMap);
                 }
                 break;
             case "power_doc_hv_bushings":
@@ -277,7 +277,7 @@ public class ExportServiceImpl implements ExportService {
                         detailMap = DataConvertUtil.javaBeanToMap(hvBushings);
                     }
                     subReportMap.putAll(detailMap);
-                    list.add(detailMap);
+                    list.add(subReportMap);
                 }
                 break;
             case "power_doc_voltage_transformer":
@@ -295,7 +295,7 @@ public class ExportServiceImpl implements ExportService {
                         detailMap = DataConvertUtil.javaBeanToMap(voltageTransformer);
                     }
                     subReportMap.putAll(detailMap);
-                    list.add(detailMap);
+                    list.add(subReportMap);
                 }
 
                 break;
@@ -315,7 +315,7 @@ public class ExportServiceImpl implements ExportService {
                         detailMap = DataConvertUtil.javaBeanToMap(currentTransformer);
                     }
                     subReportMap.putAll(detailMap);
-                    list.add(detailMap);
+                    list.add(subReportMap);
                 }
                 break;
                         

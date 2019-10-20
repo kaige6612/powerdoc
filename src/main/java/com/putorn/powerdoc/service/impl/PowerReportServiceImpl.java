@@ -22,6 +22,7 @@ import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Field;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -29,7 +30,7 @@ import java.util.*;
  *  PowerReportServiceImpl
  */
 @Service("powerReportService")
-@Transactional
+//@Transactional
 public class PowerReportServiceImpl extends BaseServiceImpl<PowerReport> implements PowerReportService {
     private final Log logger = LogFactory.getLog(this.getClass());
     @Autowired
@@ -79,7 +80,8 @@ public class PowerReportServiceImpl extends BaseServiceImpl<PowerReport> impleme
     }
 
     @Override
-    public List<String> saveReportBatch(List<PowerReportVo> reportList) {
+    @Transactional
+    public List<String> saveReportBatch(List<PowerReportVo> reportList) throws Exception{
         List<String> errorList = new ArrayList<>();
         for (PowerReportVo powerReportVo :reportList) {
             //保存报告封面信息
@@ -104,7 +106,11 @@ public class PowerReportServiceImpl extends BaseServiceImpl<PowerReport> impleme
                     }else {
 
                         //转为子报告首页信息
-                        PowerSubReport subReport = JSON.toJavaObject(JSON.parseObject(JSON.toJSONString(subreportMap)),PowerSubReport.class);
+                        String subString = JSON.toJSONString(subreportMap);
+                        logger.info("转换前的字符串为："+subString);
+                        JSONObject jsonSub = JSON.parseObject(subString);
+                        PowerSubReport subReport = JSON.toJavaObject(jsonSub, PowerSubReport.class);
+//                        PowerSubReport subReport = JSON.toJavaObject(JSON.parseObject(JSON.toJSONString(subreportMap)),PowerSubReport.class);
                         String deviceModelId = String.valueOf(subReport.getDeviceModelId());
                         PowerDeviceModel powerDeviceModel = deviceModelMapper.selectByPrimaryKey(Long.parseLong(deviceModelId));
                         subReport.setDeviceId(powerDeviceModel.getDeviceId());
@@ -126,7 +132,7 @@ public class PowerReportServiceImpl extends BaseServiceImpl<PowerReport> impleme
                             PowerModel powerModel = modelMapper.selectByPrimaryKey(powerDeviceModel.getModelId());
 
                             //保存具体的报告信息
-                            saveSubDetail(powerModel,detailMap,subReportId);
+                            this.saveSubDetail(powerModel,detailMap,subReportId);
 
                         }
                         
@@ -145,17 +151,27 @@ public class PowerReportServiceImpl extends BaseServiceImpl<PowerReport> impleme
      * @param jsonObject
      * @return
      */
-    public Map<String,Object> devideSubReportAndDetail(JSONObject jsonObject) {
+    public Map<String,Object> devideSubReportAndDetail(JSONObject jsonObject) throws ParseException{
         Map<String,Object> map = new HashMap<>();
         Map<String,Object> subReportMap = new HashMap<>();
         Map<String,Object> detailMap = new HashMap<>();
 
         Class clazz = PowerSubReport.class;
-        Field[] fields = clazz.getFields();
-        List<Field> fieldsList = Arrays.asList(fields);
+        Field[] fields = clazz.getDeclaredFields();
+        List<String> fieldsList = new ArrayList<>();
+        for (int i = 0; i < fields.length; i++) {
+            fieldsList.add( fields[i].getName());
+        }
         Set<String> keySet = jsonObject.keySet();
         for(String key: keySet) {
             if(fieldsList.contains(key)) {
+                if(key.equals("addtime") || key.equals("edittime")) {
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyy-MM-dd HH:mm:ss");
+                    Date parse = sdf.parse(jsonObject.get(key).toString());
+                    String formatDate = sdf.format(parse);
+                    subReportMap.put(key,Timestamp.valueOf(formatDate));
+
+                }
                 subReportMap.put(key,jsonObject.get(key));
             }else {
                 detailMap.put(key,jsonObject.get(key));
@@ -243,6 +259,9 @@ public class PowerReportServiceImpl extends BaseServiceImpl<PowerReport> impleme
     private String insertReportFromVo(PowerReportVo powerReportVo) {
         String errorMsg = null;
         try {
+            if (powerReportVo.getId() == null) {
+                return "报告id不能为空";
+            }
             PowerReport report = new PowerReport();
             report.setId(powerReportVo.getId());
             report.setSubstationId(powerReportVo.getSubstationId());
@@ -377,65 +396,65 @@ public class PowerReportServiceImpl extends BaseServiceImpl<PowerReport> impleme
                         }
 
                         if(StringUtils.isEmpty(subReportRemote.getHumidity())) {
-                            subReport.setAirTemperature(subReportRemote.getHumidity());
+                            subReport.setHumidity(subReportRemote.getHumidity());
                         }else {
-                            subReport.setAirTemperature(powerDevice.getHumidity());
+                            subReport.setHumidity(powerDevice.getHumidity());
                         }
 
                         if(StringUtils.isEmpty(subReportRemote.getRunHumidity())) {
-                            subReport.setAirTemperature(subReportRemote.getRunHumidity());
+                            subReport.setRunHumidity(subReportRemote.getRunHumidity());
                         }else {
-                            subReport.setAirTemperature(powerDevice.getRunHumidity());
+                            subReport.setRunHumidity(powerDevice.getRunHumidity());
                         }
 
                         if(StringUtils.isEmpty(subReportRemote.getConnectGroup())) {
-                            subReport.setAirTemperature(subReportRemote.getConnectGroup());
+                            subReport.setConnectGroup(subReportRemote.getConnectGroup());
                         }else {
-                            subReport.setAirTemperature(powerDevice.getConnectGroup());
+                            subReport.setConnectGroup(powerDevice.getConnectGroup());
                         }
 
                         if(StringUtils.isEmpty(subReportRemote.getModelNo())) {
-                            subReport.setAirTemperature(subReportRemote.getModelNo());
+                            subReport.setModelNo(subReportRemote.getModelNo());
                         }else {
-                            subReport.setAirTemperature(powerDevice.getModelNo());
+                            subReport.setModelNo(powerDevice.getModelNo());
                         }
 
 
                         if(StringUtils.isEmpty(subReportRemote.getProducer())) {
-                            subReport.setAirTemperature(subReportRemote.getProducer());
+                            subReport.setProducer(subReportRemote.getProducer());
                         }else {
-                            subReport.setAirTemperature(powerDevice.getProducer());
+                            subReport.setProducer(powerDevice.getProducer());
                         }
 
 
                         if(StringUtils.isEmpty(subReportRemote.getCapacity())) {
-                            subReport.setAirTemperature(subReportRemote.getCapacity());
+                            subReport.setCapacity(subReportRemote.getCapacity());
                         }else {
-                            subReport.setAirTemperature(powerDevice.getCapacity());
+                            subReport.setCapacity(powerDevice.getCapacity());
                         }
 
                         if(StringUtils.isEmpty(subReportRemote.getRunNo())) {
-                            subReport.setAirTemperature(subReportRemote.getRunNo());
+                            subReport.setRunNo(subReportRemote.getRunNo());
                         }else {
-                            subReport.setAirTemperature(powerDevice.getRunNo());
+                            subReport.setRunNo(powerDevice.getRunNo());
                         }
 
                         if(StringUtils.isEmpty(subReportRemote.getRunDate())) {
-                            subReport.setAirTemperature(subReportRemote.getRunDate());
+                            subReport.setRunDate(subReportRemote.getRunDate());
                         }else {
-                            subReport.setAirTemperature(powerDevice.getRunDate());
+                            subReport.setRunDate(powerDevice.getRunDate());
                         }
 
                         if(StringUtils.isEmpty(subReportRemote.getProductionDate())) {
-                            subReport.setAirTemperature(subReportRemote.getProductionDate());
+                            subReport.setProductionDate(subReportRemote.getProductionDate());
                         }else {
-                            subReport.setAirTemperature(powerDevice.getProductionDate());
+                            subReport.setProductionDate(powerDevice.getProductionDate());
                         }
 
                         if(StringUtils.isEmpty(subReportRemote.getProductionNo())) {
-                            subReport.setAirTemperature(subReportRemote.getProductionNo());
+                            subReport.setProductionNo(subReportRemote.getProductionNo());
                         }else {
-                            subReport.setAirTemperature(powerDevice.getProductionNo());
+                            subReport.setProductionNo(powerDevice.getProductionNo());
                         }
 
                     }
@@ -460,6 +479,7 @@ public class PowerReportServiceImpl extends BaseServiceImpl<PowerReport> impleme
                         }
                     }
                 }
+                subReport.setDeviceId(subReportRemote.getDeviceModelId());
                 subReport.setInstrumentNames(instrumentNamesSb.toString());
                 subReport.setConclusion(subReportRemote.getConclusion());
                 subReport.setRemark(subReportRemote.getRemark());

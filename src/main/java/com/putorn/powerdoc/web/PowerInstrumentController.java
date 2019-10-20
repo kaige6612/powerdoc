@@ -34,16 +34,15 @@ public class PowerInstrumentController{
     private PowerInstrumentService powerInstrumentService;
 
     private final Log logger = LogFactory.getLog(this.getClass());
-    @RequestMapping("saveInstrument")
-    @ApiImplicitParam(name = "instrument",value = "添加仪器",dataType = "PowerInstrument",required = true)
+    @PostMapping("saveInstrument")
+    @ApiImplicitParam(name = "instrumentName",value = "仪器名称",dataType = "String",required = true)
     @ApiOperation(value = "添加仪器",notes = "添加仪器对象,主键自增"/*,produces = "application/json"*/)
     @ApiResponse(code = 200,message = "success")
 //    public ResponseEntity<Map<String,Object>> savePowerInstrument(@RequestBody PowerInstrument instrument){
-    public ResponseEntity<Map<String,Object>> savePowerInstrument(HttpServletRequest request,String instrumentId,String instrumentName){
+    public ResponseEntity<Map<String,Object>> savePowerInstrument(String instrumentName){
         Map<String,Object> result = new HashMap<>();
         try {
-            int i = 1/0;
-//            request.getpara
+
             PowerInstrument instrument = new PowerInstrument();
             instrument.setInstrumentName(instrumentName);
             result = powerInstrumentService.saveInstrument(instrument);

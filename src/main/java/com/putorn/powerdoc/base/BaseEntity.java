@@ -1,5 +1,6 @@
 package com.putorn.powerdoc.base;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -19,12 +20,14 @@ public class BaseEntity implements Serializable{
 	private Integer addUserid;//添加人id
 	@ApiModelProperty(value = "添加人姓名",example = "张三",hidden = true)
 	private String addUsername;//添加人姓名
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
 	@ApiModelProperty(value = "添加时间",example = "2019-03-14 15:28:34",hidden = true)
 	private Timestamp addtime;//添加时间
 	@ApiModelProperty(value = "修改人id",example = "123",hidden = true)
 	private Integer editUserid;//修改人id
 	@ApiModelProperty(value = "添加人姓名",example = "张三",hidden = true)
 	private String editUsername;//添加人姓名
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
 	@ApiModelProperty(value = "修改时间",example = "2019-03-14 15:28:34",hidden = true)
 	private Timestamp edittime;//修改时间
 

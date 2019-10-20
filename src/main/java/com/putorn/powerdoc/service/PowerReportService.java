@@ -10,5 +10,5 @@ import java.util.List;
  */
 public interface PowerReportService extends BaseService<PowerReport>{
 
-    List<String> saveReportBatch(List<PowerReportVo> reportList);
+    List<String> saveReportBatch(List<PowerReportVo> reportList) throws Exception;
 }

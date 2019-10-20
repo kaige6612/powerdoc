@@ -56,11 +56,12 @@ public class PowerReportController{
             code = 500;
             message = "服务异常";
             result.put("message","服务异常");
+            logger.error(e);
 
         }
         result.put("code",code);
         result.put("message",message);
-        logger.info("用户登录返回结果："+JSON.toJSONString(result));
+        logger.info("保存报告返回结果："+JSON.toJSONString(result));
        if(!flag) {
            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
        }else {

@@ -66,6 +66,7 @@
             var validForm = $("#signupForm").Validform({
                 tiptype: 4,
                 callback: function (data) {
+                    window.alert('返回信息：'+data);
                     if (data.statusText == "OK") {
                         parent.layer.msg('添加成功');
 
