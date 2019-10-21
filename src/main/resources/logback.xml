@@ -9,12 +9,12 @@
         </encoder>
     </appender>
     <appender name="INFO_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <File>${BASE_DIR}/${APP}/info.log</File>
+        <File>C:\Log\info.log</File>
         <encoder>
             <pattern> %d^|^%contextName^|^%X{requestId}^|^%level^|^%c{1.}^|^%t^|^%m%n</pattern>
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${BASE_DIR}/${APP}/info.%d{_yyyy-MM-dd}</fileNamePattern>
+            <fileNamePattern>C:\Log\info.%d{_yyyy-MM-dd}</fileNamePattern>
         </rollingPolicy>
     </appender>
     <logger name="com.putorn.dao" level="TRACE"/>

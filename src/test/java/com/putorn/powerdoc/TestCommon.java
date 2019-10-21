@@ -1,9 +1,12 @@
 package com.putorn.powerdoc;
 
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.deepoove.poi.data.DocxRenderData;
+import com.putorn.powerdoc.entity.PowerSubReport;
+import com.putorn.powerdoc.entity.SubReport;
 import com.putorn.powerdoc.entity.vo.PowerSubReportVo;
 
 import java.io.File;
@@ -21,8 +24,12 @@ public class TestCommon {
 //		testJosnToMap();
 
 //		testJavabeanToJson();
-        long time = System.currentTimeMillis();
-        System.out.printf(String.valueOf(time));
+//        long time = System.currentTimeMillis();
+//        System.out.printf(String.valueOf(time));
+
+
+		testJson();
+
     }
 
 	public static void testListAndArray() {
@@ -69,6 +76,22 @@ public class TestCommon {
 //		segment.getRenderDatas()getRenderDatas
 	}
 
+
+	public static void testJson() {
+		JSONObject json = new JSONObject();
+
+		json.put("addtime","2019-10-21 14:05:21");
+		json.put("edittime","2019-09-21 14:05:22");
+		json.put("addUsername","张飞");
+		json.put("editUsername","赵云");
+
+		System.out.println("转换前参数："+json.toJSONString());
+		SubReport subReport = JSON.toJavaObject(json, SubReport.class);
+
+		System.out.println("转换后修改时间为："+subReport.getEdittime());
+
+		System.out.println("对象转json："+JSON.toJSONString(subReport));
+	}
 
 
 }
