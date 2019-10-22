@@ -1,4 +1,5 @@
 package com.putorn.powerdoc.entity;
+import com.alibaba.fastjson.annotation.JSONField;
 import com.putorn.powerdoc.base.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -129,6 +130,7 @@ public class PowerDocCurrentTransformer extends BaseEntity{
     @ApiModelProperty(value = "添加人姓名",example = "")
     private String addUsername;
     // 添加时间
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     @ApiModelProperty(value = "添加时间",example = "")
     private java.sql.Timestamp addtime;
     // 修改人id
@@ -138,6 +140,7 @@ public class PowerDocCurrentTransformer extends BaseEntity{
     @ApiModelProperty(value = "修改人姓名",example = "")
     private String editUsername;
     // 修改时间
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     @ApiModelProperty(value = "修改时间",example = "")
     private java.sql.Timestamp edittime;
 
