@@ -10,6 +10,7 @@ import com.putorn.powerdoc.entity.SubReport;
 import com.putorn.powerdoc.entity.vo.PowerSubReportVo;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -28,9 +29,13 @@ public class TestCommon {
 //        System.out.printf(String.valueOf(time));
 
 
-		testJson();
+		try {
+			testJson();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-    }
+	}
 
 	public static void testListAndArray() {
 		JSONObject json = new JSONObject();
@@ -77,7 +82,7 @@ public class TestCommon {
 	}
 
 
-	public static void testJson() {
+	public static void testJson() throws Exception{
 		JSONObject json = new JSONObject();
 
 		json.put("addtime","2019-10-21 14:05:21");
@@ -85,10 +90,16 @@ public class TestCommon {
 		json.put("addUsername","张飞");
 		json.put("editUsername","赵云");
 
+		//将字符串形式的时间，转为Date格式，fastjson内部支持Date转TimeStamp
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date addtime = sdf.parse(json.getString("addtime"));
+		json.put("addtime",addtime);
+
 		System.out.println("转换前参数："+json.toJSONString());
 		SubReport subReport = JSON.toJavaObject(json, SubReport.class);
 
 		System.out.println("转换后修改时间为："+subReport.getEdittime());
+		System.out.println("转换后添加时间为："+subReport.getAddtime());
 
 		System.out.println("对象转json："+JSON.toJSONString(subReport));
 	}

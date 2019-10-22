@@ -163,13 +163,20 @@ public class PowerReportServiceImpl extends BaseServiceImpl<PowerReport> impleme
             fieldsList.add( fields[i].getName());
         }
         Set<String> keySet = jsonObject.keySet();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyy-MM-dd HH:mm:ss");
         for(String key: keySet) {
             if(fieldsList.contains(key)) {
                 if(key.equals("addtime") || key.equals("edittime")) {
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyy-MM-dd HH:mm:ss");
-                    Date parse = sdf.parse(jsonObject.get(key).toString());
-                    String formatDate = sdf.format(parse);
-                    subReportMap.put(key,Timestamp.valueOf(formatDate));
+                    Date parse ;
+                    if(StringUtils.isEmpty(key)) {
+
+                        parse = sdf.parse(jsonObject.get(key).toString());
+                    }else {
+                        //前端此字段为空，则赋值为当前时间
+                        parse = new Date();
+                    }
+                    subReportMap.put(key,parse);
+
 
                 }
                 subReportMap.put(key,jsonObject.get(key));

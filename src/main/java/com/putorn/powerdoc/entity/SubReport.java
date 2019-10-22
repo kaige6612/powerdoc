@@ -11,14 +11,14 @@ public class SubReport {
     // 添加人姓名
     private String addUsername;
     // 添加时间
-    @JSONField(format="yyyy-MM-dd HH:mm:ss")
+//    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Timestamp addtime;
     // 修改人id
     private Integer editUserid;
     // 修改人姓名
     private String editUsername;
     // 修改时间
-    @JSONField(format="yyyy-MM-dd HH:mm:ss")
+//    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date edittime;
 
     public Integer getAddUserid() {
