@@ -96,7 +96,7 @@ public class ExportServiceImpl implements ExportService {
                     List<PowerSubReport> subReports = groups.get(tableName);
 
                     // 2、根据库名，获取子报告详情
-                    List<Map<String, Object>> subReportDetail = getSubReportDetail(tableName, subReports);
+                    List<Map<String, Object>> subReportDetail = getSubReportDetail(tableName, subReports,powerReport);
 
                     // 3、设置要生成的文档
                     exportEntity = setDocs(exportEntity, tableName, subReportDetail);
@@ -183,26 +183,22 @@ public class ExportServiceImpl implements ExportService {
      * @param subReports
      * @return
      */
-    private List<Map<String,Object>> getSubReportDetail(String tableName,List<PowerSubReport> subReports) throws Exception{
-//        String errMsg = null;
-//        Long subReportId = subReport.getId();
-//        Long deviceModelId = subReport.getDeviceModelId();
+    private List<Map<String,Object>> getSubReportDetail(String tableName,List<PowerSubReport> subReports,PowerReport report) throws Exception{
 //
-//
-//        Map<String, Object> detailMap = new HashMap<>();
-//        PowerModel powerModel = modelMapper.selectByPrimaryKey(deviceModelMapper.selectByPrimaryKey(deviceModelId).getModelId());
-//
-//        if(powerModel == null) {
-//            errMsg = "没有查询到报告对应的模板信息，请检查！";
-//        }
         List<Map<String,Object>> list = new ArrayList<>();
-        switch (tableName) {
-            case "power_doc_insulation":
-                for (PowerSubReport subReport : subReports) {
-                    Map<String, Object> subReportMap = DataConvertUtil.javaBeanToMap(subReport);
-                    Map<String, Object> detailMap = new HashMap<>();
+        for (PowerSubReport subReport : subReports) {
+            Map<String, Object> subReportMap = DataConvertUtil.javaBeanToMap(subReport);
+            Map<String, Object> detailMap = new HashMap<>();
+            Long subReportId = subReport.getId();
+
+            //将报告封面中的公共信息加入map中
+            subReportMap.put("substationName",report.getSubstationName());
+            subReportMap.put("runNo",report.getRunNo());
+            subReportMap.put("testDate",report.getTestDate());
+            switch (tableName) {
+                case "power_doc_insulation":
                     PowerDocInsulation insulation = new PowerDocInsulation();
-                    insulation.setSubreportId(subReport.getId());
+                    insulation.setSubreportId(subReportId);
                     List<PowerDocInsulation> powerDocInsulations = insulationMapper.listByObj(insulation);
                     logger.info("查询结果："+ JSON.toJSONString(powerDocInsulations));
                     //每个子报告只可能对应一个子报告内容，否则就是异常数据不予处理
@@ -210,18 +206,10 @@ public class ExportServiceImpl implements ExportService {
                         insulation = powerDocInsulations.get(0);
                         detailMap = DataConvertUtil.javaBeanToMap(insulation);
                     }
-                    subReportMap.putAll(detailMap);
-                    list.add(subReportMap);
-                }
+                    break;
 
-                //获取字模板输出
-//                DocxRenderData segment = new DocxRenderData(new File("src/test/resources/story/segment.docx"), detailMap );
-                break;
-            case "power_doc_dc_resistance":
-                for (PowerSubReport subReport : subReports) {
-                    Map<String, Object> subReportMap = DataConvertUtil.javaBeanToMap(subReport);
-                    Map<String, Object> detailMap = new HashMap<>();
-                    Long subReportId = subReport.getId();
+                case "power_doc_dc_resistance":
+
                     PowerDocDcResistance dcResistance = new PowerDocDcResistance();
                     dcResistance.setSubreportId(subReportId);
                     List<PowerDocDcResistance> dcResistances = dcResistanceMapper.listByObj(dcResistance);
@@ -258,15 +246,9 @@ public class ExportServiceImpl implements ExportService {
                             }
                         }
                     }
-                    subReportMap.putAll(detailMap);
-                    list.add(subReportMap);
-                }
-                break;
-            case "power_doc_hv_bushings":
-                for (PowerSubReport subReport : subReports) {
-                    Map<String, Object> subReportMap = DataConvertUtil.javaBeanToMap(subReport);
-                    Map<String, Object> detailMap = new HashMap<>();
-                    Long subReportId = subReport.getId();
+
+                    break;
+                case "power_doc_hv_bushings":
                     PowerDocHvBushings hvBushings = new PowerDocHvBushings();
                     hvBushings.setSubreportId(subReportId);
                     List<PowerDocHvBushings> hvBushingss = hvBushingsMapper.listByObj(hvBushings);
@@ -276,15 +258,9 @@ public class ExportServiceImpl implements ExportService {
                         hvBushings = hvBushingss.get(0);
                         detailMap = DataConvertUtil.javaBeanToMap(hvBushings);
                     }
-                    subReportMap.putAll(detailMap);
-                    list.add(subReportMap);
-                }
-                break;
-            case "power_doc_voltage_transformer":
-                for (PowerSubReport subReport : subReports) {
-                    Map<String, Object> subReportMap = DataConvertUtil.javaBeanToMap(subReport);
-                    Map<String, Object> detailMap = new HashMap<>();
-                    Long subReportId = subReport.getId();
+
+                    break;
+                case "power_doc_voltage_transformer":
                     PowerDocVoltageTransformer voltageTransformer = new PowerDocVoltageTransformer();
                     voltageTransformer.setSubreportId(subReportId);
                     List<PowerDocVoltageTransformer> voltageTransformers = voltageTransformerMapper.listByObj(voltageTransformer);
@@ -294,17 +270,10 @@ public class ExportServiceImpl implements ExportService {
                         voltageTransformer = voltageTransformers.get(0);
                         detailMap = DataConvertUtil.javaBeanToMap(voltageTransformer);
                     }
-                    subReportMap.putAll(detailMap);
-                    list.add(subReportMap);
-                }
 
-                break;
+                    break;
 
-            case "power_doc_current_transformer":
-                for (PowerSubReport subReport : subReports) {
-                    Map<String, Object> subReportMap = DataConvertUtil.javaBeanToMap(subReport);
-                    Map<String, Object> detailMap = new HashMap<>();
-                    Long subReportId = subReport.getId();
+                case "power_doc_current_transformer":
                     PowerDocCurrentTransformer currentTransformer = new PowerDocCurrentTransformer();
                     currentTransformer.setSubreportId(subReportId);
                     List<PowerDocCurrentTransformer> currentTransformers = currentTransformerMapper.listByObj(currentTransformer);
@@ -314,14 +283,12 @@ public class ExportServiceImpl implements ExportService {
                         currentTransformer = currentTransformers.get(0);
                         detailMap = DataConvertUtil.javaBeanToMap(currentTransformer);
                     }
-                    subReportMap.putAll(detailMap);
-                    list.add(subReportMap);
-                }
-                break;
-                        
+                    break;
+            }
+
+            subReportMap.putAll(detailMap);
+            list.add(subReportMap);
         }
-
-
         return list;
     }
 

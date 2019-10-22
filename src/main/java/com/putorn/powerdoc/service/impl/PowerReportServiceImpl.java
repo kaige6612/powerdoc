@@ -95,21 +95,20 @@ public class PowerReportServiceImpl extends BaseServiceImpl<PowerReport> impleme
                 List<JSONObject> subReportList = powerReportVo.getSubReportList();
                 for (JSONObject subReportJson:subReportList) {
 
-                    Map<String, Object> map = devideSubReportAndDetail(subReportJson);
-                    Map<String,Object> subreportMap = (Map<String,Object>)map.get("subReport");
-                    Map<String,Object> detailMap = (Map<String,Object>)map.get("detail");
+                    Map<String, JSONObject> map = devideSubReportAndDetail(subReportJson);
+                    JSONObject subJson = map.get("subReport");
+                    JSONObject detailJson = map.get("detail");
 
-                    if(!subreportMap.containsKey("deviceModelId")) {
+                    if(!subJson.containsKey("deviceModelId")) {
                         errorList.add(String.valueOf(powerReportVo.getId()));
                         logger.error("不包含deviceModelId字段，无法保存信息");
                         continue;
                     }else {
 
                         //转为子报告首页信息
-                        String subString = JSON.toJSONString(subreportMap);
-                        logger.info("转换前的字符串为："+subString);
-                        JSONObject jsonSub = JSON.parseObject(subString);
-                        PowerSubReport subReport = JSON.toJavaObject(jsonSub, PowerSubReport.class);
+
+                        PowerSubReport subReport = JSON.toJavaObject(subJson, PowerSubReport.class);
+//                        subReport.setDeviceModelId();
 //                        PowerSubReport subReport = JSON.toJavaObject(JSON.parseObject(JSON.toJSONString(subreportMap)),PowerSubReport.class);
                         String deviceModelId = String.valueOf(subReport.getDeviceModelId());
                         PowerDeviceModel powerDeviceModel = deviceModelMapper.selectByPrimaryKey(Long.parseLong(deviceModelId));
@@ -132,7 +131,7 @@ public class PowerReportServiceImpl extends BaseServiceImpl<PowerReport> impleme
                             PowerModel powerModel = modelMapper.selectByPrimaryKey(powerDeviceModel.getModelId());
 
                             //保存具体的报告信息
-                            this.saveSubDetail(powerModel,detailMap,subReportId);
+                            this.saveSubDetail(powerModel,detailJson,subReportId);
 
                         }
                         
@@ -151,10 +150,12 @@ public class PowerReportServiceImpl extends BaseServiceImpl<PowerReport> impleme
      * @param jsonObject
      * @return
      */
-    public Map<String,Object> devideSubReportAndDetail(JSONObject jsonObject) throws ParseException{
-        Map<String,Object> map = new HashMap<>();
-        Map<String,Object> subReportMap = new HashMap<>();
-        Map<String,Object> detailMap = new HashMap<>();
+    public Map<String,JSONObject> devideSubReportAndDetail(JSONObject jsonObject) throws ParseException{
+        Map<String,JSONObject> map = new HashMap<>();
+
+
+        JSONObject subReportJson = new JSONObject();
+        JSONObject detailJson = new JSONObject();
 
         Class clazz = PowerSubReport.class;
         Field[] fields = clazz.getDeclaredFields();
@@ -168,25 +169,27 @@ public class PowerReportServiceImpl extends BaseServiceImpl<PowerReport> impleme
             if(fieldsList.contains(key)) {
                 if(key.equals("addtime") || key.equals("edittime")) {
                     Date parse ;
-                    if(StringUtils.isEmpty(key)) {
+                    if(!StringUtils.isEmpty(jsonObject.get(key))) {
 
                         parse = sdf.parse(jsonObject.get(key).toString());
                     }else {
                         //前端此字段为空，则赋值为当前时间
                         parse = new Date();
                     }
-                    subReportMap.put(key,parse);
+                    subReportJson.put(key,parse);
 
 
+                }else {
+                    subReportJson.put(key,jsonObject.get(key));
                 }
-                subReportMap.put(key,jsonObject.get(key));
+
             }else {
-                detailMap.put(key,jsonObject.get(key));
+                detailJson.put(key,jsonObject.get(key));
             }
         }
 
-        map.put("subReport",subReportMap);
-        map.put("detail",detailMap);
+        map.put("subReport",subReportJson);
+        map.put("detail",detailJson);
         return map;
 
     }
@@ -197,7 +200,7 @@ public class PowerReportServiceImpl extends BaseServiceImpl<PowerReport> impleme
      * @param detailMap
      * @param subReportId
      */
-    private void saveSubDetail(PowerModel powerModel,Map<String,Object> detailMap,String subReportId){
+    private void saveSubDetail(PowerModel powerModel,JSONObject detailMap,String subReportId){
         String modelTableName = powerModel.getModelTableName();
 
         //获取具体报告内容
@@ -486,7 +489,7 @@ public class PowerReportServiceImpl extends BaseServiceImpl<PowerReport> impleme
                         }
                     }
                 }
-                subReport.setDeviceId(subReportRemote.getDeviceModelId());
+                subReport.setDeviceModelId(subReportRemote.getDeviceModelId());
                 subReport.setInstrumentNames(instrumentNamesSb.toString());
                 subReport.setConclusion(subReportRemote.getConclusion());
                 subReport.setRemark(subReportRemote.getRemark());

@@ -18,25 +18,26 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @MapperScan(basePackages = {"com.putorn.powerdoc.dao"})
 @EnableSwagger2
 @ApiResponses({@ApiResponse(code = 200, message = "success", response = ResponseEntity.class)})
-@ServletComponentScan
-public class Application extends SpringBootServletInitializer {
+//@ServletComponentScan
+public class Application  {
+//public class Application extends SpringBootServletInitializer {
 
 
-//	@Bean
-//	public RestTemplate restTemplate(RestTemplateBuilder builder) {
-//		return builder.build();
-//	}
-//	public static void main(String[] args) {
-//		SpringApplication.run(Application.class, args);
-//	}
-
-	//重写configure方法
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(Application.class);
+	@Bean
+	public RestTemplate restTemplate(RestTemplateBuilder builder) {
+		return builder.build();
 	}
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
+
+	//重写configure方法
+//	@Override
+//	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+//		return application.sources(Application.class);
+//	}
+//	public static void main(String[] args) {
+//		SpringApplication.run(Application.class, args);
+//	}
 
 }
