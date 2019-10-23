@@ -224,14 +224,14 @@ public class ExportServiceImpl implements ExportService {
                         detailQuery.setSubreportId(subReportId);
                         List<PowerDocResistanceDetail> powerDocResistanceDetails = resistanceDetailMapper.listByObj(detailQuery);
                         for (PowerDocResistanceDetail detail:powerDocResistanceDetails) {
-                            detailMap.put(detail.getRowNum()+"HighAO",detail.getHighAo());
-                            detailMap.put(detail.getRowNum()+"HighBO",detail.getHighBo());
-                            detailMap.put(detail.getRowNum()+"HighCO",detail.getHighCo());
-                            detailMap.put(detail.getRowNum()+"HighError",detail.getHighError());
-                            detailMap.put(detail.getRowNum()+"MiddleAmOm",detail.getMiddleAmOm());
-                            detailMap.put(detail.getRowNum()+"MiddleBmOm",detail.getMiddleBmOm());
-                            detailMap.put(detail.getRowNum()+"MiddleCmOm",detail.getMiddleCmOm());
-                            detailMap.put(detail.getRowNum()+"MiddleError",detail.getMiddleError());
+                            detailMap.put(detail.getRowNum()+"AO",detail.getHighAo());
+                            detailMap.put(detail.getRowNum()+"BO",detail.getHighBo());
+                            detailMap.put(detail.getRowNum()+"CO",detail.getHighCo());
+                            detailMap.put(detail.getRowNum()+"Er",detail.getHighError());
+                            detailMap.put(detail.getRowNum()+"Am",detail.getMiddleAmOm());
+                            detailMap.put(detail.getRowNum()+"Bm",detail.getMiddleBmOm());
+                            detailMap.put(detail.getRowNum()+"Cm",detail.getMiddleCmOm());
+                            detailMap.put(detail.getRowNum()+"MEr",detail.getMiddleError());
                         }
                         if(powerDocResistanceDetails.size() < 17) {//不足17 行，则其他行默认为空
                             for (int i = powerDocResistanceDetails.size(); i < 18; i++) {
