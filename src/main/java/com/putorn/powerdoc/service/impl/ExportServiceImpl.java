@@ -235,14 +235,14 @@ public class ExportServiceImpl implements ExportService {
                         }
                         if(powerDocResistanceDetails.size() < 17) {//不足17 行，则其他行默认为空
                             for (int i = powerDocResistanceDetails.size(); i < 18; i++) {
-                                detailMap.put(i+"HighAO","");
-                                detailMap.put(i+"HighBO","");
-                                detailMap.put(i+"HighCO","");
-                                detailMap.put(i+"HighError","");
-                                detailMap.put(i+"MiddleAmOm","");
-                                detailMap.put(i+"MiddleBmOm","");
-                                detailMap.put(i+"MiddleCmOm","");
-                                detailMap.put(i+"MiddleError","");
+                                detailMap.put(i+"AO","");
+                                detailMap.put(i+"BO","");
+                                detailMap.put(i+"CO","");
+                                detailMap.put(i+"Er","");
+                                detailMap.put(i+"Am","");
+                                detailMap.put(i+"Bm","");
+                                detailMap.put(i+"Cm","");
+                                detailMap.put(i+"MEr","");
                             }
                         }
                     }
