@@ -66,21 +66,17 @@
             var validForm = $("#signupForm").Validform({
                 tiptype: 4,
                 callback: function (data) {
+                    window.alert(data.msg);
 //                    window.alert('返回信息：'+data.toJSON());
-                    window.console.info('返回信息：'+data)
                     if (data.state == "success") {
 //                        layer.msg('添加成功');
-                        window.alert('添加成功aaaaa');
+
                         //提交成功刷新列表页面
                         parent.$("#tableList").bootstrapTable('refresh');
                         //关闭增加页面
                         parent.layer.closeAll();
                     }
-                    else
-                    {
-                        //失败弹出提示错误
-                        alert('添加失败');
-                    }
+
                 }
             });
             validForm.ajaxPost(false, false, '/powerInstrument/saveInstrument');

@@ -142,7 +142,7 @@ var ButtonInit = function () {
             }, function () {
                 $.ajax({
                     type: "post",
-                    url: "/Home/Delete",
+                    url: "/powerInstrument/deleteInstrumentById",
                     data: { "": JSON.stringify(arrselections) },
                     success: function (data, status) {
                         if (status == "success") {
