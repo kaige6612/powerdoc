@@ -118,7 +118,7 @@ public class PowerSubstationController{
             Map<String, Object> params = JSONObject.parseObject(JSON.toJSONString(substation), new TypeReference<Map<String, Object>>(){});
             pageParam.setParams(params);
             PageBean pageInfo =this.powerSubstationService.listPage(pageParam);
-            return ResponseEntity.ok(pageInfo.getRecordList());
+            return ResponseEntity.ok(pageInfo.getRows());
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);

@@ -138,7 +138,7 @@ public class PowerDeviceController{
             params.put("status", SystemStatusEnum.SYSTEM_STATUS_EFFECTIVE.getKey());
             pageParam.setParams(params);
             PageBean pageInfo =this.powerDeviceService.listPage(pageParam);
-            List<PowerDevice> devices = pageInfo.getRecordList();
+            List<PowerDevice> devices = pageInfo.getRows();
             return ResponseEntity.ok(devices);
         } catch (Exception e) {
             e.printStackTrace();

@@ -129,7 +129,7 @@ public class PowerSysUserController{
             params.put("status",SystemStatusEnum.SYSTEM_STATUS_EFFECTIVE.getKey());
             pageParam.setParams(params);
             PageBean pageInfo =this.powerSysUserService.listPage(pageParam);
-            return ResponseEntity.ok(pageInfo.getRecordList());
+            return ResponseEntity.ok(pageInfo.getRows());
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);

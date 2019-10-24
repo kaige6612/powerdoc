@@ -19,11 +19,13 @@ var TableInit = function () {
             url: '/powerInstrument/queryInstrumentList',         //请求后台的URL（*）
             method: 'post',                      //请求方式（*）
             toolbar: '#tableListToolbar',       //工具按钮用哪个容器
+            // dataType: "json",
+            // dataField: 'rows',
             striped: true,                      //是否显示行间隔色
             cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
             pagination: true,                   //是否显示分页（*）
             sortable: false,                     //是否启用排序
-            sortOrder: "asc",                   //排序方式
+            // sortOrder: "asc",                   //排序方式
             queryParams: oTableInit.queryParams,//传递参数（*）
             //sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
             pageNumber: 1,                       //初始化加载第一页，默认第一页
@@ -36,11 +38,23 @@ var TableInit = function () {
             minimumCountColumns: 2,             //最少允许的列数
             clickToSelect: true,                //是否启用点击选中行
             height: 500,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
-            uniqueId: "ID",                     //每一行的唯一标识，一般为主键列
+            uniqueId: "instrumentId",                     //每一行的唯一标识，一般为主键列
             showToggle: true,                    //是否显示详细视图和列表视图的切换按钮
             cardView: false,                    //是否显示详细视图
             detailView: false,                   //是否显示父子表
             iconSize: "outline",
+            columns: [{
+                        checkbox: true,
+                        visible: true                  //是否显示复选框
+                    },{
+                        field: 'instrumentId',
+                        title: '仪器编号',
+                        sortable: true
+                    },{
+                        field: 'instrumentName',
+                        title: '仪器名称',
+                        sortable: true
+                    }],
             icons: {
                 refresh: "glyphicon-repeat",
                 toggle: "glyphicon-list-alt",
@@ -54,8 +68,8 @@ var TableInit = function () {
         var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
             limit: params.limit,   //页面大小
             offset: params.offset,  //页码
-            departmentname: $("#txt_search_departmentname").val(),
-            statu: $("#txt_search_statu").val()
+            instrumentName: $("#instrumentName").val(),
+            instrumentStatus: $("#instrumentStatus").val()
         };
         return temp;
     };
@@ -122,12 +136,12 @@ var ButtonInit = function () {
 
             });
             $("#myModalLabel").text("编辑");
-            $("#txt_departmentname").val(arrselections[0].DEPARTMENT_NAME);
-            $("#txt_parentdepartment").val(arrselections[0].PARENT_ID);
-            $("#txt_departmentlevel").val(arrselections[0].DEPARTMENT_LEVEL);
-            $("#txt_statu").val(arrselections[0].STATUS);
+            $("#instrumentName").val(arrselections[0].instrumentName);
+            // $("#txt_parentdepartment").val(arrselections[0].PARENT_ID);
+            // $("#txt_departmentlevel").val(arrselections[0].DEPARTMENT_LEVEL);
+            // $("#txt_statu").val(arrselections[0].STATUS);
 
-            postdata.DEPARTMENT_ID = arrselections[0].DEPARTMENT_ID;
+            postdata.instrumentId = arrselections[0].instrumentId;
             $('#myModal').modal();
         });
 
@@ -137,13 +151,18 @@ var ButtonInit = function () {
                 layer.msg('请选择要删除的数据');
                 return;
             }
+            if (arrselections.length > 1) {
+                layer.msg('只能选择一行进行编辑');
+
+                return;
+            }
             layer.confirm('确认要删除选择的数据吗？', {
                 btn: ['确认', '取消'] //按钮
             }, function () {
                 $.ajax({
-                    type: "post",
+                    type: "get",
                     url: "/powerInstrument/deleteInstrumentById",
-                    data: { "": JSON.stringify(arrselections) },
+                    data: { "id": arrselections[0].instrumentId },
                     success: function (data, status) {
                         if (status == "success") {
                             layer.msg('提交数据成功');

@@ -19,8 +19,8 @@ public class PageBean<T> implements Serializable {
     private int pageSize; // 每页显示多少条
 
     // 查询数据库
-    private int totalCount; // 总记录数
-    private List<T> recordList =new  ArrayList<T>(0); // 本页的数据列表
+    private int total; // 总记录数
+    private List<T> rows =new  ArrayList<T>(0); // 本页的数据列表
 
     // 计算
     private int totalPage; // 总页数
@@ -114,8 +114,8 @@ public class PageBean<T> implements Serializable {
             List<T> recordList) {
         this.currentPage = currentPage;
         this.pageSize = pageSize;
-        this.totalCount = totalCount;
-        this.recordList = recordList;
+        this.total = totalCount;
+        this.rows = recordList;
 
         // 计算总页码
         totalPage = (totalCount + pageSize - 1) / pageSize;
@@ -155,8 +155,8 @@ public class PageBean<T> implements Serializable {
             List<T> recordList, Map<String, Object> countResultMap) {
         this.currentPage = currentPage;
         this.pageSize = pageSize;
-        this.totalCount = totalCount;
-        this.recordList = recordList;
+        this.total = totalCount;
+        this.rows = recordList;
         this.countResultMap = countResultMap;
 
         // 计算总页码
@@ -185,13 +185,7 @@ public class PageBean<T> implements Serializable {
         }
     }
 
-    public List<T> getRecordList() {
-        return recordList;
-    }
 
-    public void setRecordList(List<T> recordList) {
-        this.recordList = recordList;
-    }
 
     public int getCurrentPage() {
         return currentPage;
@@ -209,13 +203,7 @@ public class PageBean<T> implements Serializable {
         this.totalPage = totalPage;
     }
 
-    public int getTotalCount() {
-        return totalCount;
-    }
 
-    public void setTotalCount(int totalCount) {
-        this.totalCount = totalCount;
-    }
 
     public int getBeginPageIndex() {
         return beginPageIndex;
@@ -247,5 +235,21 @@ public class PageBean<T> implements Serializable {
 
     public void setPageSize(int pageSize) {
         this.pageSize = pageSize;
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
+
+    public List<T> getRows() {
+        return rows;
+    }
+
+    public void setRows(List<T> rows) {
+        this.rows = rows;
     }
 }
