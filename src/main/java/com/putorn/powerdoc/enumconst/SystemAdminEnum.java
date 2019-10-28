@@ -7,8 +7,8 @@ package com.putorn.powerdoc.enumconst;
  */
 public enum SystemAdminEnum {
 
-	SYSTEM_STATUS_ON(0,"否"),
-	SYSTEM_STATUS_OFF(1,"是");
+	NO(0,"否"),
+	YES(1,"是");
 
 	private final Integer key;
 	private final String value;

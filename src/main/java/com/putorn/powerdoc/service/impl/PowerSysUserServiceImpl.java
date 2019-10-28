@@ -46,7 +46,7 @@ public class PowerSysUserServiceImpl extends BaseServiceImpl<PowerSysUser> imple
             upUser.setStatus(Integer.parseInt(SystemStatusEnum.SYSTEM_STATUS_EFFECTIVE.getKey()));
 
             //如果没有此参数,默认非系统管理员
-            Integer isSysadmin = upUser.getIsSysadmin() == null ? SystemAdminEnum.SYSTEM_STATUS_ON.getKey() : upUser.getIsSysadmin();
+            Integer isSysadmin = upUser.getIsSysadmin() == null ? SystemAdminEnum.NO.getKey() : upUser.getIsSysadmin();
             upUser.setIsSysadmin(isSysadmin);
 
             result.put("state", "success");

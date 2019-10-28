@@ -2,6 +2,7 @@ logging:
   config: classpath:logback.xml
 server:
   port: 8081
+  session: 7200
 #  servlet:
 #    context-path: /powerdoc
 spring:
@@ -14,41 +15,14 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/powerdoc?useSSL=false&characterEncoding=utf8
     username: root
     password: 123456
-#  redis:
-#    host: 127.0.0.1
-#    port: 6379
-#    #数据库索引
-#    database: 0
-#    password:
-#    jedis:
-#      pool:
-#        #最大连接数
-#        max-active: 8
-#        #最大阻塞等待时间(负数表示没限制)
-#        max-wait: -1
-#        #最大空闲
-#        max-idle: 8
-#        #最小空闲
-#        min-idle: 0
-#    #连接超时时间
-#    timeout: 10000
 
 
 mybatis:
   mapper-locations: classpath*:mapper/*Mapper.xml
 
 
-#security:
-#  oauth2:
-#    resource:
-#      filter-order: 3
 swagger:
   print-init: true #非必需,默认false
   enabled: true #必需
   docket:
     base-package: com.putorn.powerdoc.web   #必需
-#auth:
-#  tokenValiditySeconds: 1200  #token存储到redis的过期时间
-#  cookieDomain: putorn.com
-#  cookieMaxAge: -1
-#  tokenName: token

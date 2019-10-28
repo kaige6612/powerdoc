@@ -379,6 +379,84 @@
         </where>
     </sql>
 
+
+    <!-- 模糊查询这样： 字段名 LIKE CONCAT('%',CONCAT(#{model.userName},'%')) -->
+    <sql id="findPageList">
+        <where>
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="substationId != null">
+                AND substation_id = #{substationId}
+            </if>
+            <if test="substationName != null and substationName !=''">
+                AND substation_name = #{substationName}
+            </if>
+            <if test="deviceIds != null and deviceIds !=''">
+                AND device_ids = #{deviceIds}
+            </if>
+            <if test="deviceNames != null and deviceNames !=''">
+                AND device_names = #{deviceNames}
+            </if>
+            <if test="runNo != null and runNo !=''">
+                AND run_no = #{runNo}
+            </if>
+            <if test="testProperties != null and testProperties !=''">
+                AND test_properties = #{testProperties}
+            </if>
+            <if test="userId != null and userId !=''">
+                AND (test_duty_person_id = #{userId}
+                  or FIND_IN_SET(#{userId},test_people_id)
+                )
+            </if>
+
+            <if test="testDate != null">
+                AND test_date = #{testDate}
+            </if>
+            <if test="reviewPersonId != null and reviewPersonId !=''">
+                AND review_person_id = #{reviewPersonId}
+            </if>
+            <if test="reviewPerson != null and reviewPerson !=''">
+                AND review_person = #{reviewPerson}
+            </if>
+            <if test="checkPersonId != null and checkPersonId !=''">
+                AND check_person_id = #{checkPersonId}
+            </if>
+            <if test="checkPerson != null and checkPerson !=''">
+                AND check_person = #{checkPerson}
+            </if>
+            <if test="approvePersonId != null and approvePersonId !=''">
+                AND approve_person_id = #{approvePersonId}
+            </if>
+            <if test="approvePerson != null and approvePerson !=''">
+                AND approve_person = #{approvePerson}
+            </if>
+            <if test="addUserid != null">
+                AND add_userid = #{addUserid}
+            </if>
+            <if test="addUsername != null and addUsername !=''">
+                AND add_username = #{addUsername}
+            </if>
+            <if test="addtime != null">
+                AND addtime = #{addtime}
+            </if>
+            <if test="editUserid != null">
+                AND edit_userid = #{editUserid}
+            </if>
+            <if test="editUsername != null and editUsername !=''">
+                AND edit_username = #{editUsername}
+            </if>
+            <if test="edittime != null">
+                AND edittime = #{edittime}
+            </if>
+            <if test="reportStatus != null and reportStatus !=''">
+                AND report_status = #{reportStatus}
+            </if>
+            <if test="reportType != null and reportType !=''">
+                AND report_type = #{reportType}
+            </if>
+        </where>
+    </sql>
     <!-- selsect by obj -->
     <select id="listByObj" resultMap="RM_PowerReport" parameterType="com.putorn.powerdoc.entity.PowerReport">
         SELECT
@@ -392,14 +470,14 @@
     <select id="listPageCount" resultType="long" parameterType="map">
         SELECT COUNT(1)
         FROM power_report
-        <include refid="findPage_where" />
+        <include refid="findPageList" />
     </select>
 
     <select id="listPage" resultMap="RM_PowerReport" parameterType="map">
         SELECT
         <include refid="columns" />
         FROM power_report
-        <include refid="findPage_where" />
+        <include refid="findPageList" />
 
         <if test="sortColumns != null and sortColumns !=''">
             ORDER BY ${sortColumns}

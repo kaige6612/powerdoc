@@ -1,6 +1,16 @@
 package com.putorn.powerdoc.web;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
+import com.putorn.powerdoc.base.PageBean;
+import com.putorn.powerdoc.base.PageParam;
+import com.putorn.powerdoc.base.PageParamHelper;
+import com.putorn.powerdoc.entity.PowerInstrument;
+import com.putorn.powerdoc.entity.PowerReport;
+import com.putorn.powerdoc.entity.PowerSysUser;
 import com.putorn.powerdoc.entity.vo.PowerReportVo;
+import com.putorn.powerdoc.enumconst.SystemAdminEnum;
+import com.putorn.powerdoc.enumconst.SystemStatusEnum;
 import com.putorn.powerdoc.service.PowerReportService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -12,6 +22,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,6 +79,42 @@ public class PowerReportController{
        }else {
            return ResponseEntity.ok(result);
        }
+    }
+
+
+
+    @PostMapping("queryReportList")
+    @ApiImplicitParam(name = "report",value = "报告查询条件，可为空",paramType = "PowerReport")
+    @ApiOperation(value = "分页按条件查询报告" ,notes="分页查询所有报告")
+    public ResponseEntity<PageBean> queryReportList(HttpServletRequest request, PowerReport report){
+        try {
+            PageParam pageParam = PageParamHelper.getPageParam(request);
+            Map<String, Object> params = JSONObject.parseObject(JSON.toJSONString(report), new TypeReference<Map<String, Object>>(){});
+            params.put("reportStatus", SystemStatusEnum.SYSTEM_STATUS_EFFECTIVE.getKey());
+
+            HttpSession session = request.getSession();
+
+            Object obj = session.getAttribute("user");
+            if(obj != null || !"".equals(obj)) {
+                PowerSysUser user = (PowerSysUser)obj;
+                Integer isSysadmin = user.getIsSysadmin();
+                //如果是管理员，则可查看全部，否则只能查看个人参与的报告
+                if(isSysadmin != SystemAdminEnum.YES.getKey()) {
+                    params.put("userId",user.getId());
+                }
+                params.put("sortColumns","test_date");
+                pageParam.setParams(params);
+                PageBean pageInfo =this.powerReportService.listPage(pageParam);
+                return ResponseEntity.ok(pageInfo);
+            }else {
+                logger.error("未登录，禁止获取试验报告");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
 }
