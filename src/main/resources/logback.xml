@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <property name="BASE_DIR" value="logs" />
-    <property name="APP" value="upcenter" />
+    <property name="BASE_DIR" value="/opt/project/logs" />
+    <property name="APP" value="powerdoc" />
     <contextName>${APP}</contextName>
     <appender name="STDOUT_C" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -9,12 +9,12 @@
         </encoder>
     </appender>
     <appender name="INFO_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <File>C:\Log\info.log</File>
+        <File>${BASE_DIR}/${APP}/info.log</File>
         <encoder>
             <pattern> %d^|^%contextName^|^%X{requestId}^|^%level^|^%c{1.}^|^%t^|^%m%n</pattern>
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>C:\Log\info.%d{_yyyy-MM-dd}</fileNamePattern>
+            <fileNamePattern>${BASE_DIR}/${APP}/info.%d{_yyyy-MM-dd}</fileNamePattern>
         </rollingPolicy>
     </appender>
     <logger name="com.putorn.dao" level="TRACE"/>

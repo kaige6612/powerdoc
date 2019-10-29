@@ -15,10 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.URLEncoder;
 import java.util.*;
 
@@ -104,8 +101,10 @@ public class ExportServiceImpl implements ExportService {
                 }
             }
 
+            InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("template/0_first.docx");
+
 //        生成报告
-            XWPFTemplate template = XWPFTemplate.compile("src/main/resources/template/0_first.docx").render(exportEntity);
+            XWPFTemplate template = XWPFTemplate.compile(inputStream).render(exportEntity);
 
             String docName = "实验报告"+ DateUtil.getDateTime2()+".docx";
 //            docName = URLEncoder.encode(docName,"UTF-8");
@@ -295,23 +294,33 @@ public class ExportServiceImpl implements ExportService {
     private PowerReportExportEntity setDocs(PowerReportExportEntity exportEntity,String tableName,List<Map<String, Object>> subReportDetail) {
         //判定写入哪个模板数据
         if(tableName.equalsIgnoreCase("power_doc_insulation")) {
-            DocxRenderData insulation = new DocxRenderData(new File("src/main/resources/template/1_insulation.docx"), subReportDetail );
+            InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("template/1_insulation.docx");
+
+            DocxRenderData insulation = new DocxRenderData(inputStream, subReportDetail );
             exportEntity.setInsulation(insulation);
         }
         if(tableName.equalsIgnoreCase("power_doc_dc_resistance")) {
-            DocxRenderData dcResistance = new DocxRenderData(new File("src/main/resources/template/2_dc_resistance.docx"), subReportDetail );
+            InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("template/2_dc_resistance.docx");
+
+            DocxRenderData dcResistance = new DocxRenderData(inputStream, subReportDetail );
             exportEntity.setDcResistance(dcResistance);
         }
         if(tableName.equalsIgnoreCase("power_doc_hv_bushings")) {
-            DocxRenderData hvBushings = new DocxRenderData(new File("src/main/resources/template/3_hv_bushings.docx"), subReportDetail );
+            InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("template/3_hv_bushings.docx");
+
+            DocxRenderData hvBushings = new DocxRenderData(inputStream, subReportDetail );
             exportEntity.setHvBushings(hvBushings);
         }
         if(tableName.equalsIgnoreCase("power_doc_voltage_transformer")) {
-            DocxRenderData voltageTransformer = new DocxRenderData(new File("src/main/resources/template/15_voltage_transformer.docx"), subReportDetail );
+            InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("template/15_voltage_transformer.docx");
+
+            DocxRenderData voltageTransformer = new DocxRenderData(inputStream, subReportDetail );
             exportEntity.setVoltageTransformer(voltageTransformer);
         }
         if(tableName.equalsIgnoreCase("power_doc_current_transformer")) {
-            DocxRenderData currentTransformer = new DocxRenderData(new File("src/main/resources/template/16_current_transformer.docx"), subReportDetail );
+            InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("template/16_current_transformer.docx");
+
+            DocxRenderData currentTransformer = new DocxRenderData(inputStream, subReportDetail );
             exportEntity.setCurrentTransformer(currentTransformer);
         }
         return exportEntity;
