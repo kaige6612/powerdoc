@@ -61,6 +61,7 @@ public class LoginController {
         try {
             String userName = paramUser.getUsername();
             String password = paramUser.getPassword();
+            logger.info("用户登录参数为:"+JSON.toJSONString(paramUser));
             logger.info("用户登录参数为： 用户姓名="+userName+" ，用户密码："+password);
             PowerSysUser user = new PowerSysUser();
             user.setUsername(userName);

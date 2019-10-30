@@ -53,11 +53,13 @@ public class PowerReportController{
             if(reportList != null && reportList.size() > 0) {
                 List<String> errorList = powerReportService.saveReportBatch(reportList);
                 if(errorList == null || errorList.size() == 0) {
+                    flag = true;
                     code = 200;
                     message = "报告全部保存成功";
                 }else if(errorList.size() == reportList.size()) {
                     message = "报告全部保存失败";
                 }else {
+                    flag = true;
                     message = "报告部分保存失败，失败的报告id为："+JSON.toJSONString(errorList)+"失败数量：" + errorList.size();
                 }
             }else {
