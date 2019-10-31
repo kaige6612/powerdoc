@@ -45,6 +45,7 @@ public class PowerReportController{
     @ApiResponse(code = 200,message = "success")
     public ResponseEntity<Map<String,Object>> saveReportBatch(@RequestBody List<PowerReportVo> reportList){
         Map<String,Object> result = new HashMap<>();
+        result.put("result","");
         boolean flag = false;
         String message;
         int code = 400;

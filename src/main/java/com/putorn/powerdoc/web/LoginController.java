@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -62,48 +63,60 @@ public class LoginController {
             String userName = paramUser.getUsername();
             String password = paramUser.getPassword();
             logger.info("用户登录参数为:"+JSON.toJSONString(paramUser));
-            logger.info("用户登录参数为： 用户姓名="+userName+" ，用户密码："+password);
-            PowerSysUser user = new PowerSysUser();
-            user.setUsername(userName);
-            List<PowerSysUser> userList = userService.listByObj(user);
-            if(userList == null || userList.size() == 0) {
+            if(StringUtils.isEmpty(userName)) {
                 result.put("code","404");
-                result.put("message","没有此用户，请检查输入后重试");
+                result.put("message","请输入用户名！");
             }else {
-                boolean flag = false;
-                for (PowerSysUser queryUse:userList) {
-                    if(queryUse.getPassword().equals(password)) {
-                        //查询到的用户名密码与输入的相同，则登录成功
-                        result.put("code","200");
-                        result.put("message","登录成功");
+                PowerSysUser user = new PowerSysUser();
+                user.setUsername(userName);
+                List<PowerSysUser> userList = userService.listByObj(user);
+                if(userList == null || userList.size() == 0) {
+                    result.put("code","404");
+                    result.put("message","没有此用户，请检查输入后重试");
+                }else if(userList.size() > 1) {
+                    result.put("code","400");
+                    result.put("message","发现多个用户，请注意是否认为篡改数据库");
+                }else {
+                    boolean flag = false;
+                    for (PowerSysUser queryUse:userList) {
+                        if(queryUse.getPassword().equals(password)) {
+                            //查询到的用户名密码与输入的相同，则登录成功
+                            result.put("code","200");
+                            result.put("message","登录成功");
 
-                        flag = true;
-                        //更新最新登录ip
-                        String ipAdrress = IpUtil.getIpAdrress(request);
-                        queryUse.setLastip(ipAdrress);
-                        userService.update(queryUse);
-                        //保存到缓存中，方便使用
-                        UserSessionContext.setSession(queryUse);
+                            flag = true;
+                            //更新最新登录ip
+                            String ipAdrress = IpUtil.getIpAdrress(request);
+                            queryUse.setLastip(ipAdrress);
+                            userService.update(queryUse);
+                            //保存到缓存中，方便使用
+                            UserSessionContext.setSession(queryUse);
 
-                        //安全起见 不返回用户密码
-                        queryUse.setPassword("");
-                        result.put("result",queryUse);
-                        HttpSession session = request.getSession();
-                        session.setAttribute("user",queryUse);
+                            //安全起见 不返回用户密码
+                            queryUse.setPassword("");
+                            result.put("result",queryUse);
+                            HttpSession session = request.getSession();
+                            session.setAttribute("user",queryUse);
 
+                        }
+                    }
+                    if (!flag){
+                        result.put("code","400");
+                        result.put("message","密码错误！");
                     }
                 }
-                if (!flag){
-                    result.put("code","400");
-                    result.put("message","密码错误！");
-                }
             }
+
         }catch (Exception e){
 
             result.put("code","500");
             result.put("message","服务异常");
+            result.put("result","");
             logger.error("服务异常!!! result="+ JSON.toJSONString(result),e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(result);
+        }
+        if(!result.containsKey("result")) {
+            result.put("result","");
         }
         logger.info("用户登录返回结果："+JSON.toJSONString(result));
         return ResponseEntity.ok(result);
@@ -159,6 +172,7 @@ public class LoginController {
             result.clear();
             result.put("code","500");
             result.put("message","服务异常");
+            result.put("result","");
             logger.error("服务异常!!! result="+ JSON.toJSONString(result),e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(result);
         }
