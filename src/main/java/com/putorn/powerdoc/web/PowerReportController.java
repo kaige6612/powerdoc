@@ -84,16 +84,15 @@ public class PowerReportController{
        }
     }
 
-
-
     @PostMapping("queryReportList")
     @ApiImplicitParam(name = "report",value = "报告查询条件，可为空",paramType = "PowerReport")
     @ApiOperation(value = "分页按条件查询报告" ,notes="分页查询所有报告")
-    public ResponseEntity<PageBean> queryReportList(HttpServletRequest request, PowerReport report){
+    public ResponseEntity<PageBean> queryReportList(HttpServletRequest request, @RequestBody PageParam pageParam){
         try {
-            PageParam pageParam = PageParamHelper.getPageParam(request);
-            Map<String, Object> params = JSONObject.parseObject(JSON.toJSONString(report), new TypeReference<Map<String, Object>>(){});
+//            PageParam pageParam = PageParamHelper.getPageParam(request);
+            Map<String, Object> params = pageParam.getParams();
             params.put("reportStatus", SystemStatusEnum.SYSTEM_STATUS_EFFECTIVE.getKey());
+            params.put("sortColumns", "addtime");
 
             HttpSession session = request.getSession();
 

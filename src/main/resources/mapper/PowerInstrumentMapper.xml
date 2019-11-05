@@ -174,7 +174,7 @@
 					AND instrument_id = #{instrumentId}
 				</if>
 				<if test="instrumentName != null and instrumentName !=''">
-					AND instrument_name = #{instrumentName}
+					AND instrument_name LIKE '%${instrumentName}%'
 				</if>
 				<if test="instrumentType != null and instrumentType !=''">
 					AND instrument_type = #{instrumentType}
@@ -203,6 +203,17 @@
 		</where>
 	</sql>
 
+	<sql id="findPage_2">
+		<where>
+			<if test="search!=null and search!=''">
+				AND instrument_name LIKE '%${search}%'
+			</if>
+			<if test="instrumentStatus != null and instrumentStatus !=''">
+				AND instrument_status = #{instrumentStatus}
+			</if>
+		</where>
+	</sql>
+
 	<!-- selsect by obj -->
 	<select id="listByObj" resultMap="RM_PowerInstrument" parameterType="com.putorn.powerdoc.entity.PowerInstrument">
 	SELECT
@@ -216,14 +227,14 @@
 	<select id="listPageCount" resultType="long" parameterType="map">
 		SELECT COUNT(1)
 		FROM power_instrument
-		<include refid="findPage_where" />
+		<include refid="findPage_2" />
 	</select>  
 
 	<select id="listPage" resultMap="RM_PowerInstrument" parameterType="map">
-		 SELECT
+		SELECT
 		<include refid="columns" />
 		FROM power_instrument
-		<include refid="findPage_where" />
+		<include refid="findPage_2" />
 
 		<if test="sortColumns != null and sortColumns !=''">
 			ORDER BY ${sortColumns}

@@ -59,4 +59,14 @@ public class PowerDeviceModelServiceImpl extends BaseServiceImpl<PowerDeviceMode
     public List<PowerDeviceModel> effectiveList(PowerDeviceModel powerDeviceModel) {
         return powerDeviceModelMapper.effectiveList(powerDeviceModel);
     }
+
+    /**
+     * 按设备查找模型
+     * @param deviceId
+     * @return
+     */
+    @Override
+    public List<PowerDeviceModel> queryListByDeviceId(int deviceId) {
+       return powerDeviceModelMapper.queryListByDeviceId(deviceId);
+    }
 }

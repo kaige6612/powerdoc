@@ -7,6 +7,26 @@
     <link href="../static/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
     <link href="../static/css/animate.min.css" rel="stylesheet">
     <link href="../static/css/style.min.css?v=4.1.0" rel="stylesheet">
+
+    <style type="text/css">
+
+        .models ul li {
+            list-style: none;
+            outline: none;
+            /*border: solid 1px #2E2D3C;*/
+            line-height: 30px;
+        }
+
+        .models ul li a {
+            margin-right: 20px;
+        }
+
+        .models ul li:hover {
+            background-color: #f8f8f8;
+        }
+
+    </style>
+
 </head>
 <body>
     <div class="row">
@@ -14,71 +34,96 @@
             <div class="ibox float-e-margins">                
                 <div class="ibox-content">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a href="#">设备信息</a></li>
-                        <li><a href="#">报告模板</a></li>
+                        <li class="active"><a href="#div_device" data-toggle="tab">设备信息</a></li>
+                        <li><a href="#div_device_model" data-toggle="tab">报告模板</a></li>
                     </ul>
-                    <form class="form-horizontal m-t" id="signupForm">                        
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">运行编号：</label>
-                            <div class="col-sm-4">
-                                <input id="runNo" name="txtPrice" datatype="n" class="form-control" type="text">
-                                <span class="help-block m-b-none Validform_checktip"></span>
-                            </div>
-                            <label class="col-sm-2 control-label">设备名称：</label>
-                            <div class="col-sm-4">
-                                <input id="deviceName" name="txtSeat" datatype="n" class="form-control" type="text">
-                                <span class="help-block m-b-none Validform_checktip"></span>
-                            </div>
+
+                    <div class="tab-content">
+                        <div class="tab-pane fade in active" id="div_device">
+                            <form class="form-horizontal m-t" id="signupForm">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">运行编号：</label>
+                                    <div class="col-sm-4">
+                                        <input id="runNo" name="runNo" datatype="s" class="form-control" type="text">
+                                        <span class="help-block m-b-none Validform_checktip"></span>
+                                    </div>
+                                    <label class="col-sm-2 control-label">设备名称：</label>
+                                    <div class="col-sm-4">
+                                        <input id="deviceName" name="deviceName" datatype="s" class="form-control" type="text">
+                                        <span class="help-block m-b-none Validform_checktip"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">运行电压：</label>
+                                    <div class="col-sm-4">
+                                        <input id="runHumidity" name="runHumidity" datatype="s" class="form-control" type="text">
+                                        <span class="help-block m-b-none Validform_checktip"></span>
+                                    </div>
+                                    <label class="col-sm-2 control-label">气温：</label>
+                                    <div class="col-sm-4">
+                                        <input id="airTemperature" name="airTemperature" datatype="s" class="form-control" type="text">
+                                        <span class="help-block m-b-none Validform_checktip"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">湿度：</label>
+                                    <div class="col-sm-4">
+                                        <input id="humidity" name="humidity" datatype="s" class="form-control" type="text">
+                                        <span class="help-block m-b-none Validform_checktip"></span>
+                                    </div>
+                                    <label class="col-sm-2 control-label">型号：</label>
+                                    <div class="col-sm-4">
+                                        <input id="modelNo" name="modelNo" datatype="s" class="form-control" type="text">
+                                        <span class="help-block m-b-none Validform_checktip"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">制造厂家：</label>
+                                    <div class="col-sm-4">
+                                        <input id="producer" name="producer" datatype="s" class="form-control" type="text">
+                                        <span class="help-block m-b-none Validform_checktip"></span>
+                                    </div>
+                                    <label class="col-sm-2 control-label">容量：</label>
+                                    <div class="col-sm-4">
+                                        <input id="capacity" name="capacity" datatype="s" class="form-control" type="text">
+                                        <span class="help-block m-b-none Validform_checktip"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">出厂编号：</label>
+                                    <div class="col-sm-4">
+                                        <input id="productionNo" name="productionNo" datatype="s" class="form-control" type="text">
+                                        <span class="help-block m-b-none Validform_checktip"></span>
+                                    </div>
+                                    <label class="col-sm-2 control-label">出厂日期：</label>
+                                    <div class="col-sm-4">
+                                        <input id="productionDate" name="productionDate" onclick="laydate({ istime: true, format: 'YYYY-MM-DD'})" class="form-control" datatype="*" type="text">
+                                        <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 请选择时间</span>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">运行电压：</label>
-                            <div class="col-sm-4">
-                                <input id="runHumidity" name="txtPrice" datatype="n" class="form-control" type="text">
-                                <span class="help-block m-b-none Validform_checktip"></span>
+                        <div class="tab-pane fade" id="div_device_model">
+                            <form class="form-horizontal m-t">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">模版：</label>
+                                    <div class="col-sm-4">
+                                        <select id="model" class="form-control">
+
+                                        </select>
+
+                                    </div>
+                                    <a href="javascript:;" class="col-sm-1  btn btn-primary" onclick="addModel()">添加</a>
+                                </div>
+                            </form>
+
+                            <div class="models">
+                                <h4>已选择的模版</h4>
+                                <ul></ul>
                             </div>
-                            <label class="col-sm-2 control-label">气温：</label>
-                            <div class="col-sm-4">
-                                <input id="airTemperature" name="txtSeat" datatype="n" class="form-control" type="text">
-                                <span class="help-block m-b-none Validform_checktip"></span>
-                            </div>
+
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">湿度：</label>
-                            <div class="col-sm-4">
-                                <input id="humidity" name="txtPrice" datatype="n" class="form-control" type="text">
-                                <span class="help-block m-b-none Validform_checktip"></span>
-                            </div>
-                            <label class="col-sm-2 control-label">型号：</label>
-                            <div class="col-sm-4">
-                                <input id="modelNo" name="txtSeat" datatype="n" class="form-control" type="text">
-                                <span class="help-block m-b-none Validform_checktip"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">制造厂家：</label>
-                            <div class="col-sm-4">
-                                <input id="producer" name="txtPrice" datatype="n" class="form-control" type="text">
-                                <span class="help-block m-b-none Validform_checktip"></span>
-                            </div>
-                            <label class="col-sm-2 control-label">容量：</label>
-                            <div class="col-sm-4">
-                                <input id="capacity" name="txtSeat" datatype="n" class="form-control" type="text">
-                                <span class="help-block m-b-none Validform_checktip"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">出厂编号：</label>
-                            <div class="col-sm-4">
-                                <input id="productionNo" name="txtPhone" datatype="m" class="form-control" type="text">
-                                <span class="help-block m-b-none Validform_checktip"></span>
-                            </div>
-                            <label class="col-sm-2 control-label">出厂日期：</label>
-                            <div class="col-sm-4">
-                                <input id="productionDate" name="txtBeginDate" onclick="laydate({ istime: true, format: 'YYYY-MM-DD hh:mm:ss', min: laydate.now() })" class="form-control" datatype="*" type="text">
-                                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 请选择时间</span>
-                            </div>
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -89,25 +134,98 @@
     <script src="../static/js/plugins/validate/Validform_v5.3.2_min.js"></script>
     <script src="../static/js/plugins/layer/laydate/laydate.js"></script>
     <script type="text/javascript">
-        var keyValue;// = $.request("keyValue");//在公用写获取参数函数，做为修改页面时使用。未写！
-        $(function () {
-            initControl();
-            if (!!keyValue) {
+        var currentData;
+
+        // 编辑模型时加载出来的额所有数据
+        var oriModels;
+
+        /**
+         * 加载全部模型
+         */
+        function loadAllModels() {
+            $.ajax({
+                url: "/powerModel/query",
+                cache: false,
+                async: false,
+                method: "post",
+                contentType:"application/json",
+                data: JSON.stringify({pageSize:100}),
+                success: function (response) {
+                    var list = response.rows;
+                    $("#model").empty();
+                    for (var i=0; i<list.length; i++) {
+                        $("<option>").attr("value", list[i].modelId).text(list[i].modelName).appendTo("#model");
+                    }
+                },
+                error : function (req, err) {
+
+                }
+            });
+
+            if(currentData != null) {
                 $.ajax({
-                    url: "",
-                    data: { keyValue: keyValue },
-                    dataType: "json",
+                    url: "/powerDeviceModel/queryModelByDeviceId",
+                    cache: false,
                     async: false,
-                    success: function (data) {
-                        
+                    method: "get",
+                    dataType:"json",
+                    data: {deviceId:currentData.deviceId},
+                    success: function (response) {
+                        oriModels = response;
+                        for (var i= 0; i<oriModels.length; i++) {
+                            addNewRow(oriModels[i].modelId, oriModels[i].modelName);
+                            disOrEnableOption(oriModels[i].modelId, true);
+                        }
+                    },
+                    error : function (req, err) {
+
                     }
                 });
             }
-        });
-        function initControl() {
-            //页面加载函数
-            
         }
+
+
+        function disOrEnableOption(modelId, disabled) {
+            $("#model>option").each(function () {
+                if($(this).val() == modelId) {
+                    $(this).attr("disabled", disabled);
+                }
+            });
+        }
+
+        /**
+         * 添加一个模型
+         */
+        function addModel() {
+            var opt = $("#model>option:selected");
+            addNewRow(opt.val(), opt.text());
+        }
+
+        function addNewRow(val, text) {
+            var modelLi = "<li>\n" +
+                "                                        <a href=\"javascript:;\" onclick='removeModel(this);' class=\"text-danger\" data-id=\""+val+"\">\n" +
+                "                                            <i class=\"fa fa-remove\" ></i>\n" +
+                "                                        </a>\n" +
+                "                                        "+text+"\n" +
+                "                                    </li>"
+
+            $(".models>ul").append(modelLi);
+        }
+
+        function removeModel(obj) {
+            $(obj).parent().remove();
+            disOrEnableOption($(obj).attr("data-id"), false);
+        }
+
+        function getModelIds() {
+            var ids = "";
+             $(".models>ul>li>a").each(function () {
+                 ids += ',' + $(this).attr("data-id");
+             })
+
+            return ids.substr(1);
+        }
+
         function submitForm() {
             var validForm = $("#signupForm").Validform({
                 tiptype: 4,
@@ -127,23 +245,185 @@
                     }
                 }
             });
-            validForm.ajaxPost(false, false, 'trip.aspx');                       
-        }
-        //点击按钮时，改变形成类型
-        function changeType(tripType) {
-            $("#tripType").val(tripType);
-            if (tripType == 2)
-            {
-                $("#btnCar").removeClass("btn-default").addClass('btn-primary');
-                $("#btnCus").removeClass("btn-primary").addClass('btn-default');
+            // validForm.ajaxPost(false, false, 'trip.aspx');
+
+            if(getModelIds() == "") {
+                //alert("请添加报告模版");
+                if(parent && parent != window )
+                    parent.layer.alert("请添加报告模版");
+                else
+                    alert("请添加报告模版")
+                return;
             }
-            else if (tripType == 1)
-            {
-                $("#btnCar").removeClass("btn-primary").addClass('btn-default');
-                $("#btnCus").removeClass("btn-default").addClass('btn-primary');
+
+            if(validForm.check(false)) {
+                var data = {
+                    runNo: $("#runNo").val(),
+                    deviceName: $("#deviceName").val(),
+                    runHumidity: $("#runHumidity").val(),
+                    airTemperature: $("#airTemperature").val(),
+                    humidity: $("#humidity").val(),
+                    modelNo: $("#modelNo").val(),
+                    producer: $("#producer").val(),
+                    capacity: $("#capacity").val(),
+                    productionNo: $("#productionNo").val(),
+                    productionDate: $("#productionDate").val(),
+                };
+
+                if(currentData != null) {
+                    data = $.extend(currentData, data);
+                }
+
+                var url = currentData == null ? "/powerDevice/saveDevice" : "/powerDevice/updateDevice";
+
+                $.ajax({
+                    url: url,
+                    cache: false,
+                    async: true,
+                    method: "post",
+                    contentType:"application/json",
+                    data: JSON.stringify(data),
+                    success: function (response) {
+                        if(response.state == "success") {
+
+                            var deviceId = currentData == null ? response.deviceId : currentData.deviceId;
+                            if(deviceId != null) {
+                                saveDeviceModel(deviceId);
+                            }
+
+                            parent.layer.msg('添加成功');
+
+                            //提交成功刷新列表页面
+                            parent.$("#tableList").bootstrapTable('refresh');
+                            //关闭增加页面
+                            parent.layer.closeAll();
+                        } else {
+                            alert("other response code = " + response.code)
+                        }
+                    },
+                    error : function (req, err) {
+
+                    }
+                });
             }
-            // alert($("#tripType").val());
         }
+
+        /**
+         * 保存设备和模型的关系
+         * @param deviceId
+         */
+        function saveDeviceModel(deviceId) {
+            var modelIds = getModelIds();
+            var modelArr = modelIds.split(",");
+            if(oriModels != null) {
+                var oriModelIds = "";
+                var oriArr = new Array()
+
+                for (var i = 0; i < oriModels.length; i++ ) {
+                    oriModelIds += "," + oriModels[i].modelId
+                    oriArr.push(oriModels[i].modelId)
+                }
+                oriModelIds = oriModelIds.substr(1);
+
+                if(modelIds == oriModelIds) { // 没有产生变更，不执行后续操作
+                    return ;
+                }
+                // 对比有没有deleted的数据
+                for (var i=0; i<oriArr.length; i++) {
+                    var found = false;
+                    for (var j=0; j<modelArr.length; j++) {
+                        if(oriArr[i] == modelArr[j]) {
+                            found = true;
+                            break;
+                        }
+                    }
+                    if(!found) {
+                        deleteModel(oriModels[i].id);
+                    }
+                }
+                var waitForSave = new Array();
+                for (var i=0; i<modelArr.length; i++) {
+                    var found = false;
+                    for (var j=0; j<oriArr.length; j++) {
+                        if(oriArr[i] == modelArr[j]) {
+                            found = true;
+                            break;
+                        }
+                    }
+                    if(!found) {
+                        waitForSave.push(modelArr[i])
+                    }
+                }
+                // debugger
+                if(waitForSave.length > 0)
+                    saveModel(deviceId, waitForSave.join(",").toString());
+            } else {
+                saveModel(deviceId,modelIds);
+            }
+        }
+
+        /**
+         * 删除关联模型
+         * @param id
+         */
+        function deleteModel(id) {
+            $.ajax({
+                method:"post",
+                async:false,
+                url: "/powerDeviceModel/delete",
+                contentType:"application/json",
+                data: JSON.stringify({id:id}),
+                success: function (data, status) {
+
+                },
+                error: function () {
+                    layer.msg('删除失败');
+                },
+                complete: function () {
+
+                }
+            });
+        }
+
+        /**
+         * 保存关联模型
+         */
+        function saveModel(deviceId, modelId) {
+            $.ajax({
+                method:"post",
+                async:false,
+                url: "/powerDeviceModel/save",
+                dataType:'json',
+                data: {deviceId:deviceId, modelId:modelId},
+                success: function (data, status) {
+
+                },
+                error: function () {
+                    parent.layer.msg('删除失败');
+                },
+                complete: function () {
+
+                }
+            });
+        }
+
+        function setFormVal(data) {
+            $("#runNo").val(data.runNo);
+            $("#deviceName").val(data.deviceName);
+            $("#runHumidity").val(data.runHumidity);
+            $("#airTemperature").val(data.airTemperature);
+            $("#humidity").val(data.humidity);
+            $("#modelNo").val(data.modelNo);
+            $("#producer").val(data.producer);
+            $("#capacity").val(data.capacity);
+            $("#productionNo").val(data.productionNo);
+            $("#productionDate").val(data.productionDate);
+            currentData = data;
+            console.log(currentData)
+        }
+
+
+
     </script>
 </body>
 </html>

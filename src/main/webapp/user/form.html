@@ -17,7 +17,7 @@
                         <li class="active"><a href="#">用户信息</a></li>
                         <!--<li><a href="#">扩展信息</a></li>-->
                     </ul>
-                    <form class="form-horizontal m-t" id="signupForm">
+                    <form class="form-horizontal m-t" id="userForm">
                         <div class="form-group">
                             <label class="col-sm-2 control-label">用户身份：</label>
                             <div class="col-sm-4">
@@ -29,22 +29,25 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">用户名称：</label>
                             <div class="col-sm-4">
-                                <input id="txtbegin" name="txtbegin" class="form-control" type="text" datatype="s" aria-required="true" aria-invalid="true">
-                                <span class="help-block m-b-none Validform_checktip"></span>
+                                <input id="nickname" name="nickname" class="form-control" type="text" datatype="*" aria-required="true" aria-invalid="true">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">登录账号：</label>
                             <div class="col-sm-4">
-                                <input id="txtPhone" name="txtPhone" datatype="m" class="form-control" type="text">
-                                <span class="help-block m-b-none Validform_checktip"></span>
+                                <input id="username" name="username" datatype="s" class="form-control" type="text">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">登录密码：</label>
                             <div class="col-sm-4">
-                                <input id="txtPrice" name="txtPrice" datatype="n" class="form-control" type="text">
-                                <span class="help-block m-b-none Validform_checktip"></span>
+                                <input id="password" name="password" datatype="*" class="form-control" type="password">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">重复密码：</label>
+                            <div class="col-sm-4">
+                                <input id="password1" name="password1" class="form-control" type="password" datatype="*" recheck="password" errormsg="您两次输入的账号密码不一致！">
                             </div>
                         </div>
                     </form>
@@ -59,6 +62,7 @@
     <script src="../static/js/plugins/layer/laydate/laydate.js"></script>
     <script type="text/javascript">
         var keyValue;// = $.request("keyValue");//在公用写获取参数函数，做为修改页面时使用。未写！
+        var currentUser;
         $(function () {
             initControl();
             if (!!keyValue) {
@@ -78,7 +82,7 @@
             
         }
         function submitForm() {
-            var validForm = $("#signupForm").Validform({
+            var validForm = $("#userForm").Validform({
                 tiptype: 4,
                 callback: function (data) {
                     if (data.statusText == "OK") {
@@ -96,7 +100,48 @@
                     }
                 }
             });
-            validForm.ajaxPost(false, false, 'trip.aspx');                       
+
+            if(validForm.check(false)) {
+                var data = {
+                    nickname: $("#nickname").val(),
+                    username: $("#username").val(),
+                    password: $("#password").val(),
+                    isDutyPerson: parseInt($("#tripType").val()) == 1 ? 1 : 0,
+                    isSysadmin: parseInt($("#tripType").val()) == 2 ? 1 : 0,
+                };
+
+                if(currentUser != null) {
+                    data = $.extend(currentUser, data);
+                }
+
+                var url = currentUser == null ? "/powerSysUser/saveUser" : "/powerSysUser/updateUser";
+
+                $.ajax({
+                    url: url,
+                    cache: false,
+                    async: true,
+                    method: "post",
+                    contentType:"application/json",
+                    data: JSON.stringify(data),
+                    success: function (response) {
+                        if(response.state == "success") {
+                            parent.layer.msg('添加成功');
+
+                            //提交成功刷新列表页面
+                            parent.$("#tableList").bootstrapTable('refresh');
+                            //关闭增加页面
+                            parent.layer.closeAll();
+                        } else {
+                            alert("other response code = " + response.code)
+                        }
+                    },
+                    error : function (req, err) {
+
+                    }
+                });
+
+            }
+            // validForm.ajaxPost(false, false, 'trip.aspx');
         }
         //点击按钮时，改变形成类型
         function changeType(tripType) {
@@ -113,6 +158,15 @@
             }
             // alert($("#tripType").val());
         }
+
+        function setFormVal(user) {
+            $("#nickname").val(user.nickname);
+            $("#username").val(user.username);
+            changeType(user.isDutyPerson == 1 ? 1 : 2)
+            currentUser = user;
+        }
+
+
     </script>
 </body>
 </html>

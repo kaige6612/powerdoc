@@ -254,4 +254,15 @@
         LEFT JOIN power_model c ON a.model_id = c.model_id
         WHERE b.status='1' and c.model_status='1'
     </select>
+
+    <!--按设备查模型, 必须要求所有关联表数据满足时返回数据-->
+	<select id="queryListByDeviceId" resultMap="RM_PowerDeviceModel" parameterType="java.lang.Integer">
+        SELECT
+        a.*
+        FROM power_device_model a
+        inner JOIN power_device b ON a.device_id = b.device_id
+        inner JOIN power_model c ON a.model_id = c.model_id
+        WHERE b.status='1' and c.model_status='1'
+        and b.device_id = #{deviceId}
+    </select>
 </mapper>

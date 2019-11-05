@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <property name="BASE_DIR" value="/opt/project/logs" />
+    <property name="BASE_DIR" value="logs" />
     <property name="APP" value="powerdoc" />
     <contextName>${APP}</contextName>
     <appender name="STDOUT_C" class="ch.qos.logback.core.ConsoleAppender">
@@ -17,7 +17,7 @@
             <fileNamePattern>${BASE_DIR}/${APP}/info.%d{_yyyy-MM-dd}</fileNamePattern>
         </rollingPolicy>
     </appender>
-    <logger name="com.putorn.dao" level="TRACE"/>
+    <logger name="com.putorn.powerdoc.dao" level="TRACE"/>
     <root level="INFO">
         <appender-ref ref="STDOUT_C"/>
         <appender-ref ref="INFO_LOG"/>

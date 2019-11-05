@@ -45,6 +45,7 @@ public class PowerDeviceServiceImpl extends BaseServiceImpl<PowerDevice> impleme
                 this.save(device);
                 result.put("state","success");
                 result.put("msg","添加设备成功！");
+                result.put("deviceId",device.getDeviceId());
             }
         }
         return result;
