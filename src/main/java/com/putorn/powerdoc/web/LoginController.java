@@ -8,14 +8,11 @@ import com.putorn.powerdoc.enumconst.SystemStatusEnum;
 import com.putorn.powerdoc.service.*;
 import com.putorn.powerdoc.service.impl.PowerSysUserServiceImpl;
 import com.putorn.powerdoc.util.IpUtil;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -112,7 +109,6 @@ public class LoginController {
             result.put("message","服务异常");
             result.put("result","");
             logger.error("服务异常!!! result="+ JSON.toJSONString(result),e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(result);
         }
         if(!result.containsKey("result")) {
             result.put("result","");
@@ -199,7 +195,6 @@ public class LoginController {
             result.put("message","服务异常");
             result.put("result","");
             logger.error("服务异常!!! result="+ JSON.toJSONString(result),e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(result);
         }
         result.put("result",resultJson.toJSONString());
         logger.info("获取基础数据 ："+JSON.toJSONString(result));

@@ -1,12 +1,7 @@
 package com.putorn.powerdoc.web;
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.TypeReference;
 import com.putorn.powerdoc.base.PageBean;
 import com.putorn.powerdoc.base.PageParam;
-import com.putorn.powerdoc.base.PageParamHelper;
-import com.putorn.powerdoc.entity.PowerInstrument;
-import com.putorn.powerdoc.entity.PowerReport;
 import com.putorn.powerdoc.entity.PowerSysUser;
 import com.putorn.powerdoc.entity.vo.PowerReportVo;
 import com.putorn.powerdoc.enumconst.SystemAdminEnum;
@@ -46,7 +41,6 @@ public class PowerReportController{
     public ResponseEntity<Map<String,Object>> saveReportBatch(@RequestBody List<PowerReportVo> reportList){
         Map<String,Object> result = new HashMap<>();
         result.put("result","");
-        boolean flag = false;
         String message;
         int code = 400;
         try {
@@ -54,13 +48,11 @@ public class PowerReportController{
             if(reportList != null && reportList.size() > 0) {
                 List<String> errorList = powerReportService.saveReportBatch(reportList);
                 if(errorList == null || errorList.size() == 0) {
-                    flag = true;
                     code = 200;
                     message = "报告全部保存成功";
                 }else if(errorList.size() == reportList.size()) {
                     message = "报告全部保存失败";
                 }else {
-                    flag = true;
                     message = "报告部分保存失败，失败的报告id为："+JSON.toJSONString(errorList)+"失败数量：" + errorList.size();
                 }
             }else {
@@ -77,11 +69,8 @@ public class PowerReportController{
         result.put("code",code);
         result.put("message",message);
         logger.info("保存报告返回结果："+JSON.toJSONString(result));
-       if(!flag) {
-           return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
-       }else {
-           return ResponseEntity.ok(result);
-       }
+        return ResponseEntity.ok(result);
+
     }
 
     @PostMapping("queryReportList")
