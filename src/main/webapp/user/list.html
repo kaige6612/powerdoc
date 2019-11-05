@@ -15,28 +15,28 @@
     <div class="wrapper wrapper-content animated fadeInRight">
         <!-- Panel Other -->
         <div class="ibox float-e-margins">
-            <div class="ibox-title">
-                <h5>用户列表</h5>
-                <div class="ibox-tools">
-                    <a class="collapse-link">
-                        <i class="fa fa-chevron-up"></i>
-                    </a>
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-wrench"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-user">
-                        <li>
-                            <a href="#">选项1</a>
-                        </li>
-                        <li>
-                            <a href="#">选项2</a>
-                        </li>
-                    </ul>
-                    <a class="close-link">
-                        <i class="fa fa-times"></i>
-                    </a>
-                </div>
-            </div>
+            <!--<div class="ibox-title">-->
+                <!--<h5>用户列表</h5>-->
+                <!--<div class="ibox-tools">-->
+                    <!--<a class="collapse-link">-->
+                        <!--<i class="fa fa-chevron-up"></i>-->
+                    <!--</a>-->
+                    <!--<a class="dropdown-toggle" data-toggle="dropdown" href="#">-->
+                        <!--<i class="fa fa-wrench"></i>-->
+                    <!--</a>-->
+                    <!--<ul class="dropdown-menu dropdown-user">-->
+                        <!--<li>-->
+                            <!--<a href="#">选项1</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="#">选项2</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                    <!--<a class="close-link">-->
+                        <!--<i class="fa fa-times"></i>-->
+                    <!--</a>-->
+                <!--</div>-->
+            <!--</div>-->
             <div class="ibox-content">
                 <div class="row row-lg">
                     <div class="col-sm-12">
@@ -58,12 +58,13 @@
                                     <thead>
                                         <tr>
                                             <th data-field="state" data-checkbox="true"></th>
-                                            <th data-field="username">用户名称</th>
-                                            <th data-field="sex">用户性别</th>
+                                            <th data-field="username">登录账号</th>
+                                            <th data-field="nickname">用户名称</th>
+                                            <th data-field="sex" data-formatter="sexFormatter">用户性别</th>
                                             <th data-field="email">用户邮箱</th>
                                             <th data-field="regtime">注册时间</th>
-                                            <th data-field="status">状态</th>
-                                            <th data-field="isDuty_person">身份</th>
+                                            <th data-field="status" data-formatter="statusFormatter">状态</th>
+                                            <th data-field="isDutyPerson" data-formatter="userTypeFormatter">身份</th>
                                         </tr>
                                     </thead>
                                 </table>

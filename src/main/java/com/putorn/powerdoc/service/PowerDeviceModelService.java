@@ -12,4 +12,11 @@ public interface PowerDeviceModelService extends BaseService<PowerDeviceModel>{
     String saveByDeviceIdAndModelId(String deviceId, String modelId);
 
     List<PowerDeviceModel> effectiveList(PowerDeviceModel powerDeviceModel);
+
+    /**
+     * 按设备查找模型
+     * @param deviceId
+     * @return
+     */
+    List<PowerDeviceModel> queryListByDeviceId(int deviceId);
 }

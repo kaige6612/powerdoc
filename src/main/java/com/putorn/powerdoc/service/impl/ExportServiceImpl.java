@@ -9,10 +9,16 @@ import com.putorn.powerdoc.entity.vo.PowerReportExportEntity;
 import com.putorn.powerdoc.service.ExportService;
 import com.putorn.powerdoc.util.DataConvertUtil;
 import com.putorn.powerdoc.util.DateUtil;
+import fr.opensagres.poi.xwpf.converter.core.ImageManager;
+import fr.opensagres.poi.xwpf.converter.xhtml.XHTMLConverter;
+import fr.opensagres.poi.xwpf.converter.xhtml.XHTMLOptions;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ResourceUtils;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
@@ -65,58 +71,22 @@ public class ExportServiceImpl implements ExportService {
     private PowerDocResistanceDetailMapper resistanceDetailMapper;
     @Override
     public Map<String, Object> exportDocByReportId(String reportId, HttpServletResponse response) {
-        Long reportIdLong = Long.parseLong(reportId);
         OutputStream out = null;
         try {
-            //查询报告主页信息
-            PowerReport powerReport = powerReportMapper.selectByPrimaryKey(reportIdLong);
-
-            PowerReportExportEntity exportEntity = new PowerReportExportEntity();
-            exportEntity.setReport(powerReport);
-            //查询每个报告的表头信息
-            PowerSubReport subReportQuery = new PowerSubReport();
-            subReportQuery.setReportId(reportIdLong);
-            List<PowerSubReport> powerSubReports = subReportMapper.listByObj(subReportQuery);
-            Map<String,List<PowerSubReport>> groups = this.groupSubReports(powerSubReports);
-
-            //遍历都包含哪些模板子报告
-            Set<String> keySet = groups.keySet();
-            List<PowerModel> powerModels = modelMapper.listByObj(new PowerModel());
-            for (PowerModel model : powerModels) {
-                String tableName = model.getModelTableName();
-                if(!keySet.contains(tableName)) {
-                    // 不包含，则直接生成空文档
-                    exportEntity = this.setDocRenderNull(exportEntity,tableName);
-                }else {
-                    //包含则拼接文档
-                    // 1、获取模板对应的子报告
-                    List<PowerSubReport> subReports = groups.get(tableName);
-
-                    // 2、根据库名，获取子报告详情
-                    List<Map<String, Object>> subReportDetail = getSubReportDetail(tableName, subReports,powerReport);
-
-                    // 3、设置要生成的文档
-                    exportEntity = setDocs(exportEntity, tableName, subReportDetail);
-
-                }
+            XWPFTemplate template = genDocTemplate(reportId);
+            if(template != null) {
+                String docName = "实验报告"+ DateUtil.getDateTime2()+".docx";
+                docName = URLEncoder.encode(docName,"UTF-8");
+                //设置响应流
+                response.addHeader("Content-Type", "application/octet-stream");
+                response.addHeader("Content-Disposition", "attachment; filename=" +docName);
+                out = response.getOutputStream();
+                template.write(out);
+                out.flush();
+                out.close();
+                template.close();
             }
 
-            InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("template/0_first.docx");
-
-//        生成报告
-            XWPFTemplate template = XWPFTemplate.compile(inputStream).render(exportEntity);
-
-            String docName = "实验报告"+ DateUtil.getDateTime2()+".docx";
-//            docName = URLEncoder.encode(docName,"UTF-8");
-            //设置响应流
-            response.addHeader("Content-Type", "application/octet-stream");
-            response.addHeader("Content-Disposition", "attachment; filename=" +docName);
-            out = response.getOutputStream();
-            template.write(out);
-            out.flush();
-            out.close();
-            template.close();
-        //查询报告中的具体数据
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
@@ -130,6 +100,170 @@ public class ExportServiceImpl implements ExportService {
         }
         return null;
     }
+
+
+    /**
+     * 生成word转为html返回路径
+     * @param reportId
+     * @return
+     */
+    public String genDocToHtmlFilName(String reportId, String genPath) {
+
+        String fileName = reportId + ".html";
+        String docName = reportId + ".docx";
+
+        String path = genPath + "/" + fileName;
+
+        File absHtmlFile = new File(path);
+
+        XWPFTemplate template = genDocTemplate(reportId);
+        if(template == null) {
+            return genPath + "/error.html";
+        }
+
+        try {
+            template.writeToFile(genPath + "/"  + docName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        OutputStream out = null;
+
+
+        try {
+
+//            XWPFDocument document = template.getXWPFDocument();
+
+
+            XWPFDocument document = new XWPFDocument(new FileInputStream(genPath + "/" + docName));
+
+            // 2) Prepare XHTML options (here we set the `ImageManager` to store image and resolve iamge src)
+            XHTMLOptions options = XHTMLOptions
+                    .create()
+                    .setImageManager( new ImageManager( new File(genPath), "images" ) );
+            options.setIgnoreStylesIfUnused(false);
+            options.setFragment(true);
+
+            // 3) Convert XWPFDocument to XHTML
+            out = new FileOutputStream(new File(path));
+            XHTMLConverter.getInstance().convert(document, out, options);
+
+            if(out != null) {
+                out.close();
+            }
+
+            String htmlFileStr = FileUtils.readFileToString(absHtmlFile);
+            htmlFileStr = "<!DOCTYPE html>\n" +
+                    "<html>\n" +
+                    "<head>\n" +
+                    "    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>\n" +
+                    "    <title>试验报告</title>\n" +
+                    "\t<meta charset=\"utf-8\" />" +
+                    "<style type=\"text/css\">\n" +
+                    "        body {\n" +
+                    "            background-color: #f3f3f4;\n" +
+                    "        }\n" +
+                    "        body>div {\n" +
+                    "            background-color: #ffffff;\n" +
+                    "            width: 794px;\n" +
+                    "            margin: 0 auto;\n" +
+                    "        }\n" +
+                    "        .X10 {\n" +
+                    "            border: 1px solid #000000;\n" +
+                    "        }\n"+
+                    "    </style>" +
+                    "</head><body>"
+                    + htmlFileStr
+            + "</body></html>";
+
+            FileUtils.write(absHtmlFile , htmlFileStr);
+
+            template.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            if(template != null) {
+                try {
+                    template.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            try {
+                if(out != null) {
+                    out.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return fileName;
+    }
+
+    /**
+     * 根据ReportID 生成Word Doc Template
+     * @param reportId
+     * @return
+     */
+    private XWPFTemplate genDocTemplate(String reportId) {
+        Long reportIdLong = Long.parseLong(reportId);
+        OutputStream out = null;
+        try {
+            //查询报告主页信息
+            PowerReport powerReport = powerReportMapper.selectByPrimaryKey(reportIdLong);
+
+            PowerReportExportEntity exportEntity = new PowerReportExportEntity();
+            exportEntity.setReport(powerReport);
+            //查询每个报告的表头信息
+            PowerSubReport subReportQuery = new PowerSubReport();
+            subReportQuery.setReportId(reportIdLong);
+            List<PowerSubReport> powerSubReports = subReportMapper.listByObj(subReportQuery);
+            Map<String, List<PowerSubReport>> groups = this.groupSubReports(powerSubReports);
+
+            //遍历都包含哪些模板子报告
+            Set<String> keySet = groups.keySet();
+            List<PowerModel> powerModels = modelMapper.listByObj(new PowerModel());
+            for (PowerModel model : powerModels) {
+                String tableName = model.getModelTableName();
+                if (!keySet.contains(tableName)) {
+                    // 不包含，则直接生成空文档
+                    exportEntity = this.setDocRenderNull(exportEntity, tableName);
+                } else {
+                    //包含则拼接文档
+                    // 1、获取模板对应的子报告
+                    List<PowerSubReport> subReports = groups.get(tableName);
+
+                    // 2、根据库名，获取子报告详情
+                    List<Map<String, Object>> subReportDetail = getSubReportDetail(tableName, subReports, powerReport);
+
+                    // 3、设置要生成的文档
+                    exportEntity = setDocs(exportEntity, tableName, subReportDetail);
+
+                }
+            }
+
+            InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("template/0_first.docx");
+
+//        生成报告
+            XWPFTemplate template = XWPFTemplate.compile(inputStream).render(exportEntity);
+
+            return template;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return null;
+    }
+
 
     /**
      * 不存在的直接写入null

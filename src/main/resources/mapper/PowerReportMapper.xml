@@ -466,21 +466,30 @@
     </select>
 
 
+
+    <sql id="findPageBySearch">
+        <where>
+            <if test="search != null">
+                AND (device_names like  '%${search}%'  or substation_name like  '%${search}%' or run_no  like  '%${search}%' or test_properties like  '%${search}%')
+            </if>
+        </where>
+    </sql>
+
     <!-- 获取总数 -->
     <select id="listPageCount" resultType="long" parameterType="map">
         SELECT COUNT(1)
         FROM power_report
-        <include refid="findPageList" />
+        <include refid="findPageBySearch" />
     </select>
 
     <select id="listPage" resultMap="RM_PowerReport" parameterType="map">
         SELECT
         <include refid="columns" />
         FROM power_report
-        <include refid="findPageList" />
+        <include refid="findPageBySearch" />
 
         <if test="sortColumns != null and sortColumns !=''">
-            ORDER BY ${sortColumns}
+            ORDER BY ${sortColumns} desc
         </if>
 
         <if test="offset != null and pageSize != null">

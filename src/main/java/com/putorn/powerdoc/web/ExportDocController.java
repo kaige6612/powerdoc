@@ -12,11 +12,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,14 +28,14 @@ public class ExportDocController {
     @Autowired
     private ExportServiceImpl exportService;
 
-    @PostMapping("exportDocByReportId")
+    @GetMapping("exportDocByReportId/{reportId}")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "reportId",value = "报告主键",required = true)
     })
 //    @ApiImplicitParam(name = "paramUser",value = "单个用户",dataType = "PowerSysUser",required = true)
     @ApiOperation(value = "根据报告id导出报告内容",notes = "根据报告id导出报告内容",produces = "application/json")
     @ApiResponse(code = 200,message = "success")
-    public ResponseEntity<Map<String,Object>> exportDocByReportId(@RequestParam String reportId, HttpServletResponse response) {
+    public ResponseEntity<Map<String,Object>> exportDocByReportId(@PathVariable("reportId") String reportId, HttpServletResponse response) {
         Map<String,Object> result = new HashMap<>();
         if(StringUtils.isEmpty(reportId)) {
             result.put("code","400");
@@ -46,4 +46,21 @@ public class ExportDocController {
         result = exportService.exportDocByReportId(reportId,response);
         return ResponseEntity.ok(result);
     }
+
+    /**
+     * 预览在线的word文档
+     * @param reportId
+     * @param response
+     */
+    @GetMapping("viewDocByReportId/{reportId}")
+    public void viewDocByReportId(@PathVariable("reportId") String reportId, HttpServletRequest request,  HttpServletResponse response){
+        String path = request.getServletContext().getRealPath("/gen");
+        String fileName = exportService.genDocToHtmlFilName(reportId, path);
+        try {
+            response.sendRedirect("/gen/" + fileName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

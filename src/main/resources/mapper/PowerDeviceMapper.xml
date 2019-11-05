@@ -344,18 +344,31 @@
 	</select>
 
 
+	<sql id="findPage_where_2">
+		<where>
+			<if test="status != null and status !=''">
+				AND status = #{status}
+			</if>
+
+			<if test="search != null">
+				and device_name like '%${search}%'
+			</if>
+		</where>
+	</sql>
+
 	<!-- 获取总数 -->
 	<select id="listPageCount" resultType="long" parameterType="map">
 		SELECT COUNT(1)
 		FROM power_device
-		<include refid="findPage_where" />
+		<include refid="findPage_where_2" />
+
 	</select>  
 
 	<select id="listPage" resultMap="RM_PowerDevice" parameterType="map">
 		 SELECT
 		<include refid="columns" />
 		FROM power_device
-		<include refid="findPage_where" />
+		<include refid="findPage_where_2" />
 
 		<if test="sortColumns != null and sortColumns !=''">
 			ORDER BY ${sortColumns}

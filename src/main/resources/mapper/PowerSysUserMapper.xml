@@ -343,6 +343,8 @@
 				<if test="edittime != null">
 					AND edittime = #{edittime}
 				</if>
+
+
 		</where>
 	</sql>
 
@@ -354,19 +356,31 @@
 	<include refid="findPage_where" />
 	</select>
 
+	<sql id="findPage2">
+		<where>
+			<if test="search!=null and search!=''">
+				AND (username LIKE '%${search}%' or nickname like '%${search}%')
+			</if>
+
+			<if test="status != null" >
+				AND status = #{status}
+			</if>
+		</where>
+	</sql>
+
 
 	<!-- 获取总数 -->
 	<select id="listPageCount" resultType="long" parameterType="map">
 		SELECT COUNT(1)
 		FROM power_sys_user
-		<include refid="findPage_where" />
-	</select>  
+		<include refid="findPage2" />
+	</select>
 
 	<select id="listPage" resultMap="RM_PowerSysUser" parameterType="map">
 		 SELECT
 		<include refid="columns" />
 		FROM power_sys_user
-		<include refid="findPage_where" />
+		<include refid="findPage2" />
 
 		<if test="sortColumns != null and sortColumns !=''">
 			ORDER BY ${sortColumns}

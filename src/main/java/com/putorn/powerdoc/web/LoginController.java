@@ -19,13 +19,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -121,6 +120,32 @@ public class LoginController {
         logger.info("用户登录返回结果："+JSON.toJSONString(result));
         return ResponseEntity.ok(result);
     }
+
+    @GetMapping("userLogout")
+    public void logout(HttpServletRequest request, HttpServletResponse response) {
+        request.getSession().removeAttribute("user");
+        request.getSession().invalidate();
+
+        try {
+            response.sendRedirect("/login.html");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @GetMapping("currentUser")
+    public ResponseEntity<Map<String,Object>> currentUser(HttpServletRequest request, HttpServletResponse response) {
+        PowerSysUser user = (PowerSysUser) request.getSession().getAttribute("user");
+        Map<String,Object> ret = new HashMap<>();
+        if(user == null) {
+            ret.put("code", 400);
+        } else {
+            ret.put("code", 200);
+            ret.put("user", user);
+        }
+        return ResponseEntity.ok(ret);
+    }
+
 
 
     @PostMapping("getBasicData")

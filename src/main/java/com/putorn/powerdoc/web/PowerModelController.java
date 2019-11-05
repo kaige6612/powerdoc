@@ -84,9 +84,9 @@ public class PowerModelController{
 
 
     @PostMapping("query")
-    public ResponseEntity<PageBean> queryPowerModel(HttpServletRequest request){
+    public ResponseEntity<PageBean> queryPowerModel(@RequestBody PageParam pageParam){
         try {
-            PageParam pageParam = PageParamHelper.getPageParam(request);
+//            PageParam pageParam = PageParamHelper.getPageParam(request);
             PageBean pageInfo =this.powerModelService.listPage(pageParam);
             return ResponseEntity.ok(pageInfo);
         } catch (Exception e) {

@@ -12,4 +12,11 @@ import java.util.List;
 public interface PowerDeviceModelMapper extends BaseDao<PowerDeviceModel>{
 
     List<PowerDeviceModel> effectiveList(PowerDeviceModel powerDeviceModel);
+
+    /**
+     * 按设备查找模型
+     * @param deviceId
+     * @return
+     */
+    List<PowerDeviceModel> queryListByDeviceId(int deviceId);
 }

@@ -44,24 +44,8 @@
     <script src="../static/js/plugins/layer/laydate/laydate.js"></script>
     <script type="text/javascript">
         var keyValue;// = $.request("keyValue");//在公用写获取参数函数，做为修改页面时使用。未写！
-        $(function () {
-            initControl();
-            if (!!keyValue) {
-                $.ajax({
-                    url: "",
-                    data: { keyValue: keyValue },
-                    dataType: "json",
-                    async: false,
-                    success: function (data) {
-                        
-                    }
-                });
-            }
-        });
-        function initControl() {
-            //页面加载函数
-            
-        }
+        var currentData;
+
         function submitForm() {
             var validForm = $("#signupForm").Validform({
                 tiptype: 4,
@@ -79,7 +63,68 @@
 
                 }
             });
-            validForm.ajaxPost(false, false, '/powerInstrument/saveInstrument');
+            // validForm.ajaxPost(false, false, '/powerInstrument/saveInstrument');
+
+            if(validForm.check(false)) {
+                var url = currentData == null ? "/powerInstrument/saveInstrument" : "/powerInstrument/updateInstrument";
+                if(currentData != null) {
+                    var data = {
+                        // instrumentId: $("#instrumentId").val(),
+                        instrumentName: $("#instrumentName").val(),
+                        instrumentStatus:1,
+                    };
+                    data = $.extend(currentData, data);
+
+                    $.ajax({
+                        url: url,
+                        cache: false,
+                        async: true,
+                        method: "post",
+                        contentType:"application/json",
+                        data: JSON.stringify(data),
+                        success: function (response) {
+                            if(response.state == "success") {
+                                parent.layer.msg('添加成功');
+
+                                //提交成功刷新列表页面
+                                parent.$("#tableList").bootstrapTable('refresh');
+                                //关闭增加页面
+                                parent.layer.closeAll();
+                            } else {
+                                alert("other response code = " + response.code)
+                            }
+                        },
+                        error : function (req, err) {
+
+                        }
+                    });
+                }else {
+                    $.ajax({
+                        url: url,
+                        cache: false,
+                        async: true,
+                        method: "post",
+                        // contentType:"application/json",
+                        data: { instrumentName: $("#instrumentName").val(),},
+                        success: function (response) {
+                            if(response.state == "success") {
+                                parent.layer.msg('添加成功');
+
+                                //提交成功刷新列表页面
+                                parent.$("#tableList").bootstrapTable('refresh');
+                                //关闭增加页面
+                                parent.layer.closeAll();
+                            } else {
+                                alert("other response code = " + response.code)
+                            }
+                        },
+                        error : function (req, err) {
+
+                        }
+                    });
+                }
+
+            }
         }
         //点击按钮时，改变形成类型
         function changeType(tripType) {
@@ -96,6 +141,15 @@
             }
             // alert($("#tripType").val());
         }
+
+        function setFormVal(data) {
+            // $("#instrumentId").val(data.instrumentId);
+            $("#instrumentName").val(data.instrumentName);
+            currentData = data;
+            console.log(currentData)
+        }
+
+
     </script>
 </body>
 </html>

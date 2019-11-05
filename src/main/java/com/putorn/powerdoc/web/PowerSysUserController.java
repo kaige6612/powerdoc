@@ -122,14 +122,14 @@ public class PowerSysUserController{
     @PostMapping("queryUserList")
     @ApiImplicitParam(name = "sysUser",value = "sysUser可为空的json",paramType = "PowerSysUser" ,required = false)
     @ApiOperation(value = "分页按条件查询用户" ,notes="分页查询所有用户")
-    public ResponseEntity<List<PowerSysUser>> queryPowerSysUser(HttpServletRequest request, PowerSysUser sysUser){
+    public ResponseEntity<PageBean> queryPowerSysUser(@RequestBody PageParam pageParam){
         try {
-            PageParam pageParam = PageParamHelper.getPageParam(request);
-            Map<String, Object> params = JSONObject.parseObject(JSON.toJSONString(sysUser), new TypeReference<Map<String, Object>>(){});
-            params.put("status",SystemStatusEnum.SYSTEM_STATUS_EFFECTIVE.getKey());
-            pageParam.setParams(params);
+//            PageParam pageParam = PageParamHelper.getPageParam(request);
+//            Map<String, Object> params = JSONObject.parseObject(JSON.toJSONString(sysUser), new TypeReference<Map<String, Object>>(){});
+            pageParam.getParams().put("status",SystemStatusEnum.SYSTEM_STATUS_EFFECTIVE.getKey());
+//            pageParam.setParams(params);
             PageBean pageInfo =this.powerSysUserService.listPage(pageParam);
-            return ResponseEntity.ok(pageInfo.getRows());
+            return ResponseEntity.ok(pageInfo);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);

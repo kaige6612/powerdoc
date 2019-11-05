@@ -20,17 +20,38 @@
 	</properties>
 
 	<dependencies>
-<!--		移除内置tomcat-->
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.boot</groupId>-->
-<!--			<artifactId>spring-boot-starter-tomcat</artifactId>-->
-<!--			<scope>provided</scope>&lt;!&ndash; 打成war的时候打开注释，本地开发用内嵌tomcat时加上注释 &ndash;&gt;-->
-<!--		</dependency>-->
+		<!--移除内置tomcat-->
+		<!-- 打成war的时候打开注释，本地开发用内嵌tomcat时加上注释 -->
+		<!--<dependency>-->
+			<!--<groupId>org.springframework.boot</groupId>-->
+			<!--<artifactId>spring-boot-starter-tomcat</artifactId>-->
+			<!--<scope>provided</scope>-->
+		<!--</dependency>-->
 		<!--	引入poi-tl处理文档-->
 		<dependency>
 			<groupId>com.deepoove</groupId>
 			<artifactId>poi-tl</artifactId>
 			<version>1.5.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>fr.opensagres.xdocreport</groupId>
+			<artifactId>fr.opensagres.poi.xwpf.converter.xhtml</artifactId>
+			<version>2.0.1</version>
+			<exclusions>
+				<!--<exclusion>-->
+					<!--<groupId>org.apache.poi</groupId>-->
+					<!--<artifactId>poi</artifactId>-->
+				<!--</exclusion>-->
+				<exclusion>
+					<groupId>org.apache.poi</groupId>
+					<artifactId>poi-ooxml</artifactId>
+				</exclusion>
+				<!--<exclusion>-->
+					<!--<groupId>org.apache.poi</groupId>-->
+					<!--<artifactId>poi-ooxml-schemas</artifactId>-->
+				<!--</exclusion>-->
+			</exclusions>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-netflix-zuul -->

@@ -117,12 +117,12 @@ public class PowerInstrumentController{
     @PostMapping("queryInstrumentList")
     @ApiImplicitParam(name = "instrument",value = "设备查询条件，可为空",paramType = "PowerInstrument" ,required = false)
     @ApiOperation(value = "分页按条件查询仪器" ,notes="分页查询所有仪器")
-    public ResponseEntity<PageBean> queryPowerInstrument(HttpServletRequest request, PowerInstrument instrument){
+    public ResponseEntity<PageBean> queryPowerInstrument(HttpServletRequest request, @RequestBody PageParam pageParam){
         try {
-            PageParam pageParam = PageParamHelper.getPageParam(request);
-            Map<String, Object> params = JSONObject.parseObject(JSON.toJSONString(instrument), new TypeReference<Map<String, Object>>(){});
-            params.put("instrumentStatus", SystemStatusEnum.SYSTEM_STATUS_EFFECTIVE.getKey());
-            pageParam.setParams(params);
+//            PageParam pageParam = PageParamHelper.getPageParam(request);
+//            Map<String, Object> params = JSONObject.parseObject(JSON.toJSONString(instrument), new TypeReference<Map<String, Object>>(){});
+            pageParam.getParams().put("instrumentStatus", SystemStatusEnum.SYSTEM_STATUS_EFFECTIVE.getKey());
+//            pageParam.setParams(params);
             PageBean pageInfo =this.powerInstrumentService.listPage(pageParam);
             return ResponseEntity.ok(pageInfo);
         } catch (Exception e) {
